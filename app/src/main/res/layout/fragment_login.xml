@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Blyat"
+            android:text="@string/app_name"
             android:textSize="36sp"
             android:textStyle="bold" />
 
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="The Game"
+            android:text="@string/dots"
             android:textSize="24sp"
             android:textStyle="italic" />
 
