@@ -66,11 +66,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             case R.id.login_button: {
                 if (isPasswordRight(usernameTextInputEditText.getText().toString(),
                         passwordTextInputEditText.getText().toString())) {
-                    MainActivity.switchFragment(new MainActivityFragment(), (AppCompatActivity) getActivity());
                 }
                 break;
             }
             case R.id.register_button: {
+                MainActivity.switchFragment(new RegisterFragment(),(AppCompatActivity) getActivity());
                 break;
             }
 
