@@ -11,24 +11,6 @@
         android:orientation="vertical"
         android:padding="@dimen/padding">
 
-        <TextView
-            android:id="@+id/app_title1_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/app_name"
-            android:textSize="36sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/app_title2_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/dots"
-            android:textSize="24sp"
-            android:textStyle="italic" />
-
         <android.support.design.widget.TextInputLayout
             android:id="@+id/login_username_textinputlayout"
             android:layout_width="match_parent"
