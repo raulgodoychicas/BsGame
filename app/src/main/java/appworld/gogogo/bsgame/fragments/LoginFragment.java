@@ -1,11 +1,10 @@
 package appworld.gogogo.bsgame.fragments;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,13 +33,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(false);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
@@ -70,26 +67,32 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             case R.id.login_button: {
                 if (isPasswordRight(usernameTextInputEditText.getText().toString(),
                         passwordTextInputEditText.getText().toString())) {
-                    MainActivity.switchFragment(new OverviewFragment(),(AppCompatActivity)getActivity());
+                    MainActivity.switchFragment(new OverviewFragment(),getActivity());
                 }
                 break;
             }
             case R.id.register_button: {
-                MainActivity.switchFragment(new RegisterFragment(),(AppCompatActivity) getActivity());
+                MainActivity.switchFragment(new RegisterFragment(), getActivity());
                 break;
             }
 
         }
-
     }
 
     /**
-     * Password has to be between 5 and 20 chars long
+     * Checks if the Username and Password matches with any saved username in the Database
      *
      * @param username Username
      * @param password Password
      */
     private boolean isPasswordRight(String username, String password) {
+
+        /**
+         * TODO:
+         * Check Database for the User (if()return boolean)
+         * Check if the password matches the User (if()return boolean)
+         *
+         */
         if (!username.equals("playerOne")) {
             usernameTextInputLayout.setError("Use playerOne as username");
             return false;
