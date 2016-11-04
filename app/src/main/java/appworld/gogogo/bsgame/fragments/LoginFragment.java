@@ -18,7 +18,7 @@ import appworld.gogogo.bsgame.R;
  */
 public class LoginFragment extends Fragment implements View.OnClickListener {
 
-    private Button loginButton;
+    private Button o_loginButton;
     private Button registerButton;
 
     private TextInputEditText usernameTextInputEditText;
@@ -45,8 +45,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        loginButton = (Button) view.findViewById(R.id.login_button);
-        loginButton.setOnClickListener(this);
+        o_loginButton = (Button) view.findViewById(R.id.login_button);
+        o_loginButton.setOnClickListener(this);
 
         registerButton = (Button) view.findViewById(R.id.register_button);
         registerButton.setOnClickListener(this);

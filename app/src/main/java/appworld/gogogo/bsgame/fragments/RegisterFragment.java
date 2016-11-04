@@ -78,7 +78,6 @@ public class RegisterFragment extends Fragment {
      * @param passwordString
      * @param repeatpasswordString
      */
-
     private Boolean isPasswordAccordingToRules(String passwordString, String repeatpasswordString) {
         if (passwordString.isEmpty()) {
             passwordTextInputLayout.setError("Please fill this field");
