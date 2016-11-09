@@ -35,13 +35,6 @@ public class OverviewFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        field_size = (Spinner)view.findViewById(id.choose_fieldsize);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), array.size_array,android.R.layout.simple_spinner_item);
-        field_size.setAdapter(adapter);
-
-
-
-
 
     }
 }
