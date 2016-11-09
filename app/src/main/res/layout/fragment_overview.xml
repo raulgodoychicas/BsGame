@@ -13,18 +13,17 @@
 
         <TextView
             android:text="Wählen Sie bitte einen Spielmodus aus:"
-            android:maxLines="1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="19dp"
-            android:layout_marginTop="63dp"
+            android:textSize="@dimen/padding"
+            android:layout_marginTop="63sp"
             android:id="@+id/textView_ModusWaehlen"
             android:layout_alignParentTop="true" />
 
         <TextView
             android:text="Wählen Sie die Feldgröße aus:"
             android:layout_width="wrap_content"
-            android:textSize="20sp"
+            android:textSize="@dimen/padding"
             android:textStyle="italic"
             android:layout_height="wrap_content"
             android:id="@+id/textView_Feldgröße"
@@ -52,7 +51,6 @@
             android:entries="@array/game_mode"
             android:layout_below="@+id/textView_ModusWaehlen"
             android:layout_alignStart="@+id/textView_ModusWaehlen" />
-
 
     </RelativeLayout>
 
