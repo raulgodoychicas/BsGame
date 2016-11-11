@@ -15,14 +15,14 @@
     <string name="repeat_password_hint">repeat password</string>
     <string name="dots">Dots</string>
 
-    <string-array name="size_array">
+    <string-array name="overview_size_array">
         <item>10x10</item>git
         <item>20x20</item>
         <item>30x30</item>
         <item>50x50</item>
     </string-array>
     
-    <string-array name="game_mode">
+    <string-array name="overview_game_mode">
         <item>Single-Player</item>
         <item>Multi-Player</item>
         <item>Online Multi-Player</item>
