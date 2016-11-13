@@ -60,6 +60,7 @@ public class MainActivity extends Activity {
     public static void switchFragment(Fragment fragment, Activity activity) {
         FragmentTransaction fragmentTransaction = activity.getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment, fragment);
+        fragmentTransaction.addToBackStack(fragment.getClass().getName());
         fragmentTransaction.commit();
     }
 }

@@ -12,11 +12,12 @@ import android.widget.Button;
 
 import appworld.gogogo.bsgame.MainActivity;
 import appworld.gogogo.bsgame.R;
+import appworld.gogogo.bsgame.support.SharedPrefsMethods;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RegisterFragment extends Fragment {
+public class RegisterFragment extends Fragment{
 
     private TextInputLayout passwordTextInputLayout;
     private TextInputLayout repeatPasswordTextInputLayout;
@@ -52,24 +53,35 @@ public class RegisterFragment extends Fragment {
         repeatPasswordTextInputLayout.setErrorEnabled(true);
         repeatPasswordTextInputEditText = (TextInputEditText) view.findViewById(R.id.register_repeatpassword_textinputedittext);
 
-        Button registerButton = (Button) view.findViewById(R.id.register_button);
+        Button registerButton = (Button) view.findViewById(R.id.register_register_button);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isUserNameAvailable(usernameTextInputEditText.getText().toString())){
+                String username = usernameTextInputEditText.getText().toString();
+                String password = passwordTextInputEditText.getText().toString();
+                String passwordRepeat = repeatPasswordTextInputEditText.getText().toString();
+
+                if (!isUserNameAvailable(username)) {
+                    emptyAllErrorTexts();
                     usernameTextInputLayout.setError("Username is not available");
-                } else if (isPasswordAccordingToRules(passwordTextInputEditText.getText().toString(),
-                        repeatPasswordTextInputEditText.getText().toString())){
-                    //TODO: Benutzer in der Datenbank speichern
-                    MainActivity.switchFragment(new PlaceHolderFragment(), getActivity());
-                };
+                } else if (isPasswordAccordingToRules(password, passwordRepeat)) {
+                    SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), username, password);
+                    MainActivity.switchFragment(new LoginFragment(), getActivity());
+                }
             }
         });
     }
 
+    /**
+     * This Method proofs if th egiven username is contained in the Database.
+     * Right now Databse = Shared Preferences
+     *
+     * @param username
+     * @return
+     */
+
     private Boolean isUserNameAvailable(String username) {
-        //TODO: Select abfrage in der Datenbank um zu überprüfen ob der Name schon vergeben ist
-        return true;
+        return !SharedPrefsMethods.containsStringInSharedPrefs(getActivity(), username);
     }
 
     /**
@@ -80,26 +92,40 @@ public class RegisterFragment extends Fragment {
      */
     private Boolean isPasswordAccordingToRules(String passwordString, String repeatpasswordString) {
         if (passwordString.isEmpty()) {
+            emptyAllErrorTexts();
             passwordTextInputLayout.setError("Please fill this field");
             return false;
         }
         if (repeatpasswordString.isEmpty()) {
+            emptyAllErrorTexts();
             repeatPasswordTextInputLayout.setError("Please fill this field");
             return false;
         }
-        if (passwordString.equals(repeatpasswordString)) {
+        if (!passwordString.equals(repeatpasswordString)) {
+            emptyAllErrorTexts();
             repeatPasswordTextInputLayout.setError("Passwords have to be identic");
             return false;
         }
         if (passwordString.length() < 4) {
+            emptyAllErrorTexts();
             passwordTextInputLayout.setError("Password is too short");
             return false;
         }
-        if (!passwordString.contains("!") || !passwordString.contains("&")
-                || !passwordString.contains("_") || !passwordString.contains("-")
-                || !passwordString.contains(".") || !passwordString.contains("%")) {
+        if (passwordString.contains("!") || passwordString.contains("&")
+                || passwordString.contains("_") || passwordString.contains("-")
+                || passwordString.contains(".") || passwordString.contains("%")) {
+            return true;
+        } else {
+            emptyAllErrorTexts();
             passwordTextInputLayout.setError("Password must contain !&-_%.");
+            return false;
         }
-        return true;
     }
+
+    private void emptyAllErrorTexts(){
+        passwordTextInputLayout.setError("");
+        repeatPasswordTextInputLayout.setError("");
+        usernameTextInputLayout.setError("");
+    }
+
 }

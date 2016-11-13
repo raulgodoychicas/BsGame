@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import appworld.gogogo.bsgame.MainActivity;
 import appworld.gogogo.bsgame.R;
+import appworld.gogogo.bsgame.support.SharedPrefsMethods;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,7 +49,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         o_loginButton = (Button) view.findViewById(R.id.login_button);
         o_loginButton.setOnClickListener(this);
 
-        registerButton = (Button) view.findViewById(R.id.register_button);
+        registerButton = (Button) view.findViewById(R.id.login_register_button);
         registerButton.setOnClickListener(this);
 
         usernameTextInputLayout = (TextInputLayout) view.findViewById(R.id.login_username_textinputlayout);
@@ -67,11 +68,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             case R.id.login_button: {
                 if (isPasswordRight(usernameTextInputEditText.getText().toString(),
                         passwordTextInputEditText.getText().toString())) {
-                    MainActivity.switchFragment(new OverviewFragment(),getActivity());
+                    MainActivity.switchFragment(new OverviewFragment(), getActivity());
                 }
                 break;
             }
-            case R.id.register_button: {
+            case R.id.login_register_button: {
                 MainActivity.switchFragment(new RegisterFragment(), getActivity());
                 break;
             }
@@ -86,23 +87,18 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
      * @param password Password
      */
     private boolean isPasswordRight(String username, String password) {
-        if(true)
-            return  true;
+        // TODO: delete when App is finished
+        if (true) return true;
 
-        /**
-         * TODO:
-         * Check Database for the User (if()return boolean)
-         * Check if the password matches the User (if()return boolean)
-         *
-         */
-        if (!username.equals("playerOne")) {
-            usernameTextInputLayout.setError("Use playerOne as username");
+        if (!SharedPrefsMethods.containsStringInSharedPrefs(getActivity(), username)) {
+            usernameTextInputLayout.setError("Username is not registered");
             return false;
-        } else if (!password.equals("blyat")) {
-            passwordTextInputLayout.setError("use blyat als password");
-            return false;
-        } else {
-            return true;
         }
+        String savedPassword = SharedPrefsMethods.readStringFromSharedPrefs(getActivity(), username);
+        if (!password.equals(savedPassword)) {
+            passwordTextInputLayout.setError("Password is wrong!");
+            return false;
+        }
+        return true;
     }
 }
