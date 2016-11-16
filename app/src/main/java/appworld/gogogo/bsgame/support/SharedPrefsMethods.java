@@ -36,5 +36,4 @@ public class SharedPrefsMethods {
         SharedPreferences sharedPref = activity.getSharedPreferences(SHAREDPREFS_FILE_KEY, Context.MODE_PRIVATE);
         return sharedPref.contains(keyValueString);
     }
-
 }

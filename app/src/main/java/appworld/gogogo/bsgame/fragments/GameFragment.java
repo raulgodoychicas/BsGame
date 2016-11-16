@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import appworld.gogogo.bsgame.R;
+import appworld.gogogo.bsgame.support.SharedPrefsMethods;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,7 +35,6 @@ public class GameFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 
     }
 }
