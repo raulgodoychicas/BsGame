@@ -132,14 +132,7 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onClick(View view) {
 
-        Bundle bundle = new Bundle();
-        String a = "Hallo Bundle";
-        bundle.putString("Test",a);
-
-
-        //view.getId();
         MainActivity.switchFragment(new GameFragment(),getActivity());
-
     }
 
     public void setPlayModeConstant(String m_PlayModeConstant){

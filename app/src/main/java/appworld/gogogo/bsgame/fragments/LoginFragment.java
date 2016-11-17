@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.Switch;
 
 import appworld.gogogo.bsgame.MainActivity;
 import appworld.gogogo.bsgame.R;
@@ -22,6 +24,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     private Button o_loginButton;
     private Button registerButton;
+
+    private Switch loginSpinnerRememberMe;
 
     private TextInputEditText usernameTextInputEditText;
     private TextInputEditText passwordTextInputEditText;
@@ -60,6 +64,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         passwordTextInputLayout = (TextInputLayout) view.findViewById(R.id.login_password_textinputlayout);
         passwordTextInputLayout.setErrorEnabled(true);
         passwordTextInputEditText = (TextInputEditText) view.findViewById(R.id.login_password_textinputedittext);
+
+        loginSpinnerRememberMe =(Switch)view.findViewById(R.id.login_angemeldet_bleiben);
+        loginSpinnerRememberMe.setChecked(false);
+
+
 
     }
 
