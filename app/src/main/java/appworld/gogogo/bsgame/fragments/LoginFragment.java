@@ -23,7 +23,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private Button o_loginButton;
     private Button registerButton;
 
-    private Switch loginSpinnerRememberMe;
+    private Switch loginSwitchRememberMe;
 
     private TextInputEditText usernameTextInputEditText;
     private TextInputEditText passwordTextInputEditText;
@@ -63,22 +63,22 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         passwordTextInputLayout.setErrorEnabled(true);
         passwordTextInputEditText = (TextInputEditText) view.findViewById(R.id.login_password_textinputedittext);
 
-        loginSpinnerRememberMe =(Switch)view.findViewById(R.id.login_angemeldet_bleiben);
-
-        //OnCheckedChangeListener hinzufügen ?
-
-
-
-
+        loginSwitchRememberMe =(Switch)view.findViewById(R.id.login_angemeldet_bleiben);
+        loginSwitchRememberMe.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        
+
         switch (v.getId()) {
             case R.id.login_button: {
+                //Switch On or Off ?
+                boolean isSwitchOn = ((Switch)loginSwitchRememberMe).isChecked();
+
                 if (isPasswordRight(usernameTextInputEditText.getText().toString(),
-                        passwordTextInputEditText.getText().toString()) ) {
+                        passwordTextInputEditText.getText().toString()) && isSwitchOn) {
+                    MainActivity.switchFragment(new OverviewFragment(), getActivity());
+                } else {
                     MainActivity.switchFragment(new OverviewFragment(), getActivity());
                 }
                 break;
