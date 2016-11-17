@@ -1,7 +1,6 @@
 package appworld.gogogo.bsgame.fragments;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -10,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.Switch;
 
 import appworld.gogogo.bsgame.MainActivity;
@@ -66,7 +64,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         passwordTextInputEditText = (TextInputEditText) view.findViewById(R.id.login_password_textinputedittext);
 
         loginSpinnerRememberMe =(Switch)view.findViewById(R.id.login_angemeldet_bleiben);
-        loginSpinnerRememberMe.setChecked(false);
+
+        //OnCheckedChangeListener hinzufügen ?
+
 
 
 
@@ -74,10 +74,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+
         switch (v.getId()) {
             case R.id.login_button: {
                 if (isPasswordRight(usernameTextInputEditText.getText().toString(),
-                        passwordTextInputEditText.getText().toString())) {
+                        passwordTextInputEditText.getText().toString()) ) {
                     MainActivity.switchFragment(new OverviewFragment(), getActivity());
                 }
                 break;
