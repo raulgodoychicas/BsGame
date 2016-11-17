@@ -93,7 +93,7 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
                     Toast.makeText(this.getActivity(), "10x10 Multi-Player-Modus-Online", Toast.LENGTH_SHORT).show();
 
                 }
-                // Integer übergeben in Game-Fragment Fragement und mit bundle Werte übergeben zum zum Aufbau des Spielfeldes mit entsprechender Größe
+                // TODO: Integer übergeben in Game-Fragment Fragement und mit bundle Werte übergeben zum zum Aufbau des Spielfeldes mit entsprechender Größe
                 break;
 
             case ("20x20"):
@@ -106,7 +106,7 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
                 } else {
                     Toast.makeText(this.getActivity(), "20x20 Multi-Player-Online", Toast.LENGTH_SHORT).show();
                 }
-                // Integer übergeben in Game-Fragment Fragement und mit bundle Werte übergeben zum zum Aufbau des Spielfeldes mit entsprechender Größe
+                // TODO: Integer übergeben in Game-Fragment Fragement und mit bundle Werte übergeben zum Aufbau des Spielfeldes mit entsprechender Größe
                 break;
 
             case ("30x30"):
@@ -135,6 +135,7 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
         MainActivity.switchFragment(new GameFragment(),getActivity());
     }
 
+    // TODO: Wieder löschen
     public void setPlayModeConstant(String m_PlayModeConstant){
         this.create_field_size = m_PlayModeConstant;
     }
