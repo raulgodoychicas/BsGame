@@ -2,6 +2,7 @@ package appworld.gogogo.bsgame.fragments;
 
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -34,8 +35,6 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
     public String create_field_size;
 
 
-
-
     public OverviewFragment() {
         // Required empty public constructor
     }
@@ -60,25 +59,23 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
         o_start_game = (Button)view.findViewById(R.id.overwiew_start_button);
 
         //textView initialisieren
-        o_username = (TextView)view.findViewById(R.id.overview_textView_username);
+        o_username = (TextView)view.findViewById(R.id.overview_textview_username);
 
         //Username übernehmen
-        o_username.setText("Aaron");
+        //o_username.setText("Aaron");
 
-
-
+        //Array für Feldauswahl und Spielmodusauswahl initialiseren
         ArrayAdapter<CharSequence> field_size_adapter = ArrayAdapter.createFromResource(getActivity(), array.overview_size_array,android.R.layout.simple_spinner_dropdown_item);
-        ArrayAdapter<CharSequence> game_mode_adapter = ArrayAdapter.createFromResource(getActivity(), array.overview_game_mode,android.R.layout.simple_spinner_dropdown_item);
-
+        ArrayAdapter<CharSequence> game_mode_adapter = ArrayAdapter.createFromResource(getActivity(), array.overview_game_mode_array,android.R.layout.simple_spinner_dropdown_item);
         o_field_size.setAdapter(field_size_adapter);
         o_game_mode.setAdapter(game_mode_adapter);
 
+        //Listener setzen
         o_field_size.setOnItemSelectedListener(this);
         o_game_mode.setOnItemSelectedListener(this);
-
         o_start_game.setOnClickListener(this);
-    }
 
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -93,7 +90,8 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
                     Toast.makeText(this.getActivity(), "10x10 Multi-Player-Modus", Toast.LENGTH_SHORT).show();
                     
                 } else {
-                    Toast.makeText(this.getActivity(), "Test", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this.getActivity(), "10x10 Multi-Player-Modus-Online", Toast.LENGTH_SHORT).show();
+
                 }
                 // Integer übergeben in Game-Fragment Fragement und mit bundle Werte übergeben zum zum Aufbau des Spielfeldes mit entsprechender Größe
                 break;
@@ -133,6 +131,11 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
 
     @Override
     public void onClick(View view) {
+
+        Bundle bundle = new Bundle();
+        String a = "Hallo Bundle";
+        bundle.putString("Test",a);
+
 
         //view.getId();
         MainActivity.switchFragment(new GameFragment(),getActivity());

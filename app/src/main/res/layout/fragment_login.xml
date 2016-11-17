@@ -74,6 +74,14 @@
             android:layout_alignParentEnd="true" />
     </LinearLayout>
 
+        <Switch
+            android:text="@string/login_angemeldet_bleiben"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/login_angemeldet_bleiben"
+            android:splitTrack="false"
+            android:checked="false" />
+
     </LinearLayout>
 
 </ScrollView>
