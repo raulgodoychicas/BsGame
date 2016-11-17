@@ -72,7 +72,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.login_button: {
-                //Switch On or Off ?
+                //Switch On or Off ? On = User Daten merken !
                 boolean isSwitchOn = ((Switch)loginSwitchRememberMe).isChecked();
 
                 if (isPasswordRight(usernameTextInputEditText.getText().toString(),
