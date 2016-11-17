@@ -74,7 +74,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-
+        
         switch (v.getId()) {
             case R.id.login_button: {
                 if (isPasswordRight(usernameTextInputEditText.getText().toString(),
