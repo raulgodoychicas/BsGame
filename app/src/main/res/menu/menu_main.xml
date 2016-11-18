@@ -4,7 +4,6 @@
     tools:context="appworld.gogogo.bsgame.MainActivity">
     <item
         android:id="@+id/action_settings"
-        android:icon="@mipmap/ic_settings_black_24dp"
         android:orderInCategory="101"
         android:title="@string/action_settings" />
     <item

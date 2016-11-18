@@ -56,6 +56,7 @@ public class MainActivity extends Activity {
         if (id == R.id.action_settings) {
             return true;
         } else if (id == R.id.action_impressum) {
+            //TODO Checken ob Fragement schon geladen ist.. instance of.. fragment manager
             switchFragment(new ImpressumFragment(),this);
             return true;
         }
