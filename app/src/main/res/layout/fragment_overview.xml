@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:style="http://schemas.android.com/apk/res-auto"
     tools:context="appworld.gogogo.bsgame.fragments.OverviewFragment">
 
     <RelativeLayout
@@ -10,53 +11,6 @@
         android:orientation="vertical"
         android:padding="@dimen/padding"
         android:weightSum="1">
-
-        <Button
-            android:text="Spielen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="34dp"
-            android:id="@+id/overwiew_start_button"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="@string/overview_fieldsize_prompt"
-            android:textSize="@dimen/padding"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.20"
-            android:layout_above="@+id/overview_choosefieldsize"
-            android:layout_alignParentStart="true"
-            android:id="@+id/overview_textview_fieldsize" />
-
-        <Spinner
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/overview_choosefieldsize"
-            android:entries="@array/overview_size_array"
-            android:dropDownWidth="match_parent"
-            android:layout_marginBottom="13dp"
-            android:layout_above="@+id/overview_textview_moduswaehlen"
-            android:layout_alignParentStart="true" />
-
-        <Spinner
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/overview_spinner_gamemode"
-            android:entries="@array/overview_game_mode_array"
-            android:layout_marginBottom="30dp"
-            android:layout_above="@+id/overwiew_start_button"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:text="@string/overview_game_mode_prompt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/padding"
-            android:id="@+id/overview_textview_moduswaehlen"
-            android:layout_above="@+id/overview_spinner_gamemode"
-            android:layout_alignParentStart="true" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -67,6 +21,60 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp" />
+
+        <Spinner
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/overview_spinner_gamemode"
+            android:entries="@array/overview_game_mode_array"
+            android:layout_below="@+id/overview_textview_moduswaehlen"
+            android:layout_alignParentStart="true" />
+
+        <Spinner
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/overview_choosefieldsize"
+            android:entries="@array/overview_size_array"
+            android:dropDownWidth="match_parent"
+            android:layout_below="@+id/overview_textview_fieldsize"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:text="@string/overview_game_mode_prompt"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/padding"
+            android:id="@+id/overview_textview_moduswaehlen"
+            android:layout_marginTop="16dp"
+            android:layout_below="@+id/overview_choosefieldsize"
+            android:layout_alignParentStart="true"
+            android:textColor="?android:attr/textColorPrimary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/overview_fieldsize_prompt"
+            android:textSize="@dimen/padding"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20"
+            android:id="@+id/overview_textview_fieldsize"
+            android:layout_marginTop="134dp"
+            android:layout_below="@+id/overview_textview_username"
+            android:layout_alignParentStart="true"
+            android:textColor="?android:attr/textColorPrimary" />
+
+        <Button
+            android:text="Spiel starten"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/overwiew_start_button"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="66dp" />
 
     </RelativeLayout>
 

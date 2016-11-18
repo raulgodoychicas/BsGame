@@ -1,5 +1,6 @@
 package appworld.gogogo.bsgame;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -11,7 +12,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toolbar;
 
+import appworld.gogogo.bsgame.fragments.ImpressumFragment;
 import appworld.gogogo.bsgame.fragments.LoginFragment;
+import appworld.gogogo.bsgame.fragments.RegisterFragment;
 
 public class MainActivity extends Activity {
 
@@ -51,6 +54,9 @@ public class MainActivity extends Activity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
+            return true;
+        } else if (id == R.id.action_impressum) {
+            switchFragment(new ImpressumFragment(),this);
             return true;
         }
 
