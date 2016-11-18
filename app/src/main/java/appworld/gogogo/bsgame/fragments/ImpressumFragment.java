@@ -32,7 +32,7 @@ public class ImpressumFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_impressum, container, false);
 
     }
-
+     //TODO in Strings XML machen, verhindern dass Fragment immer neu geladen wird
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

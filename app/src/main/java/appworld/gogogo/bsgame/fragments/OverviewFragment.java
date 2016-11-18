@@ -32,7 +32,7 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
     private Spinner o_game_mode;
     private Button o_start_game;
     private TextView o_username;
-    public String create_field_size;
+    private int gameMode;
 
 
     public OverviewFragment() {
@@ -50,6 +50,9 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //int gameMode initialisieren
+        gameMode = 0;
 
         //Spinner initialisieren
         o_field_size = (Spinner)view.findViewById(R.id.overview_choosefieldsize);
@@ -90,7 +93,8 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
                     Toast.makeText(this.getActivity(), "10x10 Multi-Player-Modus", Toast.LENGTH_SHORT).show();
                     
                 } else {
-                    Toast.makeText(this.getActivity(), "10x10 Multi-Player-Modus-Online", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this.getActivity(), "10x10 Multi-Player-Modus-Online", Toast.LENGTH_SHORT).show();
+                    gameMode = 10;
 
                 }
                 // TODO: Integer übergeben in Game-Fragment Fragement und mit bundle Werte übergeben zum zum Aufbau des Spielfeldes mit entsprechender Größe
@@ -106,7 +110,7 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
                 } else {
                     Toast.makeText(this.getActivity(), "20x20 Multi-Player-Online", Toast.LENGTH_SHORT).show();
                 }
-                // TODO: Integer übergeben in Game-Fragment Fragement und mit bundle Werte übergeben zum Aufbau des Spielfeldes mit entsprechender Größe
+                // TODO: Integer gamemode definieren für gameFragment
                 break;
 
             case ("30x30"):
@@ -132,17 +136,7 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onClick(View view) {
 
-        MainActivity.switchFragment(new GameFragment(),getActivity());
+        MainActivity.switchFragment(GameFragment.newInstance(gameMode),getActivity());
     }
-
-    // TODO: Wieder löschen
-    public void setPlayModeConstant(String m_PlayModeConstant){
-        this.create_field_size = m_PlayModeConstant;
-    }
-    public String getPlayModeConstant(){
-
-        return create_field_size;
-    }
-
 
 }

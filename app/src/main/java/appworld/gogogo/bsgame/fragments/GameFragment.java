@@ -17,10 +17,19 @@ import appworld.gogogo.bsgame.support.SharedPrefsMethods;
  */
 public class GameFragment extends Fragment {
 
+    public static String GAME_MODE;
+    private int gameMode;
     public GameFragment() {
         // Required empty public constructor
     }
 
+    public static GameFragment newInstance(int gamemode){
+        GameFragment gameFragment = new GameFragment();
+        Bundle args = new Bundle();
+        args.putInt(GAME_MODE,gamemode);
+        gameFragment.setArguments(args);
+        return gameFragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,7 +44,12 @@ public class GameFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+    }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        gameMode = getArguments().getInt(GAME_MODE,0);
 
     }
 }
