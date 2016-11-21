@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="16dp"
         android:textSize="25sp"
         android:id="@+id/impressum_haeder_textview"
         android:textColor="?android:attr/textColorPrimary" />
@@ -19,7 +19,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/impressum_body_textview"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="15sp"
         android:layout_below="@+id/impressum_haeder_textview"
