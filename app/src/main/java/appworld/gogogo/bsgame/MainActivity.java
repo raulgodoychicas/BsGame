@@ -3,8 +3,10 @@ package appworld.gogogo.bsgame;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -57,8 +59,11 @@ public class MainActivity extends Activity {
             return true;
         } else if (id == R.id.action_impressum) {
             //TODO Checken ob Fragement schon geladen ist.. instance of.. fragment manager
-            switchFragment(new ImpressumFragment(),this);
-            return true;
+
+            if(true ) {
+                switchFragment(new ImpressumFragment(), this);
+                return true;
+            }
         }
 
         return super.onOptionsItemSelected(item);

@@ -6,25 +6,22 @@
     tools:context="appworld.gogogo.bsgame.fragments.ImpressumFragment">
 
     <TextView
-        android:text=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="26dp"
         android:textSize="25sp"
-        android:textStyle="bold"
-        android:id="@+id/impressumHeader_textView"
+        android:id="@+id/impressum_haeder_textview"
         android:textColor="?android:attr/textColorPrimary" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/impressum_textView"
+        android:id="@+id/impressum_body_textview"
         android:layout_marginTop="22dp"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="15sp"
-        android:textStyle="bold"
-        android:layout_below="@+id/impressumHeader_textView"
+        android:layout_below="@+id/impressum_haeder_textview"
         android:layout_alignParentStart="true" />
 </RelativeLayout>

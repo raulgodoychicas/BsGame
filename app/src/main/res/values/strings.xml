@@ -15,6 +15,20 @@
     <string name="register_subtitle">This user will only be sotred locally</string>
     <string name="repeat_password_hint">repeat password</string>
     <string name="dots">Dots</string>
+    <string name="impressum_body_textview"><![CDATA[
+                  <u>SG Solutions AG - Lösungen für ihren Vorsprung</u><br><br>"
+                "Rechtsform: Kapitalgesellschaft<br><br>"
+                "Unternehmensgegenstand: Sofwareentwicklung<br><br>"
+                "UID Nummer: DE 54611651<br><br>"
+                "Handelsregisternummer: HRB 846552<br><br>"
+                "Handelsregistergericht: Amtsgericht München<br><br>"
+                "Firmensitz: Freising<br><br>"
+                "Anschrift: 85354 Freising, Musterstraße 1, Deutschland<br><br>"
+                "Telefon +49 8161 / 123 456<br>"
+                "Email: support@sg-solutions.de<br><br>"
+                "Geschäftsführer:<br>"
+                "Aaron Siegl, Raul Gonzales Godoy"]]> </string>
+    <string name="impressum_header_textview"><![CDATA[ <u>Impressum</u>]]></string>
 
     <string-array name="overview_size_array">
         <item>10x10</item>
