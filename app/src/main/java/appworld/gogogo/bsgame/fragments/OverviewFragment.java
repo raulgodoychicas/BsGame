@@ -2,8 +2,6 @@ package appworld.gogogo.bsgame.fragments;
 
 
 import android.app.Fragment;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -18,8 +16,6 @@ import android.widget.Toast;
 
 import appworld.gogogo.bsgame.MainActivity;
 import appworld.gogogo.bsgame.R;
-import appworld.gogogo.bsgame.engine.PlayGroundView;
-import appworld.gogogo.bsgame.support.SharedPrefsMethods;
 
 import static appworld.gogogo.bsgame.R.*;
 
@@ -28,12 +24,17 @@ import static appworld.gogogo.bsgame.R.*;
  */
 public class OverviewFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
-    private Spinner o_field_size;
-    private Spinner o_game_mode;
-    private Button o_start_game;
-    private TextView o_username;
-    private int gameMode;
+    private Spinner fieldSizeSpinner;
+    private Spinner gameModeSpinner;
+    private Button startGameButton;
 
+    private TextView userNameTextView;
+
+    /*Bsp. gameModeID:
+            101 --> Fieldsize 10 = 10x10 , GameMode 1 = Single Player
+            202 --> Fieldsize 20 = 20x20 , GameMode 2 = MultiPlayer
+            303 --> Fieldsite 30 = 30x30 , GameMode 3 = Multi Player Online */
+    private int gameModeID;
 
     public OverviewFragment() {
         // Required empty public constructor
@@ -51,92 +52,74 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //int gameMode initialisieren
-        gameMode = 0;
-
         //Spinner initialisieren
-        o_field_size = (Spinner)view.findViewById(R.id.overview_choosefieldsize);
-        o_game_mode = (Spinner)view.findViewById(R.id.overview_spinner_gamemode);
+        fieldSizeSpinner = (Spinner)view.findViewById(R.id.overview_choosefieldsize);
+        gameModeSpinner = (Spinner)view.findViewById(R.id.overview_spinner_gamemode);
 
         //Button initialiseren
-        o_start_game = (Button)view.findViewById(R.id.overwiew_start_button);
+        startGameButton = (Button)view.findViewById(R.id.overwiew_start_button);
 
         //textView initialisieren
-        o_username = (TextView)view.findViewById(R.id.overview_textview_username);
+        userNameTextView = (TextView)view.findViewById(R.id.overview_textview_username);
 
-        //Username übernehmen
+        //TODO Username übernehmen
         //o_username.setText("Aaron");
 
         //Array für Feldauswahl und Spielmodusauswahl initialiseren
         ArrayAdapter<CharSequence> field_size_adapter = ArrayAdapter.createFromResource(getActivity(), array.overview_size_array,android.R.layout.simple_spinner_dropdown_item);
         ArrayAdapter<CharSequence> game_mode_adapter = ArrayAdapter.createFromResource(getActivity(), array.overview_game_mode_array,android.R.layout.simple_spinner_dropdown_item);
-        o_field_size.setAdapter(field_size_adapter);
-        o_game_mode.setAdapter(game_mode_adapter);
+        fieldSizeSpinner.setAdapter(field_size_adapter);
+        gameModeSpinner.setAdapter(game_mode_adapter);
 
         //Listener setzen
-        o_field_size.setOnItemSelectedListener(this);
-        o_game_mode.setOnItemSelectedListener(this);
-        o_start_game.setOnClickListener(this);
-
+        fieldSizeSpinner.setOnItemSelectedListener(this);
+        gameModeSpinner.setOnItemSelectedListener(this);
+        startGameButton.setOnClickListener(this);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-        switch (o_field_size.getSelectedItem().toString()){
-
+        //Spielmodus und Spielfeldgröße des Spielers auslesen und eindeutige ID (int+string) an GameFragment übergeben
+        switch (fieldSizeSpinner.getSelectedItem().toString()){
             case ("10x10"):
-                if(o_game_mode.getSelectedItem().toString().equals("Single-Player")) {
-                    //MainActivity.switchFragment(new LoginFragment(),getActivity());
-                    Toast.makeText(this.getActivity(), "10x10 Single-Player-Modus", Toast.LENGTH_SHORT).show();
-                } else if (o_game_mode.getSelectedItem().toString().equals("Multi-Player")){
-                    Toast.makeText(this.getActivity(), "10x10 Multi-Player-Modus", Toast.LENGTH_SHORT).show();
-                    
+                if(gameModeSpinner.getSelectedItem().toString().equals("Single-Player")) {
+                    gameModeID = 101;
+                } else if (gameModeSpinner.getSelectedItem().toString().equals("Multi-Player")){
+                    gameModeID = 102;
                 } else {
-                    //Toast.makeText(this.getActivity(), "10x10 Multi-Player-Modus-Online", Toast.LENGTH_SHORT).show();
-                    gameMode = 10;
-
+                    gameModeID = 103;
                 }
-                // TODO: Integer übergeben in Game-Fragment Fragement und mit bundle Werte übergeben zum zum Aufbau des Spielfeldes mit entsprechender Größe
                 break;
-
             case ("20x20"):
-                if(o_game_mode.getSelectedItem().toString().equals("Single-Player")) {
-                    //MainActivity.switchFragment(new LoginFragment(),getActivity());
-                    Toast.makeText(this.getActivity(), "20x20 Single-Player-Modus", Toast.LENGTH_SHORT).show();
-                } else if (o_game_mode.getSelectedItem().toString().equals("Multi-Player")){
-                    Toast.makeText(this.getActivity(), "20x20 Multi-Player-Modus", Toast.LENGTH_SHORT).show();
-
+                if(gameModeSpinner.getSelectedItem().toString().equals("Single-Player")) {
+                    gameModeID = 201;
+                } else if (gameModeSpinner.getSelectedItem().toString().equals("Multi-Player")){
+                    gameModeID = 202;
                 } else {
-                    Toast.makeText(this.getActivity(), "20x20 Multi-Player-Online", Toast.LENGTH_SHORT).show();
+                    gameModeID = 203;
                 }
                 // TODO: Integer gamemode definieren für gameFragment
                 break;
-
             case ("30x30"):
-                if(o_game_mode.getSelectedItem().toString().equals("Single-Player")) {
-                    //MainActivity.switchFragment(new LoginFragment(),getActivity());
-                    Toast.makeText(this.getActivity(), "30x30 Single-Player-Modus", Toast.LENGTH_SHORT).show();
-                } else if (o_game_mode.getSelectedItem().toString().equals("Multi-Player")){
-                    Toast.makeText(this.getActivity(), "30x30 Multi-Player-Modus", Toast.LENGTH_SHORT).show();
-
+                if(gameModeSpinner.getSelectedItem().toString().equals("Single-Player")) {
+                    gameModeID = 301;
+                } else if (gameModeSpinner.getSelectedItem().toString().equals("Multi-Player")){
+                    gameModeID = 302;
                 } else {
-                    Toast.makeText(this.getActivity(), "30x30 Multi-Player-Online", Toast.LENGTH_SHORT).show();
+                    gameModeID = 303;
                 }
-                // Integer übergeben in Game-Fragment Fragement und mit bundle Werte übergeben zum zum Aufbau des Spielfeldes mit entsprechender Größe
                 break;
         }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-
     }
 
     @Override
     public void onClick(View view) {
-
-        MainActivity.switchFragment(GameFragment.newInstance(gameMode),getActivity());
+        MainActivity.switchFragment(GameFragment.newInstance(gameModeID),getActivity());
     }
 
 }

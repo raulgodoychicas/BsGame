@@ -35,7 +35,6 @@
         <item>20x20</item>
         <item>30x30</item>
     </string-array>
-    
     <string-array name="overview_game_mode_array">
         <item>Single-Player</item>
         <item>Multi-Player</item>

@@ -20,11 +20,9 @@ import appworld.gogogo.bsgame.support.SharedPrefsMethods;
  */
 public class LoginFragment extends Fragment implements View.OnClickListener {
 
-    private Button o_loginButton;
+    private Button loginButton;
     private Button registerButton;
-
-    private Switch loginSwitchRememberMe;
-
+    private Switch loginRememberMeSwitch;
     private TextInputEditText usernameTextInputEditText;
     private TextInputEditText passwordTextInputEditText;
     private TextInputLayout usernameTextInputLayout;
@@ -49,8 +47,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        o_loginButton = (Button) view.findViewById(R.id.login_button);
-        o_loginButton.setOnClickListener(this);
+        loginButton = (Button) view.findViewById(R.id.login_button);
+        loginButton.setOnClickListener(this);
 
         registerButton = (Button) view.findViewById(R.id.login_register_button);
         registerButton.setOnClickListener(this);
@@ -63,8 +61,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         passwordTextInputLayout.setErrorEnabled(true);
         passwordTextInputEditText = (TextInputEditText) view.findViewById(R.id.login_password_textinputedittext);
 
-        loginSwitchRememberMe =(Switch)view.findViewById(R.id.login_angemeldet_bleiben);
-        loginSwitchRememberMe.setOnClickListener(this);
+        loginRememberMeSwitch =(Switch)view.findViewById(R.id.login_angemeldet_bleiben);
+        loginRememberMeSwitch.setOnClickListener(this);
     }
 
     @Override
@@ -73,10 +71,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.login_button: {
                 //TODO Switch On or Off ? On = User-Credentials merken !
-                boolean isSwitchOn = ((Switch)loginSwitchRememberMe).isChecked();
+                boolean isSwitchOn = ((Switch)loginRememberMeSwitch).isChecked();
 
                 if (isPasswordRight(usernameTextInputEditText.getText().toString(),
-                        passwordTextInputEditText.getText().toString()) && isSwitchOn) {
+                        passwordTextInputEditText.getText().toString())) {
                     MainActivity.switchFragment(new OverviewFragment(), getActivity());
                 } else {
                     MainActivity.switchFragment(new OverviewFragment(), getActivity());
@@ -87,7 +85,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 MainActivity.switchFragment(new RegisterFragment(), getActivity());
                 break;
             }
-
         }
     }
 

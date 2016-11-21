@@ -14,8 +14,8 @@ import appworld.gogogo.bsgame.R;
 
 public class ImpressumFragment extends Fragment {
 
-    private TextView impressum_header;
-    private TextView impressum_body;
+    private TextView impressumHeaderTextView;
+    private TextView impressumBodyTextView;
 
     public ImpressumFragment() {
         // Required empty public constructor
@@ -34,11 +34,13 @@ public class ImpressumFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        impressum_header = (TextView)view.findViewById(R.id.impressum_haeder_textview);
-        impressum_body = (TextView)view.findViewById(R.id.impressum_body_textview);
 
-        impressum_header.setText(Html.fromHtml(getString(R.string.impressum_header_textview)));
-        impressum_body.setText(Html.fromHtml(getString(R.string.impressum_body_textview)));
+
+        impressumHeaderTextView = (TextView)view.findViewById(R.id.impressum_haeder_textview);
+        impressumBodyTextView = (TextView)view.findViewById(R.id.impressum_body_textview);
+
+        impressumHeaderTextView.setText(Html.fromHtml(getString(R.string.impressum_header_textview)));
+        impressumBodyTextView.setText(Html.fromHtml(getString(R.string.impressum_body_textview)));
     }
 
 }

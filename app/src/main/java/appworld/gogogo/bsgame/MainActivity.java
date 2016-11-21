@@ -12,6 +12,7 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import appworld.gogogo.bsgame.fragments.ImpressumFragment;
@@ -54,18 +55,17 @@ public class MainActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment);
 
         if (id == R.id.action_settings) {
             return true;
-        } else if (id == R.id.action_impressum) {
-            //TODO Checken ob Fragement schon geladen ist.. instance of.. fragment manager
 
-            if(true ) {
+        } else if (id == R.id.action_impressum) {
+            //Überprüfen ob ImpressumFragment bereits geladen ist, um Mehrfachladen des Fragments zu verhindern
+            if (!(fragment instanceof ImpressumFragment)) {
                 switchFragment(new ImpressumFragment(), this);
-                return true;
             }
         }
-
         return super.onOptionsItemSelected(item);
     }
 
