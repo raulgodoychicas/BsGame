@@ -17,7 +17,6 @@ import appworld.gogogo.bsgame.R;
 public class SharedPrefsMethods {
 
     public static String SHAREDPREFS_FILE_KEY = "sharedPrefs";
-    public String gameModeValue;
 
     public static void writeStringToSharedPrefs(Activity activity, String keyValueString, String string) {
         SharedPreferences sharedPref = activity.getSharedPreferences(SHAREDPREFS_FILE_KEY, Context.MODE_PRIVATE);
@@ -42,8 +41,6 @@ public class SharedPrefsMethods {
         SharedPreferences sharedPref = activity.getSharedPreferences(SHAREDPREFS_FILE_KEY,Context.MODE_PRIVATE);
         String defaulValue = "Zero";
         return sharedPref.getString(m_gameModeValue,defaulValue);
-
-
     }
 
 }
