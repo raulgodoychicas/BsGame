@@ -21,10 +21,10 @@ public class GameFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static GameFragment newInstance(int gameModeInt){
+    public static GameFragment newInstance(int gameModeInt) {
         GameFragment gameFragment = new GameFragment();
         Bundle args = new Bundle();
-        args.putInt(GAME_MODE,gameModeInt);
+        args.putInt(GAME_MODE, gameModeInt);
         gameFragment.setArguments(args);
         return gameFragment;
     }
@@ -45,7 +45,30 @@ public class GameFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int gameModeInt;
-        gameModeInt = getArguments().getInt(GAME_MODE,0);
-        Toast.makeText(this.getActivity(),"GAME_ID: " + String.valueOf(gameModeInt),Toast.LENGTH_LONG).show();
+        gameModeInt = getArguments().getInt(GAME_MODE, 0);
+        Toast.makeText(this.getActivity(), "GAME_ID: " + String.valueOf(gameModeInt), Toast.LENGTH_SHORT).show();
     }
+
+
+    /**
+     * Object class to identify all of the Lines
+     * Changes will still probably come
+     */
+    public class lineOnFeld {
+        public int top;
+        public int left;
+        public int bottom;
+        public int right;
+        public int player;
+
+        public lineOnFeld(int top, int left, int bottom, int right, int player) {
+            this.top = top;
+            this.left = left;
+            this.bottom = bottom;
+            this.right = right;
+            this.player = player;
+        }
+
+    }
+
 }

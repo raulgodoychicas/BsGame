@@ -12,7 +12,7 @@
     <string name="login_button_text">Login</string>
     <string name="register_button_text">Register</string>
     <string name="register_title">Please register a new user to be able to play the game</string>
-    <string name="register_subtitle">This user will only be sotred locally</string>
+    <string name="register_subtitle">This user will only be stored locally</string>
     <string name="repeat_password_hint">repeat password</string>
     <string name="dots">Dots</string>
     <string name="impressum_body_textview"><![CDATA[

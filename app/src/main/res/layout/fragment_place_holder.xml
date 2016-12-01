@@ -4,11 +4,4 @@
     android:layout_height="match_parent"
     tools:context="appworld.gogogo.bsgame.fragments.PlaceHolderFragment">
 
-    <appworld.gogogo.bsgame.engine.PlayGroundView
-        android:id="@+id/signature_canvas"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/padding"
-        android:textColor="#FFFFFF" />
-
 </FrameLayout>
