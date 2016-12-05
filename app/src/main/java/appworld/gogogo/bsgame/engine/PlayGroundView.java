@@ -27,12 +27,10 @@ public class PlayGroundView extends View implements View.OnTouchListener {
     private int parentWidth;
     private int parentHeight;
 
-    public PlayGroundView(Context context) {
+    public PlayGroundView(Context context,int numberOfSquares){
         super(context);
-    }
+        this.numberOfSquares = numberOfSquares;
 
-    public PlayGroundView(Context context, AttributeSet attrs) {
-        super(context, attrs);
         //TODO: getAttribute ist nicht richtig
         // and we set a new Paint with the desired attributes
         mPaint = new Paint();
@@ -40,9 +38,6 @@ public class PlayGroundView extends View implements View.OnTouchListener {
         mPaint.setColor(Color.BLACK);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(3);
-
-        // TODO: numbers of squares has to be dinamically called
-        numberOfSquares = 20;
     }
 
     @Override
@@ -78,6 +73,10 @@ public class PlayGroundView extends View implements View.OnTouchListener {
         for (int i = 0; i < rects.length; i++) {
             rect = rects[i];
             canvas.drawRect(rects[i], mPaint);
+
+//            canvas.drawPoint(rects[i].top,);
+
+
             if (markedRects[i]) {
                 // Draws the X in a marked Squared
                 canvas.drawLine(rect.top, rect.left, rect.bottom, rect.right, mPaint);
