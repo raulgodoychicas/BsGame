@@ -26,6 +26,9 @@ public class RegisterFragment extends Fragment{
     private TextInputEditText repeatPasswordTextInputEditText;
     private TextInputEditText usernameTextInputEditText;
 
+    private static final String REGISTER_URL = "http://worldlustblog.de/Registration/registration.php";
+
+
     public RegisterFragment() {
         // Required empty public constructor
     }
