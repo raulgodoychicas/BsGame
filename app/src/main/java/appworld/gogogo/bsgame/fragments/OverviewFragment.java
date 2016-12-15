@@ -31,9 +31,10 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
     private TextView userNameTextView;
 
     /*Bsp. gameModeID:
-            101 --> Fieldsize 10 = 10x10 , GameMode 1 = Single Player
-            202 --> Fieldsize 20 = 20x20 , GameMode 2 = MultiPlayer
-            303 --> Fieldsite 30 = 30x30 , GameMode 3 = Multi Player Online */
+             31 --> Fieldsize 3 = 3x3 , GameMode 1 = Single Player
+             52 --> Fieldsize 5 = 5x5 , GameMode 2 = MultiPlayer
+            103 --> Fieldsite 10 = 10x10 , GameMode 3 = Multi Player Online */
+
     private int gameModeID;
 
     public OverviewFragment() {
@@ -84,30 +85,30 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
         switch (fieldSizeSpinner.getSelectedItem().toString()){
             case ("10x10"):
                 if(gameModeSpinner.getSelectedItem().toString().equals("Single-Player")) {
-                    gameModeID = 101;
+                    gameModeID = 31;
                 } else if (gameModeSpinner.getSelectedItem().toString().equals("Multi-Player")){
-                    gameModeID = 102;
+                    gameModeID = 32;
                 } else {
-                    gameModeID = 103;
+                    gameModeID = 33;
                 }
                 break;
             case ("20x20"):
                 if(gameModeSpinner.getSelectedItem().toString().equals("Single-Player")) {
-                    gameModeID = 201;
+                    gameModeID = 51;
                 } else if (gameModeSpinner.getSelectedItem().toString().equals("Multi-Player")){
-                    gameModeID = 202;
+                    gameModeID = 52;
                 } else {
-                    gameModeID = 203;
+                    gameModeID = 53;
                 }
                 // TODO: Integer gamemode definieren für gameFragment
                 break;
             case ("30x30"):
                 if(gameModeSpinner.getSelectedItem().toString().equals("Single-Player")) {
-                    gameModeID = 301;
+                    gameModeID = 101;
                 } else if (gameModeSpinner.getSelectedItem().toString().equals("Multi-Player")){
-                    gameModeID = 302;
+                    gameModeID = 102;
                 } else {
-                    gameModeID = 303;
+                    gameModeID = 103;
                 }
                 break;
         }
