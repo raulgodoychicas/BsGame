@@ -32,9 +32,9 @@
     <string name="impressum_header_textview"><![CDATA[ <u>Impressum</u>]]></string>
 
     <string-array name="overview_size_array">
+        <item>3x3</item>
+        <item>5x5</item>
         <item>10x10</item>
-        <item>20x20</item>
-        <item>30x30</item>
     </string-array>
     <string-array name="overview_game_mode_array">
         <item>Single-Player</item>

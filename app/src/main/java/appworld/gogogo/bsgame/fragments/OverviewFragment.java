@@ -33,7 +33,7 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
     /*Bsp. gameModeID:
              31 --> Fieldsize 3 = 3x3 , GameMode 1 = Single Player
              52 --> Fieldsize 5 = 5x5 , GameMode 2 = MultiPlayer
-            103 --> Fieldsite 10 = 10x10 , GameMode 3 = Multi Player Online */
+            103 --> Fieldsize 10 = 10x10 , GameMode 3 = Multi Player Online */
 
     private int gameModeID;
 
@@ -81,7 +81,7 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-        //Spielmodus und Spielfeldgröße des Spielers auslesen und eindeutige ID (int+string) an GameFragment übergeben
+        //Spielmodus und Spielfeldgröße des Spielers auslesen und eindeutige ID (int) an GameFragment übergeben
         switch (fieldSizeSpinner.getSelectedItem().toString()){
             case ("10x10"):
                 if(gameModeSpinner.getSelectedItem().toString().equals("Single-Player")) {

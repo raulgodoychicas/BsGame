@@ -69,6 +69,8 @@ public class RegisterFragment extends Fragment{
                     usernameTextInputLayout.setError("Username is not available");
                 } else if (isPasswordAccordingToRules(password, passwordRepeat)) {
                     SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), username, password);
+                    //TODO Datenbankverbindnug herstellen und Credentials reinschreiben!!!
+
                     MainActivity.switchFragment(new LoginFragment(), getActivity());
                 }
             }
@@ -84,6 +86,7 @@ public class RegisterFragment extends Fragment{
      */
 
     private Boolean isUserNameAvailable(String username) {
+        //TODO Datenbankverbindung herstellen und überprüfen,ob user bereits exisitiert !
         return !SharedPrefsMethods.containsStringInSharedPrefs(getActivity(), username);
     }
 
@@ -130,5 +133,6 @@ public class RegisterFragment extends Fragment{
         repeatPasswordTextInputLayout.setError("");
         usernameTextInputLayout.setError("");
     }
+
 
 }
