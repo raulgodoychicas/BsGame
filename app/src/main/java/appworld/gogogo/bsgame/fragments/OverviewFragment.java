@@ -83,7 +83,7 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
 
         //Spielmodus und Spielfeldgröße des Spielers auslesen und eindeutige ID (int) an GameFragment übergeben
         switch (fieldSizeSpinner.getSelectedItem().toString()){
-            case ("10x10"):
+            case ("3x3"):
                 if(gameModeSpinner.getSelectedItem().toString().equals("Single-Player")) {
                     gameModeID = 31;
                 } else if (gameModeSpinner.getSelectedItem().toString().equals("Multi-Player")){
@@ -92,7 +92,7 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
                     gameModeID = 33;
                 }
                 break;
-            case ("20x20"):
+            case ("5x5"):
                 if(gameModeSpinner.getSelectedItem().toString().equals("Single-Player")) {
                     gameModeID = 51;
                 } else if (gameModeSpinner.getSelectedItem().toString().equals("Multi-Player")){
@@ -102,7 +102,7 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
                 }
                 // TODO: Integer gamemode definieren für gameFragment
                 break;
-            case ("30x30"):
+            case ("10x10"):
                 if(gameModeSpinner.getSelectedItem().toString().equals("Single-Player")) {
                     gameModeID = 101;
                 } else if (gameModeSpinner.getSelectedItem().toString().equals("Multi-Player")){
