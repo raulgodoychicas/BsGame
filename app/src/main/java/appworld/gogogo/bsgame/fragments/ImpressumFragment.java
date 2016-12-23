@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,16 +36,16 @@ public class ImpressumFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        impressumHeaderTextView = (TextView)view.findViewById(R.id.impressum_haeder_textview);
-        impressumBodyTextView = (TextView)view.findViewById(R.id.impressum_body_textview);
+        impressumHeaderTextView = (TextView) view.findViewById(R.id.impressum_haeder_textview);
+        impressumBodyTextView = (TextView) view.findViewById(R.id.impressum_body_textview);
 
         Spanned resultHeader;
         Spanned resultBody;
 
         //SDK-Version Check because .fromHtml requires a certain version
-        if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            resultHeader = Html.fromHtml(getString(R.string.impressum_header_textview),Html.FROM_HTML_MODE_LEGACY);
-            resultBody = Html.fromHtml(getString(R.string.impressum_body_textview),Html.FROM_HTML_MODE_LEGACY);
+        if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            resultHeader = Html.fromHtml(getString(R.string.impressum_header_textview), Html.FROM_HTML_MODE_LEGACY);
+            resultBody = Html.fromHtml(getString(R.string.impressum_body_textview), Html.FROM_HTML_MODE_LEGACY);
             impressumHeaderTextView.setText(resultHeader);
             impressumBodyTextView.setText(resultBody);
         } else {

@@ -120,7 +120,7 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
 
     @Override
     public void onClick(View view) {
-        MainActivity.switchFragment(GameFragment.newInstance(gameModeID),getActivity());
+        MainActivity.switchFragment(GameFragment.newInstance(gameModeID),getActivity(),true);
     }
 
 }

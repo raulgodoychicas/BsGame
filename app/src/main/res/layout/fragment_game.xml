@@ -1,10 +1,46 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragment_game_relativelayout"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_game_relativelayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/padding"
     tools:context="appworld.gogogo.bsgame.fragments.GameFragment">
+
+    <TextView
+        android:id="@+id/fragment_game_player1_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="64dp"
+        android:layout_marginStart="64dp"
+        android:text="@string/fragment_game_player1_textview" />
+
+    <TextView
+        android:id="@+id/fragment_game_player1score_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@id/fragment_game_player1_textview"
+        android:layout_marginBottom="48dp" />
+
+    <TextView
+        android:id="@+id/fragment_game_player2_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="64dp"
+        android:layout_marginEnd="64dp"
+        android:text="@string/fragment_game_player2_textview" />
+
+    <TextView
+        android:id="@+id/fragment_game_player2score_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@id/fragment_game_player2_textview"
+        android:layout_marginBottom="48dp" />
 
 
 </RelativeLayout>

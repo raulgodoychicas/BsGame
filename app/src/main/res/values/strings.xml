@@ -29,7 +29,10 @@
                 UID Nummer: DE 54611651<br>
                 Handelsregisternummer: HRB 846552<br>
                 Handelsregistergericht: Amtsgericht München<br><br>]]> </string>
+
     <string name="impressum_header_textview"><![CDATA[ <u>Impressum</u>]]></string>
+    <string name="fragment_game_player1_textview">Player 1</string>
+    <string name="fragment_game_player2_textview">Player 2</string>
 
     <string-array name="overview_size_array">
         <item>3x3</item>

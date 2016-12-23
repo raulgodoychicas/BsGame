@@ -17,7 +17,7 @@ import appworld.gogogo.bsgame.support.SharedPrefsMethods;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RegisterFragment extends Fragment{
+public class RegisterFragment extends Fragment {
 
     private TextInputLayout passwordTextInputLayout;
     private TextInputLayout repeatPasswordTextInputLayout;
@@ -71,7 +71,7 @@ public class RegisterFragment extends Fragment{
                     SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), username, password);
                     //TODO Datenbankverbindnug herstellen und Credentials reinschreiben!!!
 
-                    MainActivity.switchFragment(new LoginFragment(), getActivity());
+                    MainActivity.switchFragment(new LoginFragment(), getActivity(), true);
                 }
             }
         });
@@ -128,7 +128,7 @@ public class RegisterFragment extends Fragment{
         }
     }
 
-    private void emptyAllErrorTexts(){
+    private void emptyAllErrorTexts() {
         passwordTextInputLayout.setError("");
         repeatPasswordTextInputLayout.setError("");
         usernameTextInputLayout.setError("");

@@ -18,12 +18,13 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setActionBar(toolbar);
 
-        switchFragment(new LoginFragment(),this);
+        switchFragment(new LoginFragment(), this, false);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.hide();
@@ -34,7 +35,6 @@ public class MainActivity extends Activity {
                         .setAction("Action", null).show();
             }
         });
-
     }
 
     @Override
@@ -58,16 +58,16 @@ public class MainActivity extends Activity {
         } else if (id == R.id.action_impressum) {
             //Überprüfen ob ImpressumFragment bereits geladen ist, um Mehrfachladen des Fragments zu verhindern
             if (!(fragment instanceof ImpressumFragment)) {
-                switchFragment(new ImpressumFragment(), this);
+                switchFragment(new ImpressumFragment(), this, true);
             }
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public static void switchFragment(Fragment fragment, Activity activity) {
+    public static void switchFragment(Fragment fragment, Activity activity, boolean addToBackstack) {
         FragmentTransaction fragmentTransaction = activity.getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment, fragment);
-        fragmentTransaction.addToBackStack(fragment.getClass().getName());
+        if (addToBackstack) fragmentTransaction.addToBackStack(fragment.getClass().getName());
         fragmentTransaction.commit();
     }
 }
