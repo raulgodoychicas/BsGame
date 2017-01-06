@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
@@ -22,7 +21,7 @@ public class PlayGroundView extends View {
     private lineOnCanvas[] verticalLinesOnCanvases;
     private lineOnCanvas[] horizontalLinesOnCanvas;
     private Rect[] rects;
-    private boolean[] markedRects;
+    private markedRects[] markedRects;
 
     private int numberOfSquares;
     private int parentWidth;
@@ -38,45 +37,9 @@ public class PlayGroundView extends View {
         super(context);
         this.numberOfSquares = numberOfSquares;
         this.playerListener = playerListener;
-
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
-
         player = 0;
-
-        // Define Paints
-        linePaintGray = new Paint();
-        linePaintGray.setAntiAlias(true);
-        linePaintGray.setColor(Color.GRAY);
-        linePaintGray.setStyle(Paint.Style.STROKE);
-        // material design 38% alpha for hints
-        linePaintGray.setAlpha((int) (255 * 0.38));
-        linePaintGray.setStrokeWidth(3);
-
-        pointPaintWhite = new Paint();
-        pointPaintWhite.setAntiAlias(true);
-        pointPaintWhite.setColor(Color.WHITE);
-        pointPaintWhite.setStyle(Paint.Style.STROKE);
-        pointPaintWhite.setStrokeWidth(9);
-
-        selectedLinePaintRed = new Paint();
-        selectedLinePaintRed.setAntiAlias(true);
-        selectedLinePaintRed.setColor(Color.RED);
-        selectedLinePaintRed.setStyle(Paint.Style.STROKE);
-        selectedLinePaintRed.setStrokeWidth(3);
-
-        selectedLinePaintBlue = new Paint();
-        selectedLinePaintBlue.setAntiAlias(true);
-        selectedLinePaintBlue.setColor(Color.BLUE);
-        selectedLinePaintBlue.setStyle(Paint.Style.STROKE);
-        selectedLinePaintBlue.setStrokeWidth(3);
-
-
-        rectPaint = new Paint();
-        rectPaint.setAntiAlias(true);
-        rectPaint.setColor(Color.DKGRAY);
-        rectPaint.setStyle(Paint.Style.FILL);
-        rectPaint.setStyle(Paint.Style.STROKE);
-        rectPaint.setStrokeWidth(3);
+        defineLineColors();
     }
 
     @Override
@@ -91,7 +54,6 @@ public class PlayGroundView extends View {
         super.onDraw(canvas);
 
         int maxValue = Math.min(parentHeight, parentWidth);
-
 
         // Draw the Lines for the PlayGround
         if (horizontalLinesOnCanvas == null && verticalLinesOnCanvases == null) {
@@ -130,7 +92,6 @@ public class PlayGroundView extends View {
                 canvas.drawPoint(horizontalLineOnCanvas.startX, horizontalLineOnCanvas.startY, pointPaintWhite);
                 canvas.drawPoint(horizontalLineOnCanvas.stopX, horizontalLineOnCanvas.stopY, pointPaintWhite);
                 paint = linePaintGray;
-
             }
         }
 
@@ -142,15 +103,14 @@ public class PlayGroundView extends View {
                 canvas.drawPoint(verticalLineOnCanvases.startX, verticalLineOnCanvases.startY, pointPaintWhite);
                 canvas.drawPoint(verticalLineOnCanvases.stopX, verticalLineOnCanvases.stopY, pointPaintWhite);
                 paint = linePaintGray;
-
             }
         }
 
         // Marked rects
         if (rects == null) {
-            int squareSideSize = (maxValue - 2) / numberOfSquares;
+            int squareSideSize = (maxValue - 22) / numberOfSquares;
             rects = new Rect[numberOfSquares * numberOfSquares];
-            markedRects = new boolean[numberOfSquares * numberOfSquares];
+            markedRects = new markedRects[numberOfSquares * numberOfSquares];
 
             for (int i = 0; i < numberOfSquares; i++) {
                 for (int u = 0; u < numberOfSquares; u++) {
@@ -159,19 +119,21 @@ public class PlayGroundView extends View {
                             11 + i * squareSideSize,
                             11 + u * squareSideSize + squareSideSize,
                             11 + i * squareSideSize + squareSideSize);
-                    markedRects[i * numberOfSquares + u] = false;
+                    markedRects[i * numberOfSquares + u] = new markedRects(false, -1);
                 }
             }
-
         }
 
         Rect rect;
         for (int i = 0; i < rects.length; i++) {
             rect = rects[i];
-            if (markedRects[i]) {
+            if (markedRects[i].marked) {
+                if (markedRects[i].player == 0) {
+                    rectPaint.setColor(selectedLinePaintRed.getColor());
+                } else {
+                    rectPaint.setColor(selectedLinePaintBlue.getColor());
+                }
                 canvas.drawRect(rect, rectPaint);
-                Log.v("tagged", String.valueOf(i));
-
             }
         }
 
@@ -190,28 +152,30 @@ public class PlayGroundView extends View {
         switch (action & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN: {
 
-                Log.v("getX", String.valueOf(x));
-                Log.v("getY", String.valueOf(y));
-
+                // Close Rect on The Riht Line
                 for (int i = 0; i < horizontalLinesOnCanvas.length; i++) {
                     if (horizontalLinesOnCanvas[i].player == -1) {
                         if (horizontalLinesOnCanvas[i].startY - 15 < y && horizontalLinesOnCanvas[i].stopY + 15 > y) {
                             if (horizontalLinesOnCanvas[i].startX < x && horizontalLinesOnCanvas[i].stopX > x) {
                                 horizontalLinesOnCanvas[i].player = player;
                                 playerListener.changePlayer(player);
+                                if (isHorizontalRectFinished(verticalLinesOnCanvases, horizontalLinesOnCanvas, i)) {
+                                    playerListener.changeScore();
+                                }
                                 player = 1 - player;
                             }
                         }
                     }
                 }
-
                 for (int i = 0; i < verticalLinesOnCanvases.length; i++) {
                     if (verticalLinesOnCanvases[i].player == -1) {
                         if (verticalLinesOnCanvases[i].startX - 15 < x && verticalLinesOnCanvases[i].stopX + 15 > x) {
                             if (verticalLinesOnCanvases[i].startY < y && verticalLinesOnCanvases[i].stopY > y) {
                                 verticalLinesOnCanvases[i].player = player;
                                 playerListener.changePlayer(player);
-                                isVerticalRectFinished(verticalLinesOnCanvases, horizontalLinesOnCanvas, i);
+                                if (isVerticalRectFinished(verticalLinesOnCanvases, horizontalLinesOnCanvas, i)) {
+                                    playerListener.changeScore();
+                                }
                                 player = 1 - player;
                             }
                         }
@@ -238,30 +202,128 @@ public class PlayGroundView extends View {
         }
     }
 
-    private void isVerticalRectFinished(lineOnCanvas[] verticalLinesOnCanvas, lineOnCanvas[] horizontalLinesOnCanvas, int i) {
+    private boolean isVerticalRectFinished(lineOnCanvas[] verticalLinesOnCanvas, lineOnCanvas[] horizontalLinesOnCanvas, int i) {
         // Check if the Rect to the left is Finished
 
-        int spalte = (i) / (numberOfSquares);
-        int reihe = (i) % (numberOfSquares);
+        int spalte = i / numberOfSquares;
+        int reihe = i % numberOfSquares;
 
-        Log.v("index1", String.valueOf(i));
-        if ((i / numberOfSquares) != 0) {
-            Log.v("index2", String.valueOf(i));
+        // Check if there is no more Lines to the left
+        if (spalte != 0) {
             // Left Line
             if (verticalLinesOnCanvas[i - numberOfSquares].player != -1) {
-                Log.v("index3", String.valueOf(i));
                 // Top Line
                 if (horizontalLinesOnCanvas[reihe * numberOfSquares + spalte - 1].player != -1) {
                     // Botttom Line
-                    Log.v("index4", String.valueOf(i));
                     if (horizontalLinesOnCanvas[(reihe + 1) * numberOfSquares + spalte - 1].player != -1) {
-                        Log.v("index5", String.valueOf(i));
-                        markedRects[reihe * numberOfSquares + spalte -1] = true;
+                        putMarkOnRect(reihe * numberOfSquares + spalte - 1);
+                        return true;
                     }
                 }
             }
         }
+
         // Check if the Rect to the Right is Finished
+        // Check if there are no more Lines to the Right
+        if (spalte != numberOfSquares) {
+            // Right Line
+            if (verticalLinesOnCanvas[i + numberOfSquares].player != -1) {
+                // Top Line
+                if (horizontalLinesOnCanvas[reihe * numberOfSquares + spalte].player != -1) {
+                    // Botttom Line
+                    if (horizontalLinesOnCanvas[(reihe + 1) * numberOfSquares + spalte].player != -1) {
+                        putMarkOnRect(spalte * numberOfSquares + reihe);
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+
+    private boolean isHorizontalRectFinished(lineOnCanvas[] verticalLinesOnCanvas, lineOnCanvas[] horizontalLinesOnCanvas, int i) {
+
+        int reihe = i / numberOfSquares;
+        int spalte = i % numberOfSquares;
+
+        // Check if the Rect below is Finished
+        // Check if there are Lines Below
+        if (reihe != numberOfSquares) {
+            // Bottom Line
+            if (horizontalLinesOnCanvas[i + numberOfSquares].player != -1) {
+                // Left Line
+                if (verticalLinesOnCanvas[spalte * numberOfSquares + reihe].player != -1) {
+                    // Right Line
+                    if (verticalLinesOnCanvas[(spalte + 1) * numberOfSquares + reihe].player != -1) {
+                        putMarkOnRect(spalte * numberOfSquares + reihe);
+                        return true;
+                    }
+                }
+            }
+        }
+
+        // Check if the Rect above is Finished
+        // Check if there are Lines Above
+        if (reihe != 0) {
+            // Top Line
+            if (horizontalLinesOnCanvas[i - numberOfSquares].player != -1) {
+                // Left Line
+                if (verticalLinesOnCanvas[spalte * numberOfSquares + (reihe - 1)].player != -1) {
+                    // Right Line
+                    if (verticalLinesOnCanvas[(spalte + 1) * numberOfSquares + (reihe - 1)].player != -1) {
+                        putMarkOnRect((reihe-1) * numberOfSquares + spalte);
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private void defineLineColors() {
+
+        // Define Paints
+        linePaintGray = new Paint();
+        linePaintGray.setAntiAlias(true);
+        linePaintGray.setColor(Color.GRAY);
+        linePaintGray.setStyle(Paint.Style.STROKE);
+        // material design 38% alpha for hints
+        linePaintGray.setAlpha((int) (255 * 0.38));
+        linePaintGray.setStrokeWidth(3);
+
+        pointPaintWhite = new Paint();
+        pointPaintWhite.setAntiAlias(true);
+        pointPaintWhite.setColor(Color.WHITE);
+        pointPaintWhite.setStyle(Paint.Style.STROKE);
+        pointPaintWhite.setStrokeWidth(9);
+
+        selectedLinePaintRed = new Paint();
+        selectedLinePaintRed.setAntiAlias(true);
+        selectedLinePaintRed.setColor(Color.RED);
+        selectedLinePaintRed.setStyle(Paint.Style.STROKE);
+        selectedLinePaintRed.setStrokeWidth(3);
+
+
+        selectedLinePaintBlue = new Paint();
+        selectedLinePaintBlue.setAntiAlias(true);
+        selectedLinePaintBlue.setColor(Color.BLUE);
+        selectedLinePaintBlue.setStyle(Paint.Style.STROKE);
+        selectedLinePaintBlue.setStrokeWidth(3);
+
+        rectPaint = new Paint();
+        rectPaint.setAntiAlias(true);
+        rectPaint.setColor(Color.DKGRAY);
+        rectPaint.setStyle(Paint.Style.FILL);
+        rectPaint.setStyle(Paint.Style.STROKE);
+        rectPaint.setStrokeWidth(5);
+
+    }
+
+    private void putMarkOnRect(int rectNum) {
+        markedRects[rectNum].marked = true;
+        markedRects[rectNum].player = player;
     }
 
     /**
@@ -282,5 +344,18 @@ public class PlayGroundView extends View {
             this.player = player;
         }
     }
+
+    private class markedRects {
+        private boolean marked;
+        private int player;
+
+        markedRects(boolean marked, int player) {
+            this.marked = marked;
+            this.player = player;
+
+        }
+
+    }
+
 }
 

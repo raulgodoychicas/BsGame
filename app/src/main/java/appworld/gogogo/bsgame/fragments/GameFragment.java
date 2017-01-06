@@ -85,9 +85,11 @@ public class GameFragment extends Fragment implements PlayerListener {
     @Override
     public void changeScore() {
         if (player == 0) {
-            player1scoreTextView.setText(String.valueOf(player1score++));
+            player1score++;
+            player1scoreTextView.setText(String.valueOf(player1score));
         } else {
-            player2scoreTextView.setText(String.valueOf(player2score++));
+            player2score++;
+            player2scoreTextView.setText(String.valueOf(player2score));
         }
 
     }
