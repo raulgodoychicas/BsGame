@@ -83,12 +83,10 @@ public class RegisterFragment extends Fragment {
                     if(isNetworkAvailable(getActivity())) {
                         BackGround doInBackGround = new BackGround();
                         doInBackGround.execute(username, password);
+                        MainActivity.switchFragment(new LoginFragment(), getActivity(), true);
                     } else {
                         Toast.makeText(getActivity(),"Registrierung nicht möglich. Bitte Internetverbindung prüfen",Toast.LENGTH_LONG).show();
-
                     }
-
-                    MainActivity.switchFragment(new LoginFragment(), getActivity(), true);
                 }
             }
         });
@@ -96,7 +94,7 @@ public class RegisterFragment extends Fragment {
 
     /**
      * This Method proofs if the given username is contained in the Database.
-     * Right now Databse = Shared Preferences
+     * Right now Database = Shared Preferences
      *
      * @param username
      * @return
@@ -144,7 +142,7 @@ public class RegisterFragment extends Fragment {
             return false;
         }
     }
-    //Check if there is Internet Connection
+    //This Method checks if internet connection is availabe
     private boolean isNetworkAvailable(final Context context) {
         final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
@@ -157,10 +155,9 @@ public class RegisterFragment extends Fragment {
     }
 
 
-    //Background Task which saves User-Credentials in Database
+    //inner class with async-task that saves User-Credentials in Online-Database
     class BackGround extends AsyncTask<String, String, String> {
 
-        @Override
         protected String doInBackground(String... params) {
             String username = params[0];
             String password = params[1];
@@ -198,7 +195,7 @@ public class RegisterFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             if(s.equals("")){
-                s="Registrierung war erfolgreich";
+                s = "Registrierung war erfolgreich";
             }
             Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
         }
