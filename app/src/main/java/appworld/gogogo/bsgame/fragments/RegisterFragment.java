@@ -1,6 +1,7 @@
 package appworld.gogogo.bsgame.fragments;
 
 import android.app.Fragment;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -9,6 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import appworld.gogogo.bsgame.MainActivity;
 import appworld.gogogo.bsgame.R;
@@ -19,14 +28,13 @@ import appworld.gogogo.bsgame.support.SharedPrefsMethods;
  */
 public class RegisterFragment extends Fragment {
 
+
     private TextInputLayout passwordTextInputLayout;
     private TextInputLayout repeatPasswordTextInputLayout;
     private TextInputLayout usernameTextInputLayout;
     private TextInputEditText passwordTextInputEditText;
     private TextInputEditText repeatPasswordTextInputEditText;
     private TextInputEditText usernameTextInputEditText;
-
-    private static final String REGISTER_URL = "http://worldlustblog.de/Registration/registration.php";
 
 
     public RegisterFragment() {
@@ -69,7 +77,9 @@ public class RegisterFragment extends Fragment {
                     usernameTextInputLayout.setError("Username is not available");
                 } else if (isPasswordAccordingToRules(password, passwordRepeat)) {
                     SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), username, password);
-                    //TODO Datenbankverbindnug herstellen und Credentials reinschreiben!!!
+                    //TODO Datenbankverbindnug herstellen und Credentials reinschreiben!!! Internet verbindung checken // user schon vorhanden ?
+                    BackGround doInBackGround = new BackGround();
+                    doInBackGround.execute(username, password);
 
                     MainActivity.switchFragment(new LoginFragment(), getActivity(), true);
                 }
@@ -78,7 +88,7 @@ public class RegisterFragment extends Fragment {
     }
 
     /**
-     * This Method proofs if th egiven username is contained in the Database.
+     * This Method proofs if the given username is contained in the Database.
      * Right now Databse = Shared Preferences
      *
      * @param username
@@ -134,5 +144,53 @@ public class RegisterFragment extends Fragment {
         usernameTextInputLayout.setError("");
     }
 
+
+    //Background Task which saves User-Credentials in Database
+    class BackGround extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String username = params[0];
+            String password = params[1];
+            //String email = params[2];
+            String data = "";
+            int tmp;
+
+            try {
+                URL url = new URL("http://www.worldlustblog.de/Registration/register.php");
+                String urlParams = "&name=" + username + "&password=" + password;
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setDoOutput(true);
+                OutputStream os = httpURLConnection.getOutputStream();
+                os.write(urlParams.getBytes());
+                os.flush();
+                os.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                while ((tmp = inputStream.read()) != -1) {
+                    data += (char) tmp;
+                }
+                inputStream.close();
+                httpURLConnection.disconnect();
+
+                return data;
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if(s.equals("")){
+                s="Saving Data was successful";
+            }
+            Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
+        }
+    }
 
 }

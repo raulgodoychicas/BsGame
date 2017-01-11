@@ -1,6 +1,8 @@
 package appworld.gogogo.bsgame.fragments;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import appworld.gogogo.bsgame.MainActivity;
 import appworld.gogogo.bsgame.R;
@@ -70,14 +73,17 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.login_button: {
-                //TODO Switch On or Off ? On = User-Credentials merken !
-                boolean isSwitchOn = loginRememberMeSwitch.isChecked();
-
-                if (isPasswordRight(usernameTextInputEditText.getText().toString(),
-                        passwordTextInputEditText.getText().toString())) {
-                    MainActivity.switchFragment(new OverviewFragment(), getActivity(),true);
+                //boolean isSwitchOn = loginRememberMeSwitch.isChecked();
+                //Check if internet connection is available
+                if(isNetworkAvailable(getActivity())) {
+                    //TODO COMPARE CREDENTIALS ONLINE
+                    Toast.makeText(getActivity(),"Internet vorhanden",Toast.LENGTH_LONG).show();
                 } else {
-                    MainActivity.switchFragment(new OverviewFragment(), getActivity(),true);
+                    //TODO COMPARE WITH SHARED-PREFS
+                    if (isPasswordRight(usernameTextInputEditText.getText().toString(),
+                            passwordTextInputEditText.getText().toString())) {
+                        MainActivity.switchFragment(new OverviewFragment(), getActivity(),true);
+                    }
                 }
                 break;
             }
@@ -86,6 +92,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 break;
             }
         }
+    }
+
+    /** Check if Internet Connection is available or not
+     *
+     */
+    private boolean isNetworkAvailable(final Context context) {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 
     /**
@@ -109,4 +123,5 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         }
         return true;
     }
+
 }
