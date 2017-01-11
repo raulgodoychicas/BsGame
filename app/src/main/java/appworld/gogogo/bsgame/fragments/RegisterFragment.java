@@ -1,6 +1,8 @@
 package appworld.gogogo.bsgame.fragments;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -77,9 +79,14 @@ public class RegisterFragment extends Fragment {
                     usernameTextInputLayout.setError("Username is not available");
                 } else if (isPasswordAccordingToRules(password, passwordRepeat)) {
                     SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), username, password);
-                    //TODO Datenbankverbindnug herstellen und Credentials reinschreiben!!! Internet verbindung checken // user schon vorhanden ?
-                    BackGround doInBackGround = new BackGround();
-                    doInBackGround.execute(username, password);
+                    //TODO Datenbankverbindnug herstellen und Credentials reinschreiben!!! Internet verbindung checken // user schon vorhanden
+                    if(isNetworkAvailable(getActivity())) {
+                        BackGround doInBackGround = new BackGround();
+                        doInBackGround.execute(username, password);
+                    } else {
+                        Toast.makeText(getActivity(),"Registrierung nicht möglich. Bitte Internetverbindung prüfen",Toast.LENGTH_LONG).show();
+
+                    }
 
                     MainActivity.switchFragment(new LoginFragment(), getActivity(), true);
                 }
@@ -137,6 +144,11 @@ public class RegisterFragment extends Fragment {
             return false;
         }
     }
+    //Check if there is Internet Connection
+    private boolean isNetworkAvailable(final Context context) {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+    }
 
     private void emptyAllErrorTexts() {
         passwordTextInputLayout.setError("");
@@ -152,7 +164,6 @@ public class RegisterFragment extends Fragment {
         protected String doInBackground(String... params) {
             String username = params[0];
             String password = params[1];
-            //String email = params[2];
             String data = "";
             int tmp;
 
@@ -187,7 +198,7 @@ public class RegisterFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             if(s.equals("")){
-                s="Saving Data was successful";
+                s="Registrierung war erfolgreich";
             }
             Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
         }
