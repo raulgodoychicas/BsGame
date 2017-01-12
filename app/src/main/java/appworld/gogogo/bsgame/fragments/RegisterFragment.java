@@ -13,14 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import appworld.gogogo.bsgame.MainActivity;
 import appworld.gogogo.bsgame.R;
 import appworld.gogogo.bsgame.support.SharedPrefsMethods;
@@ -80,12 +78,12 @@ public class RegisterFragment extends Fragment {
                 } else if (isPasswordAccordingToRules(password, passwordRepeat)) {
                     SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), username, password);
                     //TODO Datenbankverbindnug herstellen und Credentials reinschreiben!!! Internet verbindung checken // user schon vorhanden
-                    if(isNetworkAvailable(getActivity())) {
-                        BackGround doInBackGround = new BackGround();
+                    if (isNetworkAvailable(getActivity())) {
+                        AsyncRegistraton doInBackGround = new AsyncRegistraton();
                         doInBackGround.execute(username, password);
                         MainActivity.switchFragment(new LoginFragment(), getActivity(), true);
                     } else {
-                        Toast.makeText(getActivity(),"Registrierung nicht möglich. Bitte Internetverbindung prüfen",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Registrierung nicht möglich. Bitte Internetverbindung prüfen", Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -142,6 +140,7 @@ public class RegisterFragment extends Fragment {
             return false;
         }
     }
+
     //This Method checks if internet connection is availabe
     private boolean isNetworkAvailable(final Context context) {
         final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
@@ -154,9 +153,13 @@ public class RegisterFragment extends Fragment {
         usernameTextInputLayout.setError("");
     }
 
-
     //inner class with async-task that saves User-Credentials in Online-Database
-    class BackGround extends AsyncTask<String, String, String> {
+    class AsyncRegistraton extends AsyncTask<String, String, String> {
+
+        HttpURLConnection httpURLConnection;
+        OutputStream outputStream;
+        InputStream inputStream;
+
 
         protected String doInBackground(String... params) {
             String username = params[0];
@@ -168,13 +171,13 @@ public class RegisterFragment extends Fragment {
                 URL url = new URL("http://www.worldlustblog.de/Registration/register.php");
                 String urlParams = "&name=" + username + "&password=" + password;
 
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
-                OutputStream os = httpURLConnection.getOutputStream();
-                os.write(urlParams.getBytes());
-                os.flush();
-                os.close();
-                InputStream inputStream = httpURLConnection.getInputStream();
+                outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(urlParams.getBytes());
+                outputStream.flush();
+                outputStream.close();
+                inputStream = httpURLConnection.getInputStream();
                 while ((tmp = inputStream.read()) != -1) {
                     data += (char) tmp;
                 }
@@ -200,5 +203,6 @@ public class RegisterFragment extends Fragment {
             Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
         }
     }
+
 
 }
