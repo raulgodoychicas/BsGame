@@ -166,7 +166,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             String username = params[0];
             String password = params[1];
 
-            //Initializing Data String that is later needed to get the response information of the Mysql-DB
+            //Initializing Data String that is later needed to get the response JSON String from the Mysql-DB
             String data="";
 
             //counter for while-loop
@@ -183,11 +183,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 outputStream.flush();
                 outputStream.close();
 
+                //get Input from Server (JSON String)
                 inputStream = httpURLConnection.getInputStream();
+                //Convert the Bytes from Server into a String
                 while((count=inputStream.read())!=-1){
                     data+= (char)count;
                 }
-
+                //close connection
                 inputStream.close();
                 httpURLConnection.disconnect();
 
@@ -209,13 +211,21 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             pdLoading.show();
         }
 
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(String s) /*String s is for the JSON String we get from the DB*/  {
             pdLoading.dismiss();
             try {
+
+                //Pass String s into JSONObjec root
                 JSONObject root = new JSONObject(s);
+
+                //get user_credentials, which are sent by the Server
                 JSONObject user_data = root.getJSONObject("user_credentials");
+
+                //retrive NAME and PASSWORD from user_credentials as a string
                 NAME = user_data.getString("name");
                 PASSWORD = user_data.getString("password");
+
+                //Check if PASSWORD and NAME are equal to the entered Login-Credentials of the User
                 if (PASSWORD.equals(password)  && NAME.equals(username)) {
                     MainActivity.switchFragment(new OverviewFragment(), getActivity(), true);
                 }
