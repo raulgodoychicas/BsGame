@@ -1,6 +1,7 @@
 package appworld.gogogo.bsgame.fragments;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
@@ -13,6 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -77,11 +82,9 @@ public class RegisterFragment extends Fragment {
                     usernameTextInputLayout.setError("Username is not available");
                 } else if (isPasswordAccordingToRules(password, passwordRepeat)) {
                     SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), username, password);
-                    //TODO Datenbankverbindnug herstellen und Credentials reinschreiben!!! Internet verbindung checken // user schon vorhanden
                     if (isNetworkAvailable(getActivity())) {
                         AsyncRegistraton doInBackGround = new AsyncRegistraton();
                         doInBackGround.execute(username, password);
-                        MainActivity.switchFragment(new LoginFragment(), getActivity(), true);
                     } else {
                         Toast.makeText(getActivity(), "Registrierung nicht möglich. Bitte Internetverbindung prüfen", Toast.LENGTH_LONG).show();
                     }
@@ -99,7 +102,6 @@ public class RegisterFragment extends Fragment {
      */
 
     private Boolean isUserNameAvailable(String username) {
-        //TODO Datenbankverbindung herstellen und überprüfen,ob user bereits exisitiert !
         return !SharedPrefsMethods.containsStringInSharedPrefs(getActivity(), username);
     }
 
@@ -156,16 +158,25 @@ public class RegisterFragment extends Fragment {
     //inner class with async-task that saves User-Credentials in Online-Database
     class AsyncRegistraton extends AsyncTask<String, String, String> {
 
+        //Loading Window in UI while loggin in
+        ProgressDialog pdLoading = new ProgressDialog(getActivity());
+
         HttpURLConnection httpURLConnection;
         OutputStream outputStream;
         InputStream inputStream;
 
 
         protected String doInBackground(String... params) {
+
+            //params[0] = username, params[1] = password
             String username = params[0];
             String password = params[1];
+
+            //Initializing Data String that is later needed to get the response information of the Mysql-DB
             String data = "";
-            int tmp;
+
+            //counter for while-loop
+            int count;
 
             try {
                 URL url = new URL("http://www.worldlustblog.de/Registration/register.php");
@@ -178,8 +189,8 @@ public class RegisterFragment extends Fragment {
                 outputStream.flush();
                 outputStream.close();
                 inputStream = httpURLConnection.getInputStream();
-                while ((tmp = inputStream.read()) != -1) {
-                    data += (char) tmp;
+                while ((count = inputStream.read()) != -1) {
+                    data += (char) count;
                 }
                 inputStream.close();
                 httpURLConnection.disconnect();
@@ -194,13 +205,40 @@ public class RegisterFragment extends Fragment {
                 return "Exception: " + e.getMessage();
             }
         }
+        protected void onPreExecute() {
+        super.onPreExecute();
 
-        @Override
+        //this method will be running on UI thread
+        pdLoading.setMessage("\tLoading...");
+        pdLoading.setCancelable(false);
+        pdLoading.show();
+    }
+
         protected void onPostExecute(String s) {
-            if(s.equals("")){
-                s = "Registrierung war erfolgreich";
+            try {
+                pdLoading.dismiss();
+                //fetch JSON Object from Server
+                JSONObject root = new JSONObject(s);
+                JSONObject user_data = root.getJSONObject("user_credentials");
+
+                //fetch String from Array
+                String COUNT = user_data.getString("count");
+
+                //If result is not "0" --> User is already registered
+                if (!COUNT.equals("0")) {
+                    Toast.makeText(getActivity(),"User existiert bereits! Bitte anderen Usernamen verwenden!",Toast.LENGTH_LONG).show();
+                } else {
+                    //Switch to Overview
+                    Toast.makeText(getActivity(),"Registrierung war erfolgreich",Toast.LENGTH_LONG).show();
+
+                    //Registration was successful --> Login
+                    MainActivity.switchFragment(new LoginFragment(), getActivity(), true);
+                }
+                //try catch nötig ???????
+            } catch (JSONException e) {
+                e.printStackTrace();
+
             }
-            Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
         }
     }
 

@@ -91,19 +91,21 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.login_button: {
-                //boolean isSwitchOn = loginRememberMeSwitch.isChecked();
+
                 //Check if internet connection is available
                 if(isNetworkAvailable(getActivity())) {
-                    //TODO COMPARE CREDENTIALS ONLINE
+
+                    //get inputs from User , Username and Password
                     username = usernameTextInputEditText.getText().toString();
                     password = passwordTextInputEditText.getText().toString();
+
+                    //execute AsyncTask in Background and commit inputs from User to the AsyncTask
                     AsyncLogin asyncLogin = new AsyncLogin();
                     asyncLogin.execute(username,password);
 
                 } else {
-                    //TODO COMPARE WITH SHARED-PREFS
-                    if (isPasswordRight(usernameTextInputEditText.getText().toString(),
-                            passwordTextInputEditText.getText().toString())) {
+                    //If there is no internet connection compare User credentials with SharedPrefs
+                    if (isPasswordRight(username,password)) {
                         MainActivity.switchFragment(new OverviewFragment(), getActivity(),true);
                     }
                 }
@@ -117,7 +119,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
     /** Check if Internet Connection is available or not
-     *
      */
     private boolean isNetworkAvailable(final Context context) {
         final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
@@ -125,7 +126,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
     /**
-     * Checks if the Username and Password matches with any saved username in the Database
+     * Checks if the Username and Password matches with any saved username in the Local Database
      *
      * @param username Username
      * @param password Password
@@ -147,32 +148,47 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     }
 
+
+    /** Checks if the Username and Password matches with any saved username in the online Mysql-Database
+     */
     class AsyncLogin extends AsyncTask<String, String, String> {
+
+        //Loading Window in UI while loggin in
         ProgressDialog pdLoading = new ProgressDialog(getActivity());
 
+        OutputStream outputStream;
+        InputStream inputStream;
+        HttpURLConnection httpURLConnection;
+
         protected String doInBackground(String... params) {
+
+            //params[0] = username, params[1] = password
             String username = params[0];
             String password = params[1];
+
+            //Initializing Data String that is later needed to get the response information of the Mysql-DB
             String data="";
-            int tmp;
+
+            //counter for while-loop
+            int count;
 
             try {
                 URL url = new URL("http://www.worldlustblog.de/Registration/db_fetch_user.php");
                 String urlParams = "&name=" + username + "&password=" + password;
 
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
-                OutputStream os = httpURLConnection.getOutputStream();
-                os.write(urlParams.getBytes());
-                os.flush();
-                os.close();
+                outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(urlParams.getBytes());
+                outputStream.flush();
+                outputStream.close();
 
-                InputStream is = httpURLConnection.getInputStream();
-                while((tmp=is.read())!=-1){
-                    data+= (char)tmp;
+                inputStream = httpURLConnection.getInputStream();
+                while((count=inputStream.read())!=-1){
+                    data+= (char)count;
                 }
 
-                is.close();
+                inputStream.close();
                 httpURLConnection.disconnect();
 
                 return data;
@@ -194,7 +210,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         }
 
         protected void onPostExecute(String s) {
-            String error;
             pdLoading.dismiss();
             try {
                 JSONObject root = new JSONObject(s);
@@ -208,7 +223,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 //try catch nötig ???????
             } catch (JSONException e) {
                 e.printStackTrace();
-                //error = "Exception: "+e.getMessage();
                 Toast.makeText(getActivity(),"Username oder Passwort falsch!",Toast.LENGTH_LONG).show();
             }
 
