@@ -115,10 +115,10 @@ public class PlayGroundView extends View {
             for (int i = 0; i < numberOfSquares; i++) {
                 for (int u = 0; u < numberOfSquares; u++) {
                     rects[i * numberOfSquares + u] = new Rect(
-                            11 + u * squareSideSize,
-                            11 + i * squareSideSize,
-                            11 + u * squareSideSize + squareSideSize,
-                            11 + i * squareSideSize + squareSideSize);
+                            11 + u * squareSideSize + 10,
+                            11 + i * squareSideSize + 10,
+                            11 + u * squareSideSize + squareSideSize - 10,
+                            11 + i * squareSideSize + squareSideSize - 10);
                     markedRects[i * numberOfSquares + u] = new markedRects(false, -1);
                 }
             }
@@ -161,6 +161,8 @@ public class PlayGroundView extends View {
                                 playerListener.changePlayer(player);
                                 if (isHorizontalRectFinished(verticalLinesOnCanvases, horizontalLinesOnCanvas, i)) {
                                     playerListener.changeScore();
+                                    // Change player again because if the rectangel is finish you get another turn
+                                    player = 1 - player;
                                 }
                                 player = 1 - player;
                             }
@@ -175,6 +177,8 @@ public class PlayGroundView extends View {
                                 playerListener.changePlayer(player);
                                 if (isVerticalRectFinished(verticalLinesOnCanvases, horizontalLinesOnCanvas, i)) {
                                     playerListener.changeScore();
+                                    // Change player again because if the rectangel is finish you get another turn
+                                    player = 1 - player;
                                 }
                                 player = 1 - player;
                             }
@@ -202,6 +206,15 @@ public class PlayGroundView extends View {
         }
     }
 
+
+    /**
+     * Check if a Rect is finished when a vertical Line is chosen
+     *
+     * @param verticalLinesOnCanvas     Array with the vertical Lines
+     * @param horizontalLinesOnCanvas   Array with the horiziontal Lines
+     * @param i                         index of the chosen Line
+     * @return                          true if a Rect was closed
+     */
     private boolean isVerticalRectFinished(lineOnCanvas[] verticalLinesOnCanvas, lineOnCanvas[] horizontalLinesOnCanvas, int i) {
         // Check if the Rect to the left is Finished
 
@@ -232,7 +245,7 @@ public class PlayGroundView extends View {
                 if (horizontalLinesOnCanvas[reihe * numberOfSquares + spalte].player != -1) {
                     // Botttom Line
                     if (horizontalLinesOnCanvas[(reihe + 1) * numberOfSquares + spalte].player != -1) {
-                        putMarkOnRect(spalte * numberOfSquares + reihe);
+                        putMarkOnRect(reihe * numberOfSquares + spalte);
                         return true;
                     }
                 }
@@ -241,7 +254,14 @@ public class PlayGroundView extends View {
         return false;
     }
 
-
+    /**
+     * Check if a Rect is finished when an horizontal Line is chosen
+     *
+     * @param verticalLinesOnCanvas     Array with the vertical Lines
+     * @param horizontalLinesOnCanvas   Array with the horiziontal Lines
+     * @param i                         index of the chosen Line
+     * @return                          true if a Rect was closed
+     */
     private boolean isHorizontalRectFinished(lineOnCanvas[] verticalLinesOnCanvas, lineOnCanvas[] horizontalLinesOnCanvas, int i) {
 
         int reihe = i / numberOfSquares;
@@ -256,7 +276,7 @@ public class PlayGroundView extends View {
                 if (verticalLinesOnCanvas[spalte * numberOfSquares + reihe].player != -1) {
                     // Right Line
                     if (verticalLinesOnCanvas[(spalte + 1) * numberOfSquares + reihe].player != -1) {
-                        putMarkOnRect(spalte * numberOfSquares + reihe);
+                        putMarkOnRect(reihe * numberOfSquares + spalte);
                         return true;
                     }
                 }
@@ -282,6 +302,14 @@ public class PlayGroundView extends View {
         return false;
     }
 
+    /**
+     * Define the different colors of the Lines
+     * linePaintGray - used for the
+     * pointPaintWhite -
+     * selectedLinePaintRed -
+     * selectedLinePaintBlue -
+     * rectPaint -
+     */
     private void defineLineColors() {
 
         // Define Paints
@@ -345,6 +373,10 @@ public class PlayGroundView extends View {
         }
     }
 
+    /**
+     * Mark the different rectangles and set the Player to know
+     *
+     */
     private class markedRects {
         private boolean marked;
         private int player;

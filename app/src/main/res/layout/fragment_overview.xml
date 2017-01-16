@@ -1,80 +1,92 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:style="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/padding"
     tools:context="appworld.gogogo.bsgame.fragments.OverviewFragment">
 
-    <RelativeLayout
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/padding"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/ic_launcher"/>
+
+    <TextView
+        android:id="@+id/overview_textview_fieldsize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="134dp"
+        android:text="@string/overview_fieldsize_prompt"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="@dimen/textsize_normal"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/overview_choosefieldsize"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/overview_textview_fieldsize"
+        android:dropDownWidth="match_parent"
+        android:entries="@array/overview_size_array" />
+
+    <TextView
+        android:id="@+id/overview_textview_moduswaehlen"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="@dimen/padding"
-        android:weightSum="1">
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/overview_choosefieldsize"
+        android:layout_marginTop="16dp"
+        android:text="@string/overview_game_mode_prompt"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="@dimen/textsize_normal"
+        android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="@string/overview_username"
-            android:textSize="25dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/overview_textview_username"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp" />
+    <Spinner
+        android:id="@+id/overview_spinner_gamemode"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/overview_textview_moduswaehlen"
+        android:entries="@array/overview_game_mode_array" />
 
-        <Spinner
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/overview_spinner_gamemode"
-            android:entries="@array/overview_game_mode_array"
-            android:layout_below="@+id/overview_textview_moduswaehlen"
-            android:layout_alignParentStart="true" />
+    <Button
+        android:id="@+id/overview_help_button"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_toEndOf="@id/overview_spinner_gamemode"
+        android:layout_below="@id/overview_textview_fieldsize"
+        android:textSize="48dp"
+        android:text="\?"/>
 
-        <Spinner
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/overview_choosefieldsize"
-            android:entries="@array/overview_size_array"
-            android:dropDownWidth="match_parent"
-            android:layout_below="@+id/overview_textview_fieldsize"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:text="@string/overview_game_mode_prompt"
-            android:textStyle="bold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/padding"
-            android:id="@+id/overview_textview_moduswaehlen"
-            android:layout_marginTop="16dp"
-            android:layout_below="@+id/overview_choosefieldsize"
-            android:layout_alignParentStart="true"
-            android:textColor="?android:attr/textColorPrimary" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/overview_fieldsize_prompt"
-            android:textSize="@dimen/padding"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.20"
-            android:id="@+id/overview_textview_fieldsize"
-            android:layout_marginTop="134dp"
-            android:layout_below="@+id/overview_textview_username"
-            android:layout_alignParentStart="true"
-            android:textColor="?android:attr/textColorPrimary" />
-
-        <Button
-            android:text="Spiel starten"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/overwiew_start_button"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="66dp" />
-
-    </RelativeLayout>
+    <Button
+        android:id="@+id/overwiew_start_button"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="72dp"
+        android:text="Spiel starten"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 
-</FrameLayout>
+    <Button
+        android:id="@+id/overwiew_introduction_button"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
+        android:text="Anleitung"
+        android:textSize="8sp"
+        android:textStyle="italic"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>
+
+

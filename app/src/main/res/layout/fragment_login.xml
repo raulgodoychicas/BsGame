@@ -49,6 +49,7 @@
                 android:inputType="textPassword" />
 
         </android.support.design.widget.TextInputLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,23 +65,25 @@
                 android:layout_height="wrap_content"
                 android:text="@string/login_button_text" />
 
-        <Button
-            android:id="@+id/login_register_button"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:text="@string/register_button_text"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/login_register_button"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="@string/register_button_text" />
+        </LinearLayout>
 
         <Switch
-            android:text="@string/login_angemeldet_bleiben"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/login_angemeldet_bleiben"
+            android:layout_width="wrap_content"
+            android:padding="@dimen/padding"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:scrollbarThumbVertical="@dimen/padding"
+            android:switchPadding="@dimen/padding"
+            android:checked="false"
             android:splitTrack="false"
-            android:checked="false" />
+            android:text="@string/login_angemeldet_bleiben" />
 
     </LinearLayout>
 
