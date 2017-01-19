@@ -40,11 +40,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private TextInputLayout usernameTextInputLayout;
     private TextInputLayout passwordTextInputLayout;
 
-    public static final int CONNECTION_TIMEOUT=10000;
-    public static final int READ_TIMEOUT=15000;
-    String NAME;
-    String PASSWORD;
-
     String username;
     String password;
 
@@ -82,7 +77,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         passwordTextInputLayout.setErrorEnabled(true);
         passwordTextInputEditText = (TextInputEditText) view.findViewById(R.id.login_password_textinputedittext);
 
-        loginRememberMeSwitch =(Switch)view.findViewById(R.id.login_angemeldet_bleiben);
+        loginRememberMeSwitch = (Switch) view.findViewById(R.id.login_angemeldet_bleiben);
         loginRememberMeSwitch.setOnClickListener(this);
     }
 
@@ -92,33 +87,36 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.login_button: {
 
+                emptyAllErrorTexts();
+
+                //get inputs from User , Username(Username converted to lower case, so log-in is CaseInsensitive) and Password
+                username = usernameTextInputEditText.getText().toString().toLowerCase();
+                password = passwordTextInputEditText.getText().toString();
+
                 //Check if internet connection is available
-                if(isNetworkAvailable(getActivity())) {
+                if (isNetworkAvailable(getActivity())) {
 
-                    //get inputs from User , Username and Password
-                    username = usernameTextInputEditText.getText().toString();
-                    password = passwordTextInputEditText.getText().toString();
-
-                    //execute AsyncTask in Background and commit inputs from User to the AsyncTask
+                    //execute AsyncTask in Background and commit inputs from User to the AsyncTask to compare User Credentials with Server
                     AsyncLogin asyncLogin = new AsyncLogin();
-                    asyncLogin.execute(username,password);
+                    asyncLogin.execute(username, password);
 
                 } else {
                     //If there is no internet connection compare User credentials with SharedPrefs
-                    if (isPasswordRight(username,password)) {
-                        MainActivity.switchFragment(new OverviewFragment(), getActivity(),true);
+                    if (isPasswordRight(username, password)) {
+                        MainActivity.switchFragment(new OverviewFragment(), getActivity(), true);
                     }
                 }
                 break;
             }
             case R.id.login_register_button: {
-                MainActivity.switchFragment(new RegisterFragment(), getActivity(),true);
+                MainActivity.switchFragment(new RegisterFragment(), getActivity(), true);
                 break;
             }
         }
     }
 
-    /** Check if Internet Connection is available or not
+    /**
+     * Check if Internet Connection is available or not
      */
     private boolean isNetworkAvailable(final Context context) {
         final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
@@ -148,8 +146,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    private void emptyAllErrorTexts() {
+        passwordTextInputLayout.setError("");
+        usernameTextInputLayout.setError("");
+    }
 
-    /** Checks if the Username and Password matches with any saved username in the online Mysql-Database
+    /**
+     * Checks if the Username and Password matches with any saved username in the online Mysql-Database
      */
     class AsyncLogin extends AsyncTask<String, String, String> {
 
@@ -163,20 +166,21 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         protected String doInBackground(String... params) {
 
             //params[0] = username, params[1] = password
-            String username = params[0];
-            String password = params[1];
+            String uname = params[0];
+            String pw = params[1];
 
             //Initializing Data String that is later needed to get the response JSON String from the Mysql-DB
-            String data="";
+            String data = "";
 
             //counter for while-loop
             int count;
 
             try {
                 URL url = new URL("http://www.worldlustblog.de/Registration/db_fetch_user.php");
-                String urlParams = "&name=" + username + "&password=" + password;
+                String urlParams = "&name=" + uname + "&password=" + pw;
 
                 httpURLConnection = (HttpURLConnection) url.openConnection();
+                //httpURLConnection.setConnectTimeout(6000);
                 httpURLConnection.setDoOutput(true);
                 outputStream = httpURLConnection.getOutputStream();
                 outputStream.write(urlParams.getBytes());
@@ -185,9 +189,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
                 //get Input from Server (JSON String)
                 inputStream = httpURLConnection.getInputStream();
+
                 //Convert the Bytes from Server into a String
-                while((count=inputStream.read())!=-1){
-                    data+= (char)count;
+                while ((count = inputStream.read()) != -1) {
+                    data += (char) count;
                 }
                 //close connection
                 inputStream.close();
@@ -196,24 +201,28 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 return data;
             } catch (MalformedURLException e) {
                 e.printStackTrace();
-                return "Exception: "+e.getMessage();
+                return "Exception: " + e.getMessage();
             } catch (IOException e) {
                 e.printStackTrace();
-                return "Exception: "+e.getMessage();
+                return "Exception: " + e.getMessage();
             }
         }
+
         protected void onPreExecute() {
             super.onPreExecute();
 
-            //this method will be running on UI thread
+            //Run loading view on UI thread
             pdLoading.setMessage("\tLoading...");
             pdLoading.setCancelable(false);
             pdLoading.show();
         }
 
-        protected void onPostExecute(String s) /*String s is for the JSON String we get from the DB*/  {
+        protected void onPostExecute(String s) /*String s is for the JSON String we get from the DB*/ {
             pdLoading.dismiss();
             try {
+
+                String NAME;
+                String PW;
 
                 //Pass String s into JSONObjec root
                 JSONObject root = new JSONObject(s);
@@ -221,25 +230,33 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 //get user_credentials, which are sent by the Server
                 JSONObject user_data = root.getJSONObject("user_credentials");
 
-                //retrive NAME and PASSWORD from user_credentials as a string
+                //retrive NAME and PW from user_credentials as a string
                 NAME = user_data.getString("name");
-                PASSWORD = user_data.getString("password");
+                PW = user_data.getString("password");
 
-                //Check if PASSWORD and NAME are equal to the entered Login-Credentials of the User
-                if (PASSWORD.equals(password)  && NAME.equals(username)) {
+                //If credentials are correct --> Login
+                if (!(PW.equals(password) || NAME.equals(username))) {
+                    passwordTextInputLayout.setError("Username or Password wrong");
+                } else {
                     MainActivity.switchFragment(new OverviewFragment(), getActivity(), true);
-                }
 
-                //try catch nötig ???????
+                }
+                //  if(checkCredentialsFromServer(username,password,NAME,PW)){
+                //     MainActivity.switchFragment(new OverviewFragment(), getActivity(), true);
+                //  }
+
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(getActivity(),"Username oder Passwort falsch!",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Serverproblems!", Toast.LENGTH_LONG).show();
             }
 
         }
+
     }
 
 }
+
+
 
 
 

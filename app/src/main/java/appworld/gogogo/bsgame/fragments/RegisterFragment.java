@@ -14,10 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -40,6 +36,8 @@ public class RegisterFragment extends Fragment {
     private TextInputEditText passwordTextInputEditText;
     private TextInputEditText repeatPasswordTextInputEditText;
     private TextInputEditText usernameTextInputEditText;
+    private String username;
+    private String password;
 
 
     public RegisterFragment() {
@@ -73,15 +71,16 @@ public class RegisterFragment extends Fragment {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = usernameTextInputEditText.getText().toString();
-                String password = passwordTextInputEditText.getText().toString();
+                 username = usernameTextInputEditText.getText().toString().toLowerCase();
+                 password = passwordTextInputEditText.getText().toString();
                 String passwordRepeat = repeatPasswordTextInputEditText.getText().toString();
 
-                if (!isUserNameAvailable(username)) {
-                    emptyAllErrorTexts();
-                    usernameTextInputLayout.setError("Username is not available");
-                } else if (isPasswordAccordingToRules(password, passwordRepeat)) {
-                    SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), username, password);
+                //TODO Registration only with Internet connection !
+                // if (!isUserNameAvailable(username)) {
+                //    emptyAllErrorTexts();
+                //   usernameTextInputLayout.setError("Username is not available");
+                //}
+                if (isPasswordAccordingToRules(password, passwordRepeat)) {
                     if (isNetworkAvailable(getActivity())) {
                         AsyncRegistraton doInBackGround = new AsyncRegistraton();
                         doInBackGround.execute(username, password);
@@ -158,7 +157,7 @@ public class RegisterFragment extends Fragment {
     //inner class with async-task that saves User-Credentials in Online-Database
     class AsyncRegistraton extends AsyncTask<String, String, String> {
 
-        //Loading Window in UI while loggin in
+        //Loading view in UI while registration
         ProgressDialog pdLoading = new ProgressDialog(getActivity());
 
         HttpURLConnection httpURLConnection;
@@ -169,10 +168,10 @@ public class RegisterFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             //params[0] = username, params[1] = password
-            String username = params[0];
-            String password = params[1];
+            String uname = params[0];
+            String pw = params[1];
 
-            //Initializing Data String that is later needed to get the response information of the Mysql-DB
+            //Initializing Data String that is later needed to get the response information from the Server
             String data = "";
 
             //counter for while-loop
@@ -180,7 +179,7 @@ public class RegisterFragment extends Fragment {
 
             try {
                 URL url = new URL("http://www.worldlustblog.de/Registration/register.php");
-                String urlParams = "&name=" + username + "&password=" + password;
+                String urlParams = "&name=" + uname + "&password=" + pw;
 
                 httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
@@ -208,39 +207,32 @@ public class RegisterFragment extends Fragment {
         protected void onPreExecute() {
         super.onPreExecute();
 
-        //this method will be running on UI thread
+        //Run loading view on UI thread
         pdLoading.setMessage("\tLoading...");
         pdLoading.setCancelable(false);
         pdLoading.show();
     }
 
-        protected void onPostExecute(String s) {
-            try {
+        protected void onPostExecute(String flag) /*Flag "1" --> User already exists, Flag = "" --> Registration was successful*/
+        {
+                //Dismiss loading view in UI
                 pdLoading.dismiss();
-                //fetch JSON Object from Server
-                JSONObject root = new JSONObject(s);
-                JSONObject user_data = root.getJSONObject("user_credentials");
 
-                //fetch String from Array
-                String COUNT = user_data.getString("count");
-
-                //If result is not "0" --> User is already registered
-                if (!COUNT.equals("0")) {
-                    Toast.makeText(getActivity(),"User existiert bereits! Bitte anderen Usernamen verwenden!",Toast.LENGTH_LONG).show();
+                //Check if User already exists
+                if (flag.equals("1")) {
+                    //Toast.makeText(getActivity(),"User existiert bereits! Bitte anderen Usernamen verwenden!",Toast.LENGTH_LONG).show();
+                    emptyAllErrorTexts();
+                    usernameTextInputLayout.setError("Username is not available");
                 } else {
-                    //Switch to Overview
-                    Toast.makeText(getActivity(),"Registrierung war erfolgreich",Toast.LENGTH_LONG).show();
+                    //UI Information that registration was successfull
+                    Toast.makeText(getActivity(),"Registration was successful",Toast.LENGTH_LONG).show();
+                    //TODO write in SharedPrefs
+                    SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), username, password);
 
                     //Registration was successful --> Login
                     MainActivity.switchFragment(new LoginFragment(), getActivity(), true);
                 }
-                //try catch nötig ???????
-            } catch (JSONException e) {
-                e.printStackTrace();
-
-            }
         }
     }
-
 
 }
