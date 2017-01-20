@@ -134,12 +134,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         String savedPassword = SharedPrefsMethods.readStringFromSharedPrefs(getActivity(), username);
 
         if (!SharedPrefsMethods.containsStringInSharedPrefs(getActivity(), username)) {
-            usernameTextInputLayout.setError("Username is not registered");
+            passwordTextInputLayout.setError("Username or Password wrong");
             return false;
         }
 
         if (!password.equals(savedPassword)) {
-            passwordTextInputLayout.setError("Password is wrong!");
+            passwordTextInputLayout.setError("Username or Password wrong");
             return false;
         }
         return true;

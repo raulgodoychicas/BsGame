@@ -46,6 +46,7 @@ public class SharedPrefsMethods {
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.clear();
         editor.remove(SHAREDPREFS_FILE_KEY);
+        editor.apply();
         editor.commit();
         }
 
