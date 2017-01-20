@@ -219,15 +219,12 @@ public class RegisterFragment extends Fragment {
 
                 //Check if User already exists
                 if (flag.equals("1")) {
-                    //Toast.makeText(getActivity(),"User existiert bereits! Bitte anderen Usernamen verwenden!",Toast.LENGTH_LONG).show();
                     emptyAllErrorTexts();
                     usernameTextInputLayout.setError("Username is not available");
                 } else {
                     //UI Information that registration was successfull
-                    //Toast.makeText(getActivity(),"Registration was successful",Toast.LENGTH_LONG).show();
-                    Toast.makeText(getActivity(),uname + pw ,Toast.LENGTH_LONG).show();
-                    //TODO write in SharedPrefs
-
+                    Toast.makeText(getActivity(),"Registration was successful",Toast.LENGTH_LONG).show();
+                    //store credentials locally in sharedPrefs
                     SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), uname, pw);
 
                     //Registration was successful --> Login
