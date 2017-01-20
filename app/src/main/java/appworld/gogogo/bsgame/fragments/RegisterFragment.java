@@ -186,15 +186,20 @@ public class RegisterFragment extends Fragment {
                 outputStream.write(urlParams.getBytes());
                 outputStream.flush();
                 outputStream.close();
+
+                //get Input from Server
                 inputStream = httpURLConnection.getInputStream();
+
+                //Convert the Bytes from Server into a String
                 while ((count = inputStream.read()) != -1) {
                     data += (char) count;
                 }
+
+                //close connection
                 inputStream.close();
                 httpURLConnection.disconnect();
 
                 return data;
-
             } catch (MalformedURLException e) {
                 e.printStackTrace();
                 return "Exception: " + e.getMessage();

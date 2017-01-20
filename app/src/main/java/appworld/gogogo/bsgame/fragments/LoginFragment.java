@@ -216,15 +216,17 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             pdLoading.show();
         }
 
-        protected void onPostExecute(String s) /*String s is for the JSON String we get from the DB*/ {
-            pdLoading.dismiss();
-            try {
+        protected void onPostExecute(String data) /*String data is for the array we get from the DB*/ {
 
+            //Dismiss loading view in UI
+            pdLoading.dismiss();
+
+            try {
                 String NAME;
                 String PW;
 
                 //Pass String s into JSONObjec root
-                JSONObject root = new JSONObject(s);
+                JSONObject root = new JSONObject(data);
 
                 //get user_credentials, which are sent by the Server
                 JSONObject user_data = root.getJSONObject("user_credentials");
@@ -238,11 +240,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     passwordTextInputLayout.setError("Username or Password wrong");
                 } else {
                     MainActivity.switchFragment(new OverviewFragment(), getActivity(), true);
-
                 }
-                //  if(checkCredentialsFromServer(username,password,NAME,PW)){
-                //     MainActivity.switchFragment(new OverviewFragment(), getActivity(), true);
-                //  }
 
             } catch (JSONException e) {
                 e.printStackTrace();
