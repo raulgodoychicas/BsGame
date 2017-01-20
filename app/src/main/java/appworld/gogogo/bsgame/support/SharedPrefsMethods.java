@@ -3,13 +3,9 @@ package appworld.gogogo.bsgame.support;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-
-import java.io.File;
-
 import appworld.gogogo.bsgame.R;
 
 /**
- * Created by Raul on 23.09.2016.
  * <p>
  * This class contains all Methods for the Shared Preferences Methods used in the App
  * <p>
@@ -46,10 +42,6 @@ public class SharedPrefsMethods {
     }
 
     public static void clearSharedPrefs(Activity activity){
-       //final String FILENAME = "sharedPrefs";
-       //File sharedPrefsFile = new File(activity.getApplicationContext().getApplicationInfo().dataDir + "/shared_prefs/" + FILENAME +".xml");
-       //sharedPrefsFile.delete();
-
         SharedPreferences sharedPrefs = activity.getSharedPreferences(SHAREDPREFS_FILE_KEY,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.clear();

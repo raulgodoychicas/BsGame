@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 import android.widget.Toolbar;
-
 import appworld.gogogo.bsgame.fragments.ImpressumFragment;
 import appworld.gogogo.bsgame.fragments.LoginFragment;
 import appworld.gogogo.bsgame.support.SharedPrefsMethods;
