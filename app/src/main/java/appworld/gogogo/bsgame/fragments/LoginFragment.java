@@ -130,7 +130,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
      * @param password Password
      */
     private boolean isPasswordRight(String username, String password) {
-        // TODO: delete when App is finished
 
         String savedPassword = SharedPrefsMethods.readStringFromSharedPrefs(getActivity(), username);
 
