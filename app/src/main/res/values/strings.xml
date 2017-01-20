@@ -2,6 +2,8 @@
     <string name="app_name">Käsekästchen</string>
     <string name="action_settings">Settings</string>
     <string name="action_impressum">Impressum</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_clear_data">Clear Data</string>
     <string name="overview_fieldsize_prompt">Spielfeldgröße</string>
     <string name="overview_game_mode_prompt">Spielmodus</string>
     <string name="overview_username">KingSiegl</string>

@@ -9,10 +9,12 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import appworld.gogogo.bsgame.fragments.ImpressumFragment;
 import appworld.gogogo.bsgame.fragments.LoginFragment;
+import appworld.gogogo.bsgame.support.SharedPrefsMethods;
 
 public class MainActivity extends Activity {
 
@@ -60,6 +62,10 @@ public class MainActivity extends Activity {
             if (!(fragment instanceof ImpressumFragment)) {
                 switchFragment(new ImpressumFragment(), this, true);
             }
+        } else if ( id == R.id.action_clear_data){
+            //Delete all local datas from sharedPrefs
+            SharedPrefsMethods.clearSharedPrefs(this);
+            Toast.makeText(this,"All local data cleared",Toast.LENGTH_LONG).show();
         }
         return super.onOptionsItemSelected(item);
     }

@@ -3,12 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="appworld.gogogo.bsgame.MainActivity">
     <item
-        android:id="@+id/action_settings"
         android:orderInCategory="101"
-        android:title="@string/action_settings" />
+        android:title="@string/action_settings"
+        android:id="@+id/action_settings"/>
     <item
         android:title="@string/action_impressum"
         android:orderInCategory="102"
         android:id="@+id/action_impressum" />
+
+    <item
+        android:title="@string/action_logout"
+        android:orderInCategory="103"
+        android:id="@id/action_logout"/>
+    <item
+        android:title="@string/action_clear_data"
+        android:orderInCategory="104"
+        android:id="@+id/action_clear_data" />
 
 </menu>

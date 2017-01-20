@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.io.File;
+
 import appworld.gogogo.bsgame.R;
 
 /**
@@ -43,5 +45,19 @@ public class SharedPrefsMethods {
         return sharedPref.getString(m_gameModeValue,defaulValue);
     }
 
-}
+    public static void clearSharedPrefs(Activity activity){
+       //final String FILENAME = "sharedPrefs";
+       //File sharedPrefsFile = new File(activity.getApplicationContext().getApplicationInfo().dataDir + "/shared_prefs/" + FILENAME +".xml");
+       //sharedPrefsFile.delete();
+
+        SharedPreferences sharedPrefs = activity.getSharedPreferences(SHAREDPREFS_FILE_KEY,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        editor.clear();
+        editor.remove(SHAREDPREFS_FILE_KEY);
+        editor.commit();
+        }
+
+    }
+
+
 

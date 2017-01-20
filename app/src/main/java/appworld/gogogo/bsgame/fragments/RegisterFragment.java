@@ -36,9 +36,6 @@ public class RegisterFragment extends Fragment {
     private TextInputEditText passwordTextInputEditText;
     private TextInputEditText repeatPasswordTextInputEditText;
     private TextInputEditText usernameTextInputEditText;
-    private String username;
-    private String password;
-
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -71,8 +68,8 @@ public class RegisterFragment extends Fragment {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 username = usernameTextInputEditText.getText().toString().toLowerCase();
-                 password = passwordTextInputEditText.getText().toString();
+                String  username = usernameTextInputEditText.getText().toString().toLowerCase();
+                 String password = passwordTextInputEditText.getText().toString();
                 String passwordRepeat = repeatPasswordTextInputEditText.getText().toString();
 
                 //TODO Registration only with Internet connection !
@@ -100,6 +97,7 @@ public class RegisterFragment extends Fragment {
      * @return
      */
 
+    //TODO ENTFERNEN
     private Boolean isUserNameAvailable(String username) {
         return !SharedPrefsMethods.containsStringInSharedPrefs(getActivity(), username);
     }
@@ -164,12 +162,13 @@ public class RegisterFragment extends Fragment {
         OutputStream outputStream;
         InputStream inputStream;
 
-
+        String uname;
+        String pw;
         protected String doInBackground(String... params) {
 
             //params[0] = username, params[1] = password
-            String uname = params[0];
-            String pw = params[1];
+            uname = params[0];
+            pw = params[1];
 
             //Initializing Data String that is later needed to get the response information from the Server
             String data = "";
@@ -225,9 +224,11 @@ public class RegisterFragment extends Fragment {
                     usernameTextInputLayout.setError("Username is not available");
                 } else {
                     //UI Information that registration was successfull
-                    Toast.makeText(getActivity(),"Registration was successful",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getActivity(),"Registration was successful",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),uname + pw ,Toast.LENGTH_LONG).show();
                     //TODO write in SharedPrefs
-                    SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), username, password);
+
+                    SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), uname, pw);
 
                     //Registration was successful --> Login
                     MainActivity.switchFragment(new LoginFragment(), getActivity(), true);
