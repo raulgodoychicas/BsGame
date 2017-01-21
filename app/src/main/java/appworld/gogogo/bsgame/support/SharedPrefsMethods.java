@@ -44,7 +44,7 @@ public class SharedPrefsMethods {
     public static void clearSharedPrefs(Activity activity){
         SharedPreferences sharedPrefs = activity.getSharedPreferences(SHAREDPREFS_FILE_KEY,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
-        editor.clear();
+        //editor.clear();
         editor.remove(SHAREDPREFS_FILE_KEY);
         editor.apply();
         editor.commit();

@@ -2,6 +2,7 @@ package appworld.gogogo.bsgame;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -61,10 +62,15 @@ public class MainActivity extends Activity {
             if (!(fragment instanceof ImpressumFragment)) {
                 switchFragment(new ImpressumFragment(), this, true);
             }
-        } else if ( id == R.id.action_clear_data){
+        } else if (id == R.id.action_clear_data) {
             //Delete all local datas from sharedPrefs
             SharedPrefsMethods.clearSharedPrefs(this);
-            Toast.makeText(this,"All local data cleared",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Local data cleared", Toast.LENGTH_LONG).show();
+        } else if (id == R.id.action_logout) {
+            //if Backstack is empty do not load LoginFragment again, else clear Backstack !
+            if (clearBackStack(this)) {
+                switchFragment(new LoginFragment(), this, false);
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -74,5 +80,19 @@ public class MainActivity extends Activity {
         fragmentTransaction.replace(R.id.fragment, fragment);
         if (addToBackstack) fragmentTransaction.addToBackStack(fragment.getClass().getName());
         fragmentTransaction.commit();
+    }
+
+    public static boolean clearBackStack(Activity activity) {
+        boolean success = false;
+        FragmentManager fragmentManager = activity.getFragmentManager();
+        int count = fragmentManager.getBackStackEntryCount();
+        if (count > 0) {
+            while (count > 0) {
+                fragmentManager.popBackStackImmediate();
+                count--;
+            }
+            success = true;
+        }
+        return success;
     }
 }

@@ -103,13 +103,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 } else {
                     //If there is no internet connection compare User credentials with SharedPrefs
                     if (isPasswordRight(username, password)) {
-                        MainActivity.switchFragment(new OverviewFragment(), getActivity(), true);
+                        MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
                     }
                 }
                 break;
             }
             case R.id.login_register_button: {
-                MainActivity.switchFragment(new RegisterFragment(), getActivity(), true);
+                MainActivity.switchFragment(new RegisterFragment(), getActivity(), false);
                 break;
             }
         }
@@ -239,7 +239,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 if (!(PW.equals(password) || NAME.equals(username))) {
                     passwordTextInputLayout.setError("Username or Password wrong");
                 } else {
-                    MainActivity.switchFragment(new OverviewFragment(), getActivity(), true);
+                    MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
                 }
 
             } catch (JSONException e) {
