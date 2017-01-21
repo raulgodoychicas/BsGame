@@ -1,6 +1,7 @@
 package appworld.gogogo.bsgame.fragments;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -229,11 +230,12 @@ public class RegisterFragment extends Fragment {
                 } else {
                     //UI Information that registration was successfull
                     Toast.makeText(getActivity(),"Registration was successful",Toast.LENGTH_LONG).show();
+
                     //store credentials locally in sharedPrefs
                     SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), uname, pw);
 
-                    //Registration was successful --> Login
-                    MainActivity.switchFragment(new LoginFragment(), getActivity(), true);
+                        //Registration was successful --> Login
+                        MainActivity.switchFragment(new LoginFragment(), getActivity(), false);
                 }
         }
     }

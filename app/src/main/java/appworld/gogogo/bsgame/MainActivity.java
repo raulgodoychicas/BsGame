@@ -84,7 +84,7 @@ public class MainActivity extends Activity {
 
     public static boolean clearBackStack(Activity activity) {
         boolean success = false;
-        FragmentManager fragmentManager = activity.getFragmentManager();
+       final FragmentManager fragmentManager = activity.getFragmentManager();
         int count = fragmentManager.getBackStackEntryCount();
         if (count > 0) {
             while (count > 0) {

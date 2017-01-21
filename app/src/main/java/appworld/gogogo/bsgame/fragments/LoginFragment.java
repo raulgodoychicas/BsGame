@@ -109,7 +109,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 break;
             }
             case R.id.login_register_button: {
-                MainActivity.switchFragment(new RegisterFragment(), getActivity(), false);
+                MainActivity.switchFragment(new RegisterFragment(), getActivity(), true);
                 break;
             }
         }
