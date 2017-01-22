@@ -178,18 +178,23 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 URL url = new URL("http://www.worldlustblog.de/Registration/db_fetch_user.php");
                 String urlParams = "&name=" + uname + "&password=" + pw;
 
+                //connect to server and send Credentials to Server
                 httpURLConnection = (HttpURLConnection) url.openConnection();
-                //httpURLConnection.setConnectTimeout(6000);
                 httpURLConnection.setDoOutput(true);
+
+                //set timeout that app will not stuck in loading process if theres bad internet connection
+                httpURLConnection.setConnectTimeout(8000);
+                httpURLConnection.setReadTimeout(8000);
+
                 outputStream = httpURLConnection.getOutputStream();
                 outputStream.write(urlParams.getBytes());
                 outputStream.flush();
                 outputStream.close();
 
-                //get Input from Server (JSON String)
+                //get Input from Server (JSON coded array)
                 inputStream = httpURLConnection.getInputStream();
 
-                //Convert the Bytes from Server into a String
+                //read Inputstream from Server
                 while ((count = inputStream.read()) != -1) {
                     data += (char) count;
                 }
@@ -222,8 +227,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             pdLoading.dismiss();
 
             try {
-                String NAME;
-                String PW;
+                String name;
+                String pw;
 
                 //Pass String s into JSONObjec root
                 JSONObject root = new JSONObject(data);
@@ -231,12 +236,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 //get user_credentials, which are sent by the Server
                 JSONObject user_data = root.getJSONObject("user_credentials");
 
-                //retrive NAME and PW from user_credentials as a string
-                NAME = user_data.getString("name");
-                PW = user_data.getString("password");
+                //retrive name and pw from array user_credentials as a string
+                name = user_data.getString("name");
+                pw = user_data.getString("password");
 
                 //If credentials are correct --> Login
-                if (!(PW.equals(password) || NAME.equals(username))) {
+                if (!(pw.equals(password) || name.equals(username))) {
                     passwordTextInputLayout.setError("Username or Password wrong");
                 } else {
                     MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);

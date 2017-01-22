@@ -70,7 +70,7 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String  username = usernameTextInputEditText.getText().toString().toLowerCase();
-                 String password = passwordTextInputEditText.getText().toString();
+                String password = passwordTextInputEditText.getText().toString();
                 String passwordRepeat = repeatPasswordTextInputEditText.getText().toString();
 
                 //TODO Registration only with Internet connection !
@@ -181,6 +181,7 @@ public class RegisterFragment extends Fragment {
                 URL url = new URL("http://www.worldlustblog.de/Registration/register.php");
                 String urlParams = "&name=" + uname + "&password=" + pw;
 
+                //connect to server and send Credentials to Server
                 httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
                 outputStream = httpURLConnection.getOutputStream();
@@ -191,7 +192,7 @@ public class RegisterFragment extends Fragment {
                 //get Input from Server
                 inputStream = httpURLConnection.getInputStream();
 
-                //Convert the Bytes from Server into a String
+                //read inputstream from server
                 while ((count = inputStream.read()) != -1) {
                     data += (char) count;
                 }
@@ -231,7 +232,7 @@ public class RegisterFragment extends Fragment {
                     //UI Information that registration was successfull
                     Toast.makeText(getActivity(),"Registration was successful",Toast.LENGTH_LONG).show();
 
-                    //store credentials locally in sharedPrefs
+                    //store credentials local in sharedPrefs
                     SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), uname, pw);
 
                         //Registration was successful --> Login

@@ -67,10 +67,9 @@ public class MainActivity extends Activity {
             SharedPrefsMethods.clearSharedPrefs(this);
             Toast.makeText(this, "Local data cleared", Toast.LENGTH_LONG).show();
         } else if (id == R.id.action_logout) {
-            //if Backstack is empty do not load LoginFragment again, else clear Backstack !
-            if (clearBackStack(this)) {
+            //clear Backstack!
+            clearBackStack(this);
                 switchFragment(new LoginFragment(), this, false);
-            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -82,17 +81,12 @@ public class MainActivity extends Activity {
         fragmentTransaction.commit();
     }
 
-    public static boolean clearBackStack(Activity activity) {
-        boolean success = false;
+    public static void clearBackStack(Activity activity) {
        final FragmentManager fragmentManager = activity.getFragmentManager();
         int count = fragmentManager.getBackStackEntryCount();
-        if (count > 0) {
-            while (count > 0) {
+            while (count > -1) {
                 fragmentManager.popBackStackImmediate();
                 count--;
             }
-            success = true;
-        }
-        return success;
     }
 }
