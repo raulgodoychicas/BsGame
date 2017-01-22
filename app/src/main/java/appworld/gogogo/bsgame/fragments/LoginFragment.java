@@ -183,8 +183,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 httpURLConnection.setDoOutput(true);
 
                 //set timeout that app will not stuck in loading process if theres bad internet connection
-                httpURLConnection.setConnectTimeout(8000);
-                httpURLConnection.setReadTimeout(8000);
+                //httpURLConnection.setConnectTimeout(8000);
+                //httpURLConnection.setReadTimeout(8000);
 
                 outputStream = httpURLConnection.getOutputStream();
                 outputStream.write(urlParams.getBytes());
