@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-
 import appworld.gogogo.bsgame.MainActivity;
 import appworld.gogogo.bsgame.R;
 
@@ -153,8 +152,6 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
         });
         AlertDialog dialog = builder.create();
         dialog.show();
-
-
     }
 
 }

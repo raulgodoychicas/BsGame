@@ -20,10 +20,10 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import appworld.gogogo.bsgame.MainActivity;
 import appworld.gogogo.bsgame.R;
 import appworld.gogogo.bsgame.support.SharedPrefsMethods;
 
-import static appworld.gogogo.bsgame.MainActivity.*;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -220,8 +220,8 @@ public class RegisterFragment extends Fragment {
                    //Clear backstack!
                    // MainActivity.clearBackStack(getActivity());
 
-                        //Registration was successful --> Login
-                        switchFragment(new LoginFragment(), getActivity(), false);
+                    //Registration was successful --> Login
+                    MainActivity.switchFragment(new LoginFragment(), getActivity(), false);
                 }
         }
     }
