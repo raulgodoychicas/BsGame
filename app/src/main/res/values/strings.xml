@@ -32,6 +32,14 @@
                 Handelsregistergericht: Amtsgericht München<br><br>]]> </string>
 
     <string name="impressum_header_textview"><![CDATA[ <u>Impressum</u>]]></string>
+    <string name="introduction_header_textview"><![CDATA[ <u>Spielanleitung</u>]]></string>
+    <string name="introduction_body_textview"><![CDATA[ Ziel des Spiels:
+                 Es geht darum, möglichst viele Kästchen zu erobern. Ein Kästchen wird erobert, wenn die vierte Wand (Seitenkante) platziert wird. In jedem Zug kannst du eine Wand setzen.
+                 Wenn du ein Kästchen erobert hast, musst du gleich noch einen Zug machen - und kannst so vielleicht gleich ein weiteres Kästchen bekommen.
+                 Wenn alle Wände gesetzt sind, ist das Spiel zu Ende. Derjenige, der am meisten Kästchen erobert hat, ist der Gewinner des Spiels.Das Setzen von Wänden:
+                 Wenn du am Zug bist, musst du eine Wand setzen. Klicke dazu auf eine horizontale oder vertikale Linie, wo noch keine Wand steht.Kästchen erobern:
+                 Sobald alle vier Wände eines Kästchens (d. h. alle vier Seiten eines Quadrats) platziert wurden, gehört das Kästchen demjenigen, der die letzte Wand gesetzt hat. Spielende:
+                 Das Spiel ist zu Ende, wenn alle Wände gesetzt sind. Der Gewinner ist derjenige, der die meisten Kästchen erhalten hat ]]></string>
     <string name="fragment_game_player1_textview">Player 1</string>
     <string name="fragment_game_player2_textview">Player 2</string>
 

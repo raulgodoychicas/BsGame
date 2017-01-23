@@ -1,4 +1,5 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,8 +7,26 @@
     tools:context="appworld.gogogo.bsgame.fragments.IntroductionFragment">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="This is the Fragment where teh Game is going to be explained." />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:textSize="25sp"
+        android:textColor="?android:attr/textColorPrimary"
+        android:id="@+id/introduction_header_textview" />
 
-</LinearLayout>
+    <ScrollView
+        android:layout_below="@id/introduction_header_textview"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/introduction_header_textview"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="18dp"
+        android:id="@+id/introduction_body_textview" />
+    </ScrollView>
+</RelativeLayout>

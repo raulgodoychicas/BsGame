@@ -1,7 +1,6 @@
 package appworld.gogogo.bsgame.fragments;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -21,9 +20,10 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import appworld.gogogo.bsgame.MainActivity;
 import appworld.gogogo.bsgame.R;
 import appworld.gogogo.bsgame.support.SharedPrefsMethods;
+
+import static appworld.gogogo.bsgame.MainActivity.*;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,11 +73,6 @@ public class RegisterFragment extends Fragment {
                 String password = passwordTextInputEditText.getText().toString();
                 String passwordRepeat = repeatPasswordTextInputEditText.getText().toString();
 
-                //TODO Registration only with Internet connection !
-                // if (!isUserNameAvailable(username)) {
-                //    emptyAllErrorTexts();
-                //   usernameTextInputLayout.setError("Username is not available");
-                //}
                 if (isPasswordAccordingToRules(password, passwordRepeat)) {
                     if (isNetworkAvailable(getActivity())) {
                         AsyncRegistraton doInBackGround = new AsyncRegistraton();
@@ -88,19 +83,6 @@ public class RegisterFragment extends Fragment {
                 }
             }
         });
-    }
-
-    /**
-     * This Method proofs if the given username is contained in the Database.
-     * Right now Database = Shared Preferences
-     *
-     * @param username
-     * @return
-     */
-
-    //TODO ENTFERNEN
-    private Boolean isUserNameAvailable(String username) {
-        return !SharedPrefsMethods.containsStringInSharedPrefs(getActivity(), username);
     }
 
     /**
@@ -158,13 +140,13 @@ public class RegisterFragment extends Fragment {
 
         //Loading view in UI while registration
         ProgressDialog pdLoading = new ProgressDialog(getActivity());
-
         HttpURLConnection httpURLConnection;
         OutputStream outputStream;
         InputStream inputStream;
 
         String uname;
         String pw;
+
         protected String doInBackground(String... params) {
 
             //params[0] = username, params[1] = password
@@ -235,8 +217,11 @@ public class RegisterFragment extends Fragment {
                     //store credentials local in sharedPrefs
                     SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), uname, pw);
 
+                   //Clear backstack!
+                   // MainActivity.clearBackStack(getActivity());
+
                         //Registration was successful --> Login
-                        MainActivity.switchFragment(new LoginFragment(), getActivity(), false);
+                        switchFragment(new LoginFragment(), getActivity(), false);
                 }
         }
     }
