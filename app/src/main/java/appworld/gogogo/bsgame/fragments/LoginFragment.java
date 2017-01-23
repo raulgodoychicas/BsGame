@@ -89,13 +89,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
                 emptyAllErrorTexts();
 
-                //get inputs from User , Username(Username converted to lower case, so log-in is CaseInsensitive) and Password
+                //get inputs from User, Username(lower case, so login is CaseInsensitive) and password
                 username = usernameTextInputEditText.getText().toString().toLowerCase();
                 password = passwordTextInputEditText.getText().toString();
 
                 //Check if internet connection is available
                 if (isNetworkAvailable(getActivity())) {
-
                     //execute AsyncTask in Background and commit inputs from User to the AsyncTask to compare User Credentials with Server
                     AsyncLogin asyncLogin = new AsyncLogin();
                     asyncLogin.execute(username, password);
@@ -249,7 +248,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
                 } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(getActivity(), "Serverproblems!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Serverproblems! Try again later.", Toast.LENGTH_LONG).show();
             }
 
         }
