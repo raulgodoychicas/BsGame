@@ -62,14 +62,16 @@ public class MainActivity extends Activity {
             if (!(fragment instanceof ImpressumFragment)) {
                 switchFragment(new ImpressumFragment(), this, true);
             }
+
         } else if (id == R.id.action_clear_data) {
             //Delete all local datas from sharedPrefs
             SharedPrefsMethods.clearSharedPrefs(this);
             Toast.makeText(this, "Local data cleared", Toast.LENGTH_LONG).show();
+
         } else if (id == R.id.action_logout) {
             //clear Backstack!
             clearBackStack(this);
-                switchFragment(new LoginFragment(), this, false);
+            switchFragment(new LoginFragment(), this, false);
         }
         return super.onOptionsItemSelected(item);
     }

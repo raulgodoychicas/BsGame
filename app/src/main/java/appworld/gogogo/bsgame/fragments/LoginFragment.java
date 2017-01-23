@@ -247,7 +247,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
                 }
 
-            } catch (JSONException e) {
+                } catch (JSONException e) {
                 e.printStackTrace();
                 Toast.makeText(getActivity(), "Serverproblems!", Toast.LENGTH_LONG).show();
             }
