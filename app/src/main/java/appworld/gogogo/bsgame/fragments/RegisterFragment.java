@@ -217,7 +217,8 @@ public class RegisterFragment extends Fragment {
                     //store credentials local in sharedPrefs
                     SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), uname, pw);
 
-                   //Clear backstack!
+
+                   //TODO Clear backstack!
                    // MainActivity.clearBackStack(getActivity());
 
                     //Registration was successful --> Login

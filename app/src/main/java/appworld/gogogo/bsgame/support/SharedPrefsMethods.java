@@ -15,6 +15,7 @@ import appworld.gogogo.bsgame.R;
 public class SharedPrefsMethods {
 
     public static String SHAREDPREFS_FILE_KEY = "sharedPrefs";
+    public static String SHAREDPREFS_REMEMBER_ME_SERVICE = "sharedPrefsRememberMe";
 
     public static void writeStringToSharedPrefs(Activity activity, String keyValueString, String string) {
         SharedPreferences sharedPref = activity.getSharedPreferences(SHAREDPREFS_FILE_KEY, Context.MODE_PRIVATE);
@@ -44,10 +45,47 @@ public class SharedPrefsMethods {
     public static void clearSharedPrefs(Activity activity){
         SharedPreferences sharedPrefs = activity.getSharedPreferences(SHAREDPREFS_FILE_KEY,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
-        //editor.clear();
+        editor.clear();
         editor.remove(SHAREDPREFS_FILE_KEY);
+        editor.remove(SHAREDPREFS_REMEMBER_ME_SERVICE);
         editor.apply();
         editor.commit();
+        }
+
+    public static void clearRememberMeService(Activity activity){
+        SharedPreferences sharedPrefs = activity.getSharedPreferences(SHAREDPREFS_REMEMBER_ME_SERVICE,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        editor.clear();
+        editor.remove(SHAREDPREFS_REMEMBER_ME_SERVICE);
+        editor.apply();
+        editor.commit();
+    }
+
+    public static void writeRememberMeServiceToSharedPrefs(Activity activity,boolean m_checkSwitchState) {
+        SharedPreferences sharedPref = activity.getSharedPreferences(SHAREDPREFS_REMEMBER_ME_SERVICE,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("serviceStatus",m_checkSwitchState);
+        editor.apply();
+        editor.commit();
+    }
+
+    public static void writeUsernameToSharedPrefs(Activity activity, String username){
+        SharedPreferences sharedPref = activity.getSharedPreferences(SHAREDPREFS_REMEMBER_ME_SERVICE,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("UserName", username);
+        editor.apply();
+        editor.commit();
+    }
+
+    public static String readUsernameForRememberMeService(Activity activity, String m_username){
+        SharedPreferences sharedPref = activity.getSharedPreferences(SHAREDPREFS_REMEMBER_ME_SERVICE, Context.MODE_PRIVATE);
+        return sharedPref.getString("UserName", m_username);
+    }
+
+    public static boolean readRememberServiceStatus(Activity activity,String m_serviceStatus){
+        SharedPreferences sharedPref = activity.getSharedPreferences(SHAREDPREFS_REMEMBER_ME_SERVICE,Context.MODE_PRIVATE);
+            boolean defaultValue = false;
+            return sharedPref.getBoolean(m_serviceStatus,defaultValue);
         }
 
     }

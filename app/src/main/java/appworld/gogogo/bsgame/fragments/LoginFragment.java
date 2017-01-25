@@ -3,6 +3,7 @@ package appworld.gogogo.bsgame.fragments;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -57,6 +58,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_login, container, false);
+
     }
 
     @Override
@@ -69,6 +71,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         registerButton = (Button) view.findViewById(R.id.login_register_button);
         registerButton.setOnClickListener(this);
 
+        loginRememberMeSwitch = (Switch) view.findViewById(R.id.login_angemeldet_bleiben);
+        loginRememberMeSwitch.setOnClickListener(this);
+
         usernameTextInputLayout = (TextInputLayout) view.findViewById(R.id.login_username_textinputlayout);
         usernameTextInputLayout.setErrorEnabled(true);
         usernameTextInputEditText = (TextInputEditText) view.findViewById(R.id.login_username_textinputedittext);
@@ -77,35 +82,49 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         passwordTextInputLayout.setErrorEnabled(true);
         passwordTextInputEditText = (TextInputEditText) view.findViewById(R.id.login_password_textinputedittext);
 
-        loginRememberMeSwitch = (Switch) view.findViewById(R.id.login_angemeldet_bleiben);
-        loginRememberMeSwitch.setOnClickListener(this);
+        //Check if remember me feature is selected and set username for next start of the app !!
+        boolean saveLogin = SharedPrefsMethods.readRememberServiceStatus(getActivity(),"serviceStatus");
+        if(saveLogin == true){
+            String savedUsername = SharedPrefsMethods.readUsernameForRememberMeService(getActivity(),"UserName");
+            usernameTextInputEditText.setText(savedUsername);
+            loginRememberMeSwitch.setChecked(true);
+        }
+
     }
 
     @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.login_button: {
 
+            case R.id.login_button: {
                 emptyAllErrorTexts();
 
                 //get inputs from User, Username(lower case, so login is CaseInsensitive) and password
                 username = usernameTextInputEditText.getText().toString().toLowerCase();
                 password = passwordTextInputEditText.getText().toString();
 
+                //if Switch is on, remember Switch-State and Only Write Username To SharedPrefs
+                if (loginRememberMeSwitch.isChecked()) {
+                    if(!username.equals("")) {
+                        SharedPrefsMethods.writeRememberMeServiceToSharedPrefs(getActivity(), true);
+                        SharedPrefsMethods.writeUsernameToSharedPrefs(getActivity(), username);
+                    }
+                } else {
+                    SharedPrefsMethods.clearRememberMeService(getActivity());
+                }
                 //Check if internet connection is available
                 if (isNetworkAvailable(getActivity())) {
                     //execute AsyncTask in Background and commit inputs from User to the AsyncTask to compare User Credentials with Server
                     AsyncLogin asyncLogin = new AsyncLogin();
                     asyncLogin.execute(username, password);
-
                 } else {
                     //If there is no internet connection compare User credentials with SharedPrefs
                     if (isPasswordRight(username, password)) {
                         MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
                     }
                 }
-                break;
+                    break;
             }
             case R.id.login_register_button: {
                 MainActivity.switchFragment(new RegisterFragment(), getActivity(), true);
