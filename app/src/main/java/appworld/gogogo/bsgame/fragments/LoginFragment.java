@@ -84,8 +84,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         //Check if remember me feature is selected and set username for next start of the app !!
         boolean saveLogin = SharedPrefsMethods.readRememberServiceStatus(getActivity(),"serviceStatus");
-        if(saveLogin == true){
-            String savedUsername = SharedPrefsMethods.readUsernameForRememberMeService(getActivity(),"UserName");
+        if(saveLogin){
+            String savedUsername = SharedPrefsMethods.readUsernameForRememberMeService(getActivity(),"userName");
             usernameTextInputEditText.setText(savedUsername);
             loginRememberMeSwitch.setChecked(true);
         }

@@ -43,6 +43,7 @@ public class SharedPrefsMethods {
     }
 
     public static void clearSharedPrefs(Activity activity){
+        //TODO Clear all !!
         SharedPreferences sharedPrefs = activity.getSharedPreferences(SHAREDPREFS_FILE_KEY,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.clear();
@@ -72,14 +73,14 @@ public class SharedPrefsMethods {
     public static void writeUsernameToSharedPrefs(Activity activity, String username){
         SharedPreferences sharedPref = activity.getSharedPreferences(SHAREDPREFS_REMEMBER_ME_SERVICE,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("UserName", username);
+        editor.putString("userName", username);
         editor.apply();
         editor.commit();
     }
 
     public static String readUsernameForRememberMeService(Activity activity, String m_username){
         SharedPreferences sharedPref = activity.getSharedPreferences(SHAREDPREFS_REMEMBER_ME_SERVICE, Context.MODE_PRIVATE);
-        return sharedPref.getString("UserName", m_username);
+        return sharedPref.getString("userName", m_username);
     }
 
     public static boolean readRememberServiceStatus(Activity activity,String m_serviceStatus){
