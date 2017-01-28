@@ -221,6 +221,9 @@ public class RegisterFragment extends Fragment {
                    //TODO Clear backstack!
                    // MainActivity.clearBackStack(getActivity());
 
+                    //hide Keyboard
+                    MainActivity.hideKeyboard(getActivity());
+
                     //Registration was successful --> Login
                     MainActivity.switchFragment(new LoginFragment(), getActivity(), false);
                 }

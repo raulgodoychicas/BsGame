@@ -10,6 +10,8 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 import android.widget.Toolbar;
 import appworld.gogogo.bsgame.fragments.ImpressumFragment;
@@ -91,4 +93,14 @@ public class MainActivity extends Activity {
                 count--;
             }
     }
+
+    public static void hideKeyboard(Activity activity) {
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View cur_focus = activity.getCurrentFocus();
+        if (cur_focus != null) {
+            inputMethodManager.hideSoftInputFromWindow(cur_focus.getWindowToken(), 0);
+        }
+    }
+
 }

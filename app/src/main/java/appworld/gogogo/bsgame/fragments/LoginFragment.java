@@ -3,7 +3,6 @@ package appworld.gogogo.bsgame.fragments;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import android.support.design.widget.TextInputLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -58,7 +58,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_login, container, false);
-
     }
 
     @Override
@@ -89,7 +88,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             usernameTextInputEditText.setText(savedUsername);
             loginRememberMeSwitch.setChecked(true);
         }
-
     }
 
     @Override
@@ -99,6 +97,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
             case R.id.login_button: {
                 emptyAllErrorTexts();
+                //hide Keyboard
+                MainActivity.hideKeyboard(getActivity());
 
                 //get inputs from User, Username(lower case, so login is CaseInsensitive) and password
                 username = usernameTextInputEditText.getText().toString().toLowerCase();
@@ -127,6 +127,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     break;
             }
             case R.id.login_register_button: {
+                //hide keyboard
+                MainActivity.hideKeyboard(getActivity());
+                //switch to RegisterFragment
                 MainActivity.switchFragment(new RegisterFragment(), getActivity(), true);
                 break;
             }

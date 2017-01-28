@@ -1,6 +1,5 @@
 package appworld.gogogo.bsgame.fragments;
 
-
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
