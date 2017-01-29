@@ -33,13 +33,21 @@
 
     <string name="impressum_header_textview"><![CDATA[ <u>Impressum</u>]]></string>
     <string name="introduction_header_textview"><![CDATA[ <u>Spielanleitung</u>]]></string>
-    <string name="introduction_body_textview"><![CDATA[ Ziel des Spiels:
+    <string name="introduction_body_textview"><![CDATA[
+                 <u>Ziel des Spiels:</u><br>
                  Es geht darum, möglichst viele Kästchen zu erobern. Ein Kästchen wird erobert, wenn die vierte Wand (Seitenkante) platziert wird. In jedem Zug kannst du eine Wand setzen.
                  Wenn du ein Kästchen erobert hast, musst du gleich noch einen Zug machen - und kannst so vielleicht gleich ein weiteres Kästchen bekommen.
-                 Wenn alle Wände gesetzt sind, ist das Spiel zu Ende. Derjenige, der am meisten Kästchen erobert hat, ist der Gewinner des Spiels.Das Setzen von Wänden:
-                 Wenn du am Zug bist, musst du eine Wand setzen. Klicke dazu auf eine horizontale oder vertikale Linie, wo noch keine Wand steht.Kästchen erobern:
-                 Sobald alle vier Wände eines Kästchens (d. h. alle vier Seiten eines Quadrats) platziert wurden, gehört das Kästchen demjenigen, der die letzte Wand gesetzt hat. Spielende:
+                 Wenn alle Wände gesetzt sind, ist das Spiel zu Ende. Derjenige, der am meisten Kästchen erobert hat, ist der Gewinner des Spiels.<br><br>
+                 <u>Das Setzen von Wänden:</u><br>
+                 Wenn du am Zug bist, musst du eine Wand setzen. Klicke dazu auf eine horizontale oder vertikale Linie, wo noch keine Wand steht.<br><br>
+                 <u>Kästchen erobern:</u><br>
+                 Sobald alle vier Wände eines Kästchens (d. h. alle vier Seiten eines Quadrats) platziert wurden, gehört das Kästchen demjenigen, der die letzte Wand gesetzt hat.<br><br>
+                 <u>Spielende:</u><br>
                  Das Spiel ist zu Ende, wenn alle Wände gesetzt sind. Der Gewinner ist derjenige, der die meisten Kästchen erhalten hat ]]></string>
+    <string name="overview_help_description_button">1. Wählen Sie die Spielfeldgröße aus. (z.B. "3x3" erzeugt ein Spielfeld mit 9 Kästchen.\n\n
+                                        2. Wählen Sie den Spielmodus aus. (z.B. "MultiPlayer". Spielen Sie gegen den Computer.\n\n
+                                        3. Drücken Sie "Starten" und beginnen Sie das Spiel. </string>
+    <string name="overview_help_title_button">Spieleinstellungen:</string>
     <string name="fragment_game_player1_textview">Player 1</string>
     <string name="fragment_game_player2_textview">Player 2</string>
 

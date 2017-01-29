@@ -142,8 +142,8 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
 
     private void createHelpDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Title");
-        builder.setMessage("Erklärung über beide Buttons");
+        builder.setTitle(getString(R.string.overview_help_title_button));
+        builder.setMessage(getString(R.string.overview_help_description_button));
         builder.setPositiveButton("Verstanden", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();

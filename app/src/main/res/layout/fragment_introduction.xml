@@ -27,6 +27,7 @@
         android:layout_below="@+id/introduction_header_textview"
         android:layout_marginStart="13dp"
         android:layout_marginTop="18dp"
+        android:textColor="?android:attr/textColorPrimary"
         android:id="@+id/introduction_body_textview" />
     </ScrollView>
 </RelativeLayout>
