@@ -78,9 +78,10 @@ public class SharedPrefsMethods {
         editor.commit();
     }
 
-    public static String readUsernameForRememberMeService(Activity activity, String m_username){
+    public static String readUsernameForRememberMeService(Activity activity,String m_userName){
         SharedPreferences sharedPref = activity.getSharedPreferences(SHAREDPREFS_REMEMBER_ME_SERVICE, Context.MODE_PRIVATE);
-        return sharedPref.getString("userName", m_username);
+        String defaultValue = "";
+        return sharedPref.getString(m_userName, defaultValue);
     }
 
     public static boolean readRememberServiceStatus(Activity activity,String m_serviceStatus){
