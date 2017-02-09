@@ -15,7 +15,7 @@ import android.view.View;
 import appworld.gogogo.bsgame.R;
 import appworld.gogogo.bsgame.interfaces.PlayerListener;
 import appworld.gogogo.bsgame.objects.LineOnCanvas;
-import appworld.gogogo.bsgame.objects.MarkedRects;
+import appworld.gogogo.bsgame.objects.markedRects;
 
 /**
  * Created by Raul on 04.11.2016.
@@ -27,7 +27,7 @@ public class PlayGroundView extends View {
     private LineOnCanvas[] verticalLinesOnCanvases;
     private LineOnCanvas[] horizontalLinesOnCanvas;
     private Rect[] rects;
-    private MarkedRects[] markedRects;
+    private appworld.gogogo.bsgame.objects.markedRects[] markedRects;
 
     private int numberOfSquares;
     private int parentWidth;
@@ -129,7 +129,7 @@ public class PlayGroundView extends View {
         if (rects == null) {
             int squareSideSize = (maxValue - 40) / numberOfSquares;
             rects = new Rect[numberOfSquares * numberOfSquares];
-            markedRects = new MarkedRects[numberOfSquares * numberOfSquares];
+            markedRects = new markedRects[numberOfSquares * numberOfSquares];
 
             for (int i = 0; i < numberOfSquares; i++) {
                 for (int u = 0; u < numberOfSquares; u++) {
@@ -138,7 +138,7 @@ public class PlayGroundView extends View {
                             20 + i * squareSideSize + 10,
                             20 + u * squareSideSize + squareSideSize - 10,
                             20 + i * squareSideSize + squareSideSize - 10);
-                    markedRects[i * numberOfSquares + u] = new MarkedRects(false, -1);
+                    markedRects[i * numberOfSquares + u] = new markedRects(false, -1);
                 }
             }
         }

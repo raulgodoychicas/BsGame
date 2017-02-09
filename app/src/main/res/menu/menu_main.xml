@@ -10,14 +10,13 @@
         android:title="@string/action_impressum"
         android:orderInCategory="102"
         android:id="@+id/action_impressum" />
-
     <item
-        android:title="Logout"
+        android:title="@string/action_clear_data"
         android:orderInCategory="103"
-        android:id="@+id/action_logout"/>
-    <item
-        android:title="Clear Data"
-        android:orderInCategory="104"
         android:id="@+id/action_clear_data" />
+    <item
+        android:title="@string/action_logout"
+        android:orderInCategory="104"
+        android:id="@+id/action_logout"/>
 
 </menu>

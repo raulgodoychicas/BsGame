@@ -75,7 +75,7 @@ public class RegisterFragment extends Fragment {
                 String username = usernameTextInputEditText.getText().toString().toLowerCase();
                 String password = passwordTextInputEditText.getText().toString();
                 String passwordRepeat = repeatPasswordTextInputEditText.getText().toString();
-
+            if(isUsernameEmpty(username)) {
                 if (isPasswordAccordingToRules(password, passwordRepeat)) {
                     if (isNetworkAvailable(getActivity())) {
                         AsyncRegistraton doInBackGround = new AsyncRegistraton();
@@ -84,35 +84,45 @@ public class RegisterFragment extends Fragment {
                         Toast.makeText(getActivity(), "Registrierung nicht möglich. Bitte Internetverbindung prüfen", Toast.LENGTH_LONG).show();
                     }
                 }
+             }
             }
         });
     }
 
+
+    private boolean isUsernameEmpty(String usernameString){
+        if(usernameString.equals("")){
+            emptyAllErrorTexts();
+            usernameTextInputLayout.setError("Pflichtfeld");
+            return false;
+        }
+        return true;
+    }
     /**
      * This Methods controls if the password has the needed Format
      *
      * @param passwordString
      * @param repeatpasswordString
      */
-    private Boolean isPasswordAccordingToRules(String passwordString, String repeatpasswordString) {
+    private boolean isPasswordAccordingToRules(String passwordString, String repeatpasswordString) {
         if (passwordString.isEmpty()) {
             emptyAllErrorTexts();
-            passwordTextInputLayout.setError("Please fill this field");
+            passwordTextInputLayout.setError("Pflichtfeld");
             return false;
         }
         if (repeatpasswordString.isEmpty()) {
             emptyAllErrorTexts();
-            repeatPasswordTextInputLayout.setError("Please fill this field");
+            repeatPasswordTextInputLayout.setError("Pflichtfeld!");
             return false;
         }
         if (!passwordString.equals(repeatpasswordString)) {
             emptyAllErrorTexts();
-            repeatPasswordTextInputLayout.setError("Passwords have to be identic");
+            repeatPasswordTextInputLayout.setError("Passwörter müssen identisch sein!");
             return false;
         }
         if (passwordString.length() < 4) {
             emptyAllErrorTexts();
-            passwordTextInputLayout.setError("Password is too short");
+            passwordTextInputLayout.setError("Passwort muss mindesten 4 Zeichen lang sein!");
             return false;
         }
         if (passwordString.contains("!") || passwordString.contains("&")
@@ -121,7 +131,7 @@ public class RegisterFragment extends Fragment {
             return true;
         } else {
             emptyAllErrorTexts();
-            passwordTextInputLayout.setError("Password must contain !&-_%.");
+            passwordTextInputLayout.setError("Passwort muss !&-_% enthalten.");
             return false;
         }
     }
@@ -200,7 +210,7 @@ public class RegisterFragment extends Fragment {
             super.onPreExecute();
 
             //Run loading view on UI thread
-            pdLoading.setMessage("\tLoading...");
+            pdLoading.setMessage("\tLade...");
             pdLoading.setCancelable(false);
             pdLoading.show();
         }
@@ -212,16 +222,16 @@ public class RegisterFragment extends Fragment {
             //Check if User already exists
             if (flag.equals("1")) {
                 emptyAllErrorTexts();
-                usernameTextInputLayout.setError("Username is not available");
+                usernameTextInputLayout.setError("Username bereits vergeben.");
             } else {
                 //UI Information that registration was successfull
-                Toast.makeText(getActivity(), "Registration was successful", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Registrierung war erfolgreich.", Toast.LENGTH_LONG).show();
 
                 //store credentials local in sharedPrefs
                 SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), uname, pw);
 
                 //TODO Clear backstack!
-                // MainActivity.clearBackStack(getActivity());
+                //MainActivity.clearBackStack(getActivity());
 
                 //hide Keyboard
                 UiMethods.closeKeyboard(getView(), getActivity());

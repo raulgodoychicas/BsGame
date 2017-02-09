@@ -1,7 +1,6 @@
 package appworld.gogogo.bsgame.engine;
 
 import appworld.gogogo.bsgame.objects.LineOnCanvas;
-import appworld.gogogo.bsgame.objects.MarkedRects;
 
 /**
  * Created by Raul on 01.11.2016.

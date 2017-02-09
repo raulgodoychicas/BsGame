@@ -14,7 +14,7 @@ import android.widget.Toast;
 import appworld.gogogo.bsgame.R;
 import appworld.gogogo.bsgame.engine.PlayGroundView;
 import appworld.gogogo.bsgame.interfaces.PlayerListener;
-import appworld.gogogo.bsgame.objects.MarkedRects;
+import appworld.gogogo.bsgame.objects.markedRects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -81,12 +81,12 @@ public class GameFragment extends Fragment implements PlayerListener {
     }
 
     @Override
-    public void changeScore(MarkedRects[] markedRects) {
+    public void changeScore(markedRects[] markedRects) {
 
         int player1Score = 0;
         int player2Score = 0;
 
-        for (MarkedRects markedRect : markedRects) {
+        for (appworld.gogogo.bsgame.objects.markedRects markedRect : markedRects) {
             if (markedRect.player == 0) {
                 player1Score++;
             } else if (markedRect.player == 1) {

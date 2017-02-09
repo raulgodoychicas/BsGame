@@ -43,12 +43,10 @@ public class SharedPrefsMethods {
     }
 
     public static void clearSharedPrefs(Activity activity){
-        //TODO Clear all !!
         SharedPreferences sharedPrefs = activity.getSharedPreferences(SHAREDPREFS_FILE_KEY,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.clear();
         editor.remove(SHAREDPREFS_FILE_KEY);
-        editor.remove(SHAREDPREFS_REMEMBER_ME_SERVICE);
         editor.apply();
         editor.commit();
         }
@@ -62,7 +60,7 @@ public class SharedPrefsMethods {
         editor.commit();
     }
 
-    public static void writeRememberMeServiceToSharedPrefs(Activity activity,boolean m_checkSwitchState) {
+    public static void writeRememberMeServiceStateToSharedPrefs(Activity activity,boolean m_checkSwitchState) {
         SharedPreferences sharedPref = activity.getSharedPreferences(SHAREDPREFS_REMEMBER_ME_SERVICE,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean("serviceStatus",m_checkSwitchState);

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,8 +12,6 @@ import android.transition.Fade;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -71,7 +70,8 @@ public class MainActivity extends Activity {
         } else if (id == R.id.action_clear_data) {
             //Delete all local datas from sharedPrefs
             SharedPrefsMethods.clearSharedPrefs(this);
-            Toast.makeText(this, "Local data cleared", Toast.LENGTH_LONG).show();
+            SharedPrefsMethods.clearRememberMeService(this);
+            Toast.makeText(this, "Lokale Daten wurden gelöscht.", Toast.LENGTH_LONG).show();
 
         } else if (id == R.id.action_logout) {
             //clear Backstack!

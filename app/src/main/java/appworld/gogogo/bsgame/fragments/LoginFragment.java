@@ -116,7 +116,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 //if Switch is on, remember Switch-State and Only Write Username To SharedPrefs
                 if (loginRememberMeSwitch.isChecked()) {
                     if (!username.equals("")) {
-                        SharedPrefsMethods.writeRememberMeServiceToSharedPrefs(getActivity(), true);
+                        SharedPrefsMethods.writeRememberMeServiceStateToSharedPrefs(getActivity(), true);
                         SharedPrefsMethods.writeUsernameToSharedPrefs(getActivity(), username);
                     }
                 } else {
@@ -125,14 +125,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 //Check if internet connection is available
                 if (isNetworkAvailable(getActivity())) {
                     //execute AsyncTask in Background and commit inputs from User to the AsyncTask to compare User Credentials with Server
-//                    AsyncLogin asyncLogin = new AsyncLogin();
-//                    asyncLogin.execute(username, password);
-
-                    MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
-
-
-
-
+                      AsyncLogin asyncLogin = new AsyncLogin();
+                      asyncLogin.execute(username, password);
                 } else {
                     //If there is no internet connection compare User credentials with SharedPrefs
                     if (isPasswordRight(username, password)) {
@@ -171,12 +165,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         String savedPassword = SharedPrefsMethods.readStringFromSharedPrefs(getActivity(), username);
 
         if (!SharedPrefsMethods.containsStringInSharedPrefs(getActivity(), username)) {
-            passwordTextInputLayout.setError("Username or Password wrong");
+            passwordTextInputLayout.setError("Username oder Passwort falsch!");
             return false;
         }
 
         if (!password.equals(savedPassword)) {
-            passwordTextInputLayout.setError("Username or Password wrong");
+            passwordTextInputLayout.setError("Username oder Passwort falsch!");
             return false;
         }
         return true;
@@ -279,14 +273,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
                 //If credentials are correct --> Login
                 if (!(pw.equals(password) || name.equals(username))) {
-                    passwordTextInputLayout.setError("Username or Password wrong");
+                    passwordTextInputLayout.setError("Username oder Passwort falsch!");
                 } else {
                     MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(getActivity(), "Serverproblems! Try again later.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Verbindungsproblem! Bitte versuchen Sie es später wieder.", Toast.LENGTH_LONG).show();
             }
 
         }
