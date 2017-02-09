@@ -1,6 +1,6 @@
 package appworld.gogogo.bsgame.interfaces;
 
-import appworld.gogogo.bsgame.objects.markedRects;
+import appworld.gogogo.bsgame.objects.MarkedRects;
 
 /**
  * Created by Raul on 15.12.2016.
@@ -8,6 +8,6 @@ import appworld.gogogo.bsgame.objects.markedRects;
 
 public interface PlayerListener {
     void changePlayer(int player);
-    void changeScore(markedRects[] markedRects);
+    void changeScore(MarkedRects[] MarkedRects);
     void onGameFinished();
 }

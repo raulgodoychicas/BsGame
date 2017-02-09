@@ -11,6 +11,9 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -95,8 +98,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        //TODO: invalidate menus. zu viele
 
     }
 
@@ -106,6 +110,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
 
             case R.id.login_button: {
+//                MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
+//                break;
+
                 emptyAllErrorTexts();
                 UiMethods.closeKeyboard(getView(), getActivity());
 
@@ -125,8 +132,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 //Check if internet connection is available
                 if (isNetworkAvailable(getActivity())) {
                     //execute AsyncTask in Background and commit inputs from User to the AsyncTask to compare User Credentials with Server
-                      AsyncLogin asyncLogin = new AsyncLogin();
-                      asyncLogin.execute(username, password);
+                    AsyncLogin asyncLogin = new AsyncLogin();
+                    asyncLogin.execute(username, password);
+
+                    MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
+
+
                 } else {
                     //If there is no internet connection compare User credentials with SharedPrefs
                     if (isPasswordRight(username, password)) {
@@ -261,9 +272,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 String name;
                 String pw;
 
-                if(data.equals("Verbindungsfehler")) {
-                    Toast.makeText(getActivity(),"Verbindung zur Datenbank fehlgeschlagen!",Toast.LENGTH_LONG).show();}
-                else{
+                if (data.equals("Verbindungsfehler")) {
+                    Toast.makeText(getActivity(), "Verbindung zur Datenbank fehlgeschlagen!", Toast.LENGTH_LONG).show();
+                } else {
                     //Pass String data into JSONObjec root
                     JSONObject root = new JSONObject(data);
 

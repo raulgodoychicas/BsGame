@@ -54,7 +54,7 @@
     <string-array name="overview_size_array">
         <item>3x3</item>
         <item>5x5</item>
-        <item>10x10</item>
+        <item>8x8</item>
     </string-array>
     <string-array name="overview_game_mode_array">
         <item>Single-Player</item>

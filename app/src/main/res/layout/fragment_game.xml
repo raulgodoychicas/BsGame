@@ -6,48 +6,65 @@
     android:padding="@dimen/padding"
     tools:context="appworld.gogogo.bsgame.fragments.GameFragment">
 
-
-    <TextView
-        android:id="@+id/fragment_game_player1score_textview"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="48dp"
-        android:background="@color/Blaues_Kastl"
-        android:padding="@dimen/padding"
-        android:text="0"
-        android:textColor="@color/Background"
-        android:textSize="28sp" />
-
-    <TextView
-        android:id="@+id/fragment_game_player1_textview"
+    <LinearLayout
+        android:id="@+id/fragment_game_player1_linearlayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/fragment_game_player1score_textview"
-        android:paddingBottom="4dp"
-        android:text="@string/fragment_game_player1_textview" />
+        android:layout_alignParentBottom="true"
+        android:background="@color/grün_p1_zug"
+        android:layout_marginBottom="24dp"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-    <TextView
-        android:id="@+id/fragment_game_player2score_textview"
-        android:layout_width="130dp"
+        <TextView
+            android:id="@+id/fragment_game_player1_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="4dp"
+            android:text="@string/fragment_game_player1_textview" />
+
+        <TextView
+            android:id="@+id/fragment_game_player1score_textview"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:background="@color/Blaues_Kastl"
+            android:padding="@dimen/padding"
+            android:text="0"
+            android:textColor="@color/Background"
+            android:textSize="28sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fragment_game_player2_linearlayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="48dp"
-        android:background="@color/Grünes_Kastl"
-        android:padding="@dimen/padding"
-        android:text="0"
-        android:textAlignment="textEnd"
-        android:textColor="@color/Background"
-        android:textSize="28sp" />
+        android:layout_marginBottom="24dp"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-    <TextView
-        android:id="@+id/fragment_game_player2_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/fragment_game_player2score_textview"
-        android:layout_alignParentRight="true"
-        android:paddingBottom="4dp"
-        android:text="@string/fragment_game_player2_textview" />
+        <TextView
+            android:id="@+id/fragment_game_player2_textview"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="4dp"
+            android:text="@string/fragment_game_player2_textview"
+            android:textAlignment="textEnd" />
+
+        <TextView
+            android:id="@+id/fragment_game_player2score_textview"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:background="@color/Grünes_Kastl"
+            android:padding="@dimen/padding"
+            android:text="0"
+            android:textAlignment="textEnd"
+            android:textColor="@color/Background"
+            android:textSize="28sp" />
+
+    </LinearLayout>
+
 
 </RelativeLayout>

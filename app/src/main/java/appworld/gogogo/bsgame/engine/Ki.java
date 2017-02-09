@@ -1,5 +1,10 @@
 package appworld.gogogo.bsgame.engine;
 
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+
 import appworld.gogogo.bsgame.objects.LineOnCanvas;
 
 /**
@@ -9,25 +14,29 @@ import appworld.gogogo.bsgame.objects.LineOnCanvas;
 public class Ki {
 
     public static int simulateKiMove(LineOnCanvas[] linesOnCanvas) {
-        //TODO: test if -1 is needed
-        int numberOfRects = linesOnCanvas.length - 1;
-        int randomRectNumber = (int) (Math.random() * numberOfRects);
-        boolean areLinesFree = false;
+        int randomRectNumber;
 
-        for (LineOnCanvas lineOnCanvas : linesOnCanvas) {
-            if (lineOnCanvas.player == -1) {
-                areLinesFree = true;
+        ArrayList<Integer> availableRectNumbers = new ArrayList<>();
+
+        int v = 0;
+        for (int i = 0; i < linesOnCanvas.length; i++) {
+            if (linesOnCanvas[i].player == -1) {
+                availableRectNumbers.add(v, i);
+                v++;
             }
         }
-        if (areLinesFree) {
+
+        if (!availableRectNumbers.isEmpty()) {
+            randomRectNumber = (int) (Math.random() * availableRectNumbers.size());
+            randomRectNumber = availableRectNumbers.get(randomRectNumber);
+
             while (linesOnCanvas[randomRectNumber].player != -1) {
-                randomRectNumber = (int) (Math.random() * numberOfRects);
+                Log.v("loop", "1");
+                randomRectNumber = (int) (Math.random() * availableRectNumbers.size());
             }
             return randomRectNumber;
         } else {
             return -1;
         }
-
     }
-
 }

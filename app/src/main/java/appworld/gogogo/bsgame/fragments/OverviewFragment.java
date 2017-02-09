@@ -15,7 +15,6 @@ import android.widget.Spinner;
 
 import appworld.gogogo.bsgame.MainActivity;
 import appworld.gogogo.bsgame.R;
-import appworld.gogogo.bsgame.support.UiMethods;
 
 import static appworld.gogogo.bsgame.R.*;
 
@@ -35,7 +34,7 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
     /*Bsp. gameModeID:
              31 --> Fieldsize 3 = 3x3 , GameMode 1 = Single Player
              52 --> Fieldsize 5 = 5x5 , GameMode 2 = MultiPlayer
-            103 --> Fieldsize 10 = 10x10 , GameMode 3 = Multi Player Online */
+            83 --> Fieldsize 8 = 8x8 , GameMode 3 = Multi Player Online */
 
     private int gameModeID;
 
@@ -55,7 +54,6 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         //Spinner initialisieren
         fieldSizeSpinner = (Spinner) view.findViewById(R.id.overview_choosefieldsize);
         gameModeSpinner = (Spinner) view.findViewById(R.id.overview_spinner_gamemode);
@@ -68,12 +66,6 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
 
         // Help Button
         helpButton = (Button) view.findViewById(R.id.overview_help_button);
-
-        //textView initialisieren
-//        userNameTextView = (TextView)view.findViewById(R.id.overview_textview_username);
-
-        //TODO Username übernehmen
-        //o_username.setText("Aaron");
 
         //Array für Feldauswahl und Spielmodusauswahl initialiseren
         ArrayAdapter<CharSequence> field_size_adapter = ArrayAdapter.createFromResource(getActivity(), array.overview_size_array, android.R.layout.simple_spinner_dropdown_item);
@@ -112,13 +104,13 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
                     gameModeID = 53;
                 }
                 break;
-            case ("10x10"):
+            case ("8x8"):
                 if (gameModeSpinner.getSelectedItem().toString().equals("Single-Player")) {
-                    gameModeID = 101;
+                    gameModeID = 81;
                 } else if (gameModeSpinner.getSelectedItem().toString().equals("Multi-Player")) {
-                    gameModeID = 102;
+                    gameModeID = 82;
                 } else {
-                    gameModeID = 103;
+                    gameModeID = 83;
                 }
                 break;
         }

@@ -15,7 +15,7 @@ import android.view.View;
 import appworld.gogogo.bsgame.R;
 import appworld.gogogo.bsgame.interfaces.PlayerListener;
 import appworld.gogogo.bsgame.objects.LineOnCanvas;
-import appworld.gogogo.bsgame.objects.markedRects;
+import appworld.gogogo.bsgame.objects.MarkedRects;
 
 /**
  * Created by Raul on 04.11.2016.
@@ -27,7 +27,7 @@ public class PlayGroundView extends View {
     private LineOnCanvas[] verticalLinesOnCanvases;
     private LineOnCanvas[] horizontalLinesOnCanvas;
     private Rect[] rects;
-    private appworld.gogogo.bsgame.objects.markedRects[] markedRects;
+    private MarkedRects[] markedRects;
 
     private int numberOfSquares;
     private int parentWidth;
@@ -108,8 +108,8 @@ public class PlayGroundView extends View {
                 if (horizontalLineOnCanvas.player == 0) paint = selectedLinePaintP1;
                 if (horizontalLineOnCanvas.player == 1) paint = selectedLinePaintP2;
                 canvas.drawLine(horizontalLineOnCanvas.startX, horizontalLineOnCanvas.startY, horizontalLineOnCanvas.stopX, horizontalLineOnCanvas.stopY, paint);
-                canvas.drawPoint(horizontalLineOnCanvas.startX, horizontalLineOnCanvas.startY, pointPaintWhite);
-                canvas.drawPoint(horizontalLineOnCanvas.stopX, horizontalLineOnCanvas.stopY, pointPaintWhite);
+                canvas.drawPoint(horizontalLineOnCanvas.startX, horizontalLineOnCanvas.startY, linePaintGray);
+                canvas.drawPoint(horizontalLineOnCanvas.stopX, horizontalLineOnCanvas.stopY, linePaintGray);
                 paint = linePaintGray;
             }
         }
@@ -119,8 +119,8 @@ public class PlayGroundView extends View {
                 if (verticalLineOnCanvases.player == 0) paint = selectedLinePaintP1;
                 if (verticalLineOnCanvases.player == 1) paint = selectedLinePaintP2;
                 canvas.drawLine(verticalLineOnCanvases.startX, verticalLineOnCanvases.startY, verticalLineOnCanvases.stopX, verticalLineOnCanvases.stopY, paint);
-                canvas.drawPoint(verticalLineOnCanvases.startX, verticalLineOnCanvases.startY, pointPaintWhite);
-                canvas.drawPoint(verticalLineOnCanvases.stopX, verticalLineOnCanvases.stopY, pointPaintWhite);
+                canvas.drawPoint(verticalLineOnCanvases.startX, verticalLineOnCanvases.startY, linePaintGray);
+                canvas.drawPoint(verticalLineOnCanvases.stopX, verticalLineOnCanvases.stopY, linePaintGray);
                 paint = linePaintGray;
             }
         }
@@ -129,16 +129,16 @@ public class PlayGroundView extends View {
         if (rects == null) {
             int squareSideSize = (maxValue - 40) / numberOfSquares;
             rects = new Rect[numberOfSquares * numberOfSquares];
-            markedRects = new markedRects[numberOfSquares * numberOfSquares];
+            markedRects = new MarkedRects[numberOfSquares * numberOfSquares];
 
             for (int i = 0; i < numberOfSquares; i++) {
                 for (int u = 0; u < numberOfSquares; u++) {
                     rects[i * numberOfSquares + u] = new Rect(
-                            20 + u * squareSideSize + 10,
-                            20 + i * squareSideSize + 10,
-                            20 + u * squareSideSize + squareSideSize - 10,
-                            20 + i * squareSideSize + squareSideSize - 10);
-                    markedRects[i * numberOfSquares + u] = new markedRects(false, -1);
+                            20 + u * squareSideSize,
+                            20 + i * squareSideSize,
+                            20 + u * squareSideSize + squareSideSize,
+                            20 + i * squareSideSize + squareSideSize);
+                    markedRects[i * numberOfSquares + u] = new MarkedRects(false, -1);
                 }
             }
         }
@@ -156,6 +156,18 @@ public class PlayGroundView extends View {
                 canvas.drawRect(rect, rectPaint);
             }
         }
+
+        boolean isGameFinished = true;
+        for (MarkedRects markedRect : markedRects) {
+            if (!markedRect.marked) {
+                isGameFinished = false;
+            }
+        }
+        if (isGameFinished) {
+            playerListener.onGameFinished();
+        }
+
+
         invalidate();
     }
 
@@ -167,8 +179,6 @@ public class PlayGroundView extends View {
         float x = event.getX();
         float y = event.getY();
 
-        boolean kiMove = false;
-
         final int action = event.getAction();
         switch (action & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN: {
@@ -179,15 +189,14 @@ public class PlayGroundView extends View {
                         if (horizontalLinesOnCanvas[i].startY - 20 < y && horizontalLinesOnCanvas[i].stopY + 20 > y) {
                             if (horizontalLinesOnCanvas[i].startX < x && horizontalLinesOnCanvas[i].stopX > x) {
                                 horizontalLinesOnCanvas[i].player = player;
-                                playerListener.changePlayer(player);
                                 if (isHorizontalRectFinished(verticalLinesOnCanvases, horizontalLinesOnCanvas, i)) {
                                     playerListener.changeScore(markedRects);
                                     // Change player again because if the rectangle is finish you get another turn
                                     player = 1 - player;
                                 }
                                 player = 1 - player;
-                                kiMove = true;
                             }
+                            playerListener.changePlayer(player);
                         }
                     }
                 }
@@ -196,15 +205,14 @@ public class PlayGroundView extends View {
                         if (verticalLinesOnCanvases[i].startX - 20 < x && verticalLinesOnCanvases[i].stopX + 20 > x) {
                             if (verticalLinesOnCanvases[i].startY < y && verticalLinesOnCanvases[i].stopY > y) {
                                 verticalLinesOnCanvases[i].player = player;
-                                playerListener.changePlayer(player);
                                 if (isVerticalRectFinished(verticalLinesOnCanvases, horizontalLinesOnCanvas, i)) {
                                     playerListener.changeScore(markedRects);
                                     // Change player again because if the rectangle is finish you get another turn
                                     player = 1 - player;
                                 }
                                 player = 1 - player;
-                                kiMove = true;
                             }
+                            playerListener.changePlayer(player);
                         }
                     }
                 }
@@ -213,7 +221,7 @@ public class PlayGroundView extends View {
         }
 
         invalidate();
-        if (gameMode == 1 && kiMove) {
+        if (gameMode == 1 && player == 1) {
             simulateKiChoice();
         }
         return true;
@@ -387,43 +395,40 @@ public class PlayGroundView extends View {
      * This Method simulates the KI moves if the singleplayre mode is chosen.
      */
     private void simulateKiChoice() {
+        final boolean[] action = {false};
+        player = 1 - player;
 
+        do {
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    int kiMoveInt;
+                    double randonInt = Math.random();
 
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                int kiMoveInt;
-                boolean action;
-
-                if (Math.random() > 0.5 && Ki.simulateKiMove(horizontalLinesOnCanvas) != -1) {
-                    do {
-                        action = false;
+                    if (randonInt > 0.5 && Ki.simulateKiMove(horizontalLinesOnCanvas) != -1) {
+                        action[0] = false;
                         kiMoveInt = Ki.simulateKiMove(horizontalLinesOnCanvas);
-                        Log.v("number1", String.valueOf(kiMoveInt));
-                        horizontalLinesOnCanvas[kiMoveInt].player = 1;
+                        horizontalLinesOnCanvas[kiMoveInt].player = player;
                         if (isHorizontalRectFinished(verticalLinesOnCanvases, horizontalLinesOnCanvas, kiMoveInt)) {
                             playerListener.changeScore(markedRects);
-                            action = true;
+                            action[0] = true;
                         }
-                    } while (action && Ki.simulateKiMove(horizontalLinesOnCanvas) != -1);
-                } else if (Ki.simulateKiMove(verticalLinesOnCanvases) != -1) {
-                    do {
-                        action = false;
+                    } else if (Ki.simulateKiMove(verticalLinesOnCanvases) != -1) {
                         kiMoveInt = Ki.simulateKiMove(verticalLinesOnCanvases);
-                        Log.v("number2", String.valueOf(kiMoveInt));
-
-                        verticalLinesOnCanvases[kiMoveInt].player = 1;
+                        verticalLinesOnCanvases[kiMoveInt].player = player;
                         if (isVerticalRectFinished(verticalLinesOnCanvases, horizontalLinesOnCanvas, kiMoveInt)) {
                             playerListener.changeScore(markedRects);
-                            action = true;
+                            action[0] = true;
                         }
-                    } while (action && Ki.simulateKiMove(verticalLinesOnCanvases) != -1);
+                    }
+                    invalidate();
                 }
-                player = 1 - player;
-                invalidate();
-            }
-        }, 200);
+            }, 200);
+        }
+        while (action[0] && Ki.simulateKiMove(verticalLinesOnCanvases) != -1
+                || action[0] && Ki.simulateKiMove(horizontalLinesOnCanvas) != -1);
+
     }
 }
 

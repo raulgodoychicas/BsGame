@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,7 +15,8 @@ import android.widget.Toast;
 import appworld.gogogo.bsgame.R;
 import appworld.gogogo.bsgame.engine.PlayGroundView;
 import appworld.gogogo.bsgame.interfaces.PlayerListener;
-import appworld.gogogo.bsgame.objects.markedRects;
+import appworld.gogogo.bsgame.objects.LineOnCanvas;
+import appworld.gogogo.bsgame.objects.MarkedRects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +28,7 @@ public class GameFragment extends Fragment implements PlayerListener {
     private boolean multiPlayerMode;
     private int player;
     private TextView player1scoreTextView, player2scoreTextView;
+    private LinearLayout player1LinearLayout, player2LinearLayout;
 
     public GameFragment() {
         // Required empty public constructor
@@ -71,22 +74,32 @@ public class GameFragment extends Fragment implements PlayerListener {
         player2scoreTextView = (TextView) view.findViewById(R.id.fragment_game_player2score_textview);
         player2scoreTextView.setText("0");
 
+        player1LinearLayout = (LinearLayout) view.findViewById(R.id.fragment_game_player1_linearlayout);
+        player2LinearLayout = (LinearLayout) view.findViewById(R.id.fragment_game_player2_linearlayout);
+
     }
 
     @Override
     public void changePlayer(int player) {
-
-        Log.v("player", String.valueOf(player));
         this.player = player;
+        if (player == 0) {
+            player1LinearLayout.setBackgroundColor(getResources().getColor(R.color.grün_p1_zug));
+            player2LinearLayout.setBackgroundColor(getResources().getColor(R.color.Kastl));
+        } else {
+            player1LinearLayout.setBackgroundColor(getResources().getColor(R.color.Kastl));
+            player2LinearLayout.setBackgroundColor(getResources().getColor(R.color.blau_p2_zug));
+        }
+
+
     }
 
     @Override
-    public void changeScore(markedRects[] markedRects) {
+    public void changeScore(MarkedRects[] MarkedRects) {
 
         int player1Score = 0;
         int player2Score = 0;
 
-        for (appworld.gogogo.bsgame.objects.markedRects markedRect : markedRects) {
+        for (MarkedRects markedRect : MarkedRects) {
             if (markedRect.player == 0) {
                 player1Score++;
             } else if (markedRect.player == 1) {
@@ -100,6 +113,7 @@ public class GameFragment extends Fragment implements PlayerListener {
 
     @Override
     public void onGameFinished() {
+
 
     }
 }
