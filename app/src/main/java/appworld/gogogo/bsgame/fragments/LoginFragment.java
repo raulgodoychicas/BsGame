@@ -110,9 +110,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
 
             case R.id.login_button: {
-//                MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
-//                break;
-
                 emptyAllErrorTexts();
                 UiMethods.closeKeyboard(getView(), getActivity());
 
@@ -132,12 +129,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 //Check if internet connection is available
                 if (isNetworkAvailable(getActivity())) {
                     //execute AsyncTask in Background and commit inputs from User to the AsyncTask to compare User Credentials with Server
-                    AsyncLogin asyncLogin = new AsyncLogin();
-                    asyncLogin.execute(username, password);
-
-                    MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
-
-
+                      AsyncLogin asyncLogin = new AsyncLogin();
+                      asyncLogin.execute(username, password);
                 } else {
                     //If there is no internet connection compare User credentials with SharedPrefs
                     if (isPasswordRight(username, password)) {
