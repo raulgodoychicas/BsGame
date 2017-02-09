@@ -284,7 +284,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(getActivity(), "Verbindungsproblem! Bitte versuchen Sie es später wieder.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Serverproblem! Bitte versuchen Sie es später wieder.", Toast.LENGTH_LONG).show();
             }
 
         }
