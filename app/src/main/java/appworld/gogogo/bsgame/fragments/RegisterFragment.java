@@ -219,6 +219,9 @@ public class RegisterFragment extends Fragment {
             //Dismiss loading view in UI
             pdLoading.dismiss();
 
+            if (flag.equals("Verbindungsfehler")) {
+                Toast.makeText(getActivity(), "Verbindung zur Datenbank fehlgeschlagen!", Toast.LENGTH_LONG).show();
+            } else {
             //Check if User already exists
             if (flag.equals("1")) {
                 emptyAllErrorTexts();
@@ -239,6 +242,7 @@ public class RegisterFragment extends Fragment {
                 //Registration was successful --> Login
                 MainActivity.switchFragment(new LoginFragment(), getActivity(), false);
             }
+        }
         }
     }
 

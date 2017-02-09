@@ -261,21 +261,25 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 String name;
                 String pw;
 
-                //Pass String s into JSONObjec root
-                JSONObject root = new JSONObject(data);
+                if(data.equals("Verbindungsfehler")) {
+                    Toast.makeText(getActivity(),"Verbindung zur Datenbank fehlgeschlagen!",Toast.LENGTH_LONG).show();}
+                else{
+                    //Pass String data into JSONObjec root
+                    JSONObject root = new JSONObject(data);
 
-                //get user_credentials, which are sent by the Server
-                JSONObject user_data = root.getJSONObject("user_credentials");
+                    //get user_credentials, which are sent by the Server
+                    JSONObject user_data = root.getJSONObject("user_credentials");
 
-                //retrive name and pw from array user_credentials as a string
-                name = user_data.getString("name");
-                pw = user_data.getString("password");
+                    //retrive name and pw from array user_credentials as a string
+                    name = user_data.getString("name");
+                    pw = user_data.getString("password");
 
-                //If credentials are correct --> Login
-                if (!(pw.equals(password) || name.equals(username))) {
-                    passwordTextInputLayout.setError("Username oder Passwort falsch!");
-                } else {
-                    MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
+                    //If credentials are correct --> Login
+                    if (!(pw.equals(password) || name.equals(username))) {
+                        passwordTextInputLayout.setError("Username oder Passwort falsch!");
+                    } else {
+                        MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
+                    }
                 }
 
             } catch (JSONException e) {
