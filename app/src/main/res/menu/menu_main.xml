@@ -12,11 +12,11 @@
         android:id="@+id/action_impressum" />
 
     <item
-        android:title="@string/action_logout"
+        android:title="Logout"
         android:orderInCategory="103"
-        android:id="@id/action_logout"/>
+        android:id="@+id/action_logout"/>
     <item
-        android:title="@string/action_clear_data"
+        android:title="Clear Data"
         android:orderInCategory="104"
         android:id="@+id/action_clear_data" />
 

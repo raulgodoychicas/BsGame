@@ -3,6 +3,7 @@ package appworld.gogogo.bsgame.fragments;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +11,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import appworld.gogogo.bsgame.R;
 import appworld.gogogo.bsgame.engine.PlayGroundView;
 import appworld.gogogo.bsgame.interfaces.PlayerListener;
+import appworld.gogogo.bsgame.objects.MarkedRects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,9 +23,8 @@ public class GameFragment extends Fragment implements PlayerListener {
 
     public static String GAME_MODE;
     private int gameModeInt;
+    private boolean multiPlayerMode;
     private int player;
-    private int player1score;
-    private int player2score;
     private TextView player1scoreTextView, player2scoreTextView;
 
     public GameFragment() {
@@ -44,12 +43,10 @@ public class GameFragment extends Fragment implements PlayerListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gameModeInt = getArguments().getInt(GAME_MODE, 0);
-        player1score = 0;
-        player2score = 0;
+        multiPlayerMode = gameModeInt % 10 == 1;
         player = 1;
         Toast.makeText(this.getActivity(), "GAME_ID: " + String.valueOf(gameModeInt), Toast.LENGTH_SHORT).show();
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,7 +60,7 @@ public class GameFragment extends Fragment implements PlayerListener {
 
         RelativeLayout relativeLayout = (RelativeLayout) view.findViewById(R.id.fragment_game_relativelayout);
 
-        PlayGroundView playGroundView = new PlayGroundView(view.getContext(), gameModeInt / 10, this);
+        PlayGroundView playGroundView = new PlayGroundView(view.getContext(), gameModeInt, this);
         playGroundView.setLayoutParams(new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
 
@@ -76,23 +73,30 @@ public class GameFragment extends Fragment implements PlayerListener {
 
     }
 
-
     @Override
     public void changePlayer(int player) {
+
+        Log.v("player", String.valueOf(player));
         this.player = player;
     }
 
     @Override
-    public void changeScore() {
-        if (player == 0) {
-            player1score++;
-            player1scoreTextView.setText(String.valueOf(player1score));
-        } else {
-            player2score++;
-            player2scoreTextView.setText(String.valueOf(player2score));
-        }
+    public void changeScore(MarkedRects[] markedRects) {
 
+        int player1Score = 0;
+        int player2Score = 0;
+
+        for (MarkedRects markedRect : markedRects) {
+            if (markedRect.player == 0) {
+                player1Score++;
+            } else if (markedRect.player == 1) {
+                player2Score++;
+            }
+        }
+        player1scoreTextView.setText(String.valueOf(player1Score));
+        player2scoreTextView.setText(String.valueOf(player2Score));
     }
+
 
     @Override
     public void onGameFinished() {

@@ -14,15 +14,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import appworld.gogogo.bsgame.MainActivity;
 import appworld.gogogo.bsgame.R;
 import appworld.gogogo.bsgame.support.SharedPrefsMethods;
+import appworld.gogogo.bsgame.support.UiMethods;
 
 
 /**
@@ -69,7 +72,7 @@ public class RegisterFragment extends Fragment {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String  username = usernameTextInputEditText.getText().toString().toLowerCase();
+                String username = usernameTextInputEditText.getText().toString().toLowerCase();
                 String password = passwordTextInputEditText.getText().toString();
                 String passwordRepeat = repeatPasswordTextInputEditText.getText().toString();
 
@@ -192,41 +195,40 @@ public class RegisterFragment extends Fragment {
                 return "Exception: " + e.getMessage();
             }
         }
+
         protected void onPreExecute() {
-        super.onPreExecute();
+            super.onPreExecute();
 
-        //Run loading view on UI thread
-        pdLoading.setMessage("\tLoading...");
-        pdLoading.setCancelable(false);
-        pdLoading.show();
-    }
+            //Run loading view on UI thread
+            pdLoading.setMessage("\tLoading...");
+            pdLoading.setCancelable(false);
+            pdLoading.show();
+        }
 
-        protected void onPostExecute(String flag) /*Flag "1" --> User already exists, Flag = "" --> Registration was successful*/
-        {
-                //Dismiss loading view in UI
-                pdLoading.dismiss();
+        protected void onPostExecute(String flag) /*Flag "1" --> User already exists, Flag = "" --> Registration was successful*/ {
+            //Dismiss loading view in UI
+            pdLoading.dismiss();
 
-                //Check if User already exists
-                if (flag.equals("1")) {
-                    emptyAllErrorTexts();
-                    usernameTextInputLayout.setError("Username is not available");
-                } else {
-                    //UI Information that registration was successfull
-                    Toast.makeText(getActivity(),"Registration was successful",Toast.LENGTH_LONG).show();
+            //Check if User already exists
+            if (flag.equals("1")) {
+                emptyAllErrorTexts();
+                usernameTextInputLayout.setError("Username is not available");
+            } else {
+                //UI Information that registration was successfull
+                Toast.makeText(getActivity(), "Registration was successful", Toast.LENGTH_LONG).show();
 
-                    //store credentials local in sharedPrefs
-                    SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), uname, pw);
+                //store credentials local in sharedPrefs
+                SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), uname, pw);
 
+                //TODO Clear backstack!
+                // MainActivity.clearBackStack(getActivity());
 
-                   //TODO Clear backstack!
-                   // MainActivity.clearBackStack(getActivity());
+                //hide Keyboard
+                UiMethods.closeKeyboard(getView(), getActivity());
 
-                    //hide Keyboard
-                    MainActivity.hideKeyboard(getActivity());
-
-                    //Registration was successful --> Login
-                    MainActivity.switchFragment(new LoginFragment(), getActivity(), false);
-                }
+                //Registration was successful --> Login
+                MainActivity.switchFragment(new LoginFragment(), getActivity(), false);
+            }
         }
     }
 

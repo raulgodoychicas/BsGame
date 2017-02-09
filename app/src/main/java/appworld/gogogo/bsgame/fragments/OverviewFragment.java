@@ -12,8 +12,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+
 import appworld.gogogo.bsgame.MainActivity;
 import appworld.gogogo.bsgame.R;
+import appworld.gogogo.bsgame.support.UiMethods;
 
 import static appworld.gogogo.bsgame.R.*;
 
@@ -52,6 +54,7 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
 
         //Spinner initialisieren
         fieldSizeSpinner = (Spinner) view.findViewById(R.id.overview_choosefieldsize);
@@ -129,7 +132,11 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
     public void onClick(View view) {
         switch (view.getId()) {
             case id.overwiew_start_button:
-                MainActivity.switchFragment(GameFragment.newInstance(gameModeID), getActivity(), true);
+                if (gameModeID % 10 == 3) {
+                    MainActivity.switchFragment(new NotAvailableFragment(), getActivity(), true);
+                } else {
+                    MainActivity.switchFragment(GameFragment.newInstance(gameModeID), getActivity(), true);
+                }
                 break;
             case id.overwiew_introduction_button:
                 MainActivity.switchFragment(new IntroductionFragment(), getActivity(), true);

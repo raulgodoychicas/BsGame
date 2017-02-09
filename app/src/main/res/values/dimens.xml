@@ -5,4 +5,8 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="padding">16dp</dimen>
     <dimen name="textsize_normal">16sp</dimen>
+
+
+    <dimen name="textsize_game">28dp</dimen>
+
 </resources>

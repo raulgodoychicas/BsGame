@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,17 +17,21 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.Toast;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import appworld.gogogo.bsgame.MainActivity;
 import appworld.gogogo.bsgame.R;
 import appworld.gogogo.bsgame.support.SharedPrefsMethods;
+import appworld.gogogo.bsgame.support.UiMethods;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,7 +48,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     String username;
     String password;
-
 
     public LoginFragment() {
         // Required empty public constructor
@@ -82,12 +86,18 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         passwordTextInputEditText = (TextInputEditText) view.findViewById(R.id.login_password_textinputedittext);
 
         //Check if remember me feature is selected and set username for next start of the app !!
-        boolean saveLogin = SharedPrefsMethods.readRememberServiceStatus(getActivity(),"serviceStatus");
-        if(saveLogin){
-            String savedUsername = SharedPrefsMethods.readUsernameForRememberMeService(getActivity(),"userName");
+        boolean saveLogin = SharedPrefsMethods.readRememberServiceStatus(getActivity(), "serviceStatus");
+        if (saveLogin) {
+            String savedUsername = SharedPrefsMethods.readUsernameForRememberMeService(getActivity(), "userName");
             usernameTextInputEditText.setText(savedUsername);
             loginRememberMeSwitch.setChecked(true);
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
     }
 
     @Override
@@ -97,8 +107,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
             case R.id.login_button: {
                 emptyAllErrorTexts();
-                //hide Keyboard
-                MainActivity.hideKeyboard(getActivity());
+                UiMethods.closeKeyboard(getView(), getActivity());
 
                 //get inputs from User, Username(lower case, so login is CaseInsensitive) and password
                 username = usernameTextInputEditText.getText().toString().toLowerCase();
@@ -106,7 +115,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
                 //if Switch is on, remember Switch-State and Only Write Username To SharedPrefs
                 if (loginRememberMeSwitch.isChecked()) {
-                    if(!username.equals("")) {
+                    if (!username.equals("")) {
                         SharedPrefsMethods.writeRememberMeServiceToSharedPrefs(getActivity(), true);
                         SharedPrefsMethods.writeUsernameToSharedPrefs(getActivity(), username);
                     }
@@ -116,19 +125,26 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 //Check if internet connection is available
                 if (isNetworkAvailable(getActivity())) {
                     //execute AsyncTask in Background and commit inputs from User to the AsyncTask to compare User Credentials with Server
-                    AsyncLogin asyncLogin = new AsyncLogin();
-                    asyncLogin.execute(username, password);
+//                    AsyncLogin asyncLogin = new AsyncLogin();
+//                    asyncLogin.execute(username, password);
+
+                    MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
+
+
+
+
                 } else {
                     //If there is no internet connection compare User credentials with SharedPrefs
                     if (isPasswordRight(username, password)) {
                         MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
                     }
                 }
-                    break;
+                break;
             }
             case R.id.login_register_button: {
                 //hide keyboard
-                MainActivity.hideKeyboard(getActivity());
+                UiMethods.closeKeyboard(getView(), getActivity());
+
                 //switch to RegisterFragment
                 MainActivity.switchFragment(new RegisterFragment(), getActivity(), true);
                 break;
@@ -268,7 +284,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
                 }
 
-                } catch (JSONException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
                 Toast.makeText(getActivity(), "Serverproblems! Try again later.", Toast.LENGTH_LONG).show();
             }

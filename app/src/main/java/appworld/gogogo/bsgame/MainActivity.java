@@ -7,6 +7,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.transition.Fade;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,9 +15,11 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 import android.widget.Toolbar;
+
 import appworld.gogogo.bsgame.fragments.ImpressumFragment;
 import appworld.gogogo.bsgame.fragments.LoginFragment;
 import appworld.gogogo.bsgame.support.SharedPrefsMethods;
+import appworld.gogogo.bsgame.support.UiMethods;
 
 public class MainActivity extends Activity {
 
@@ -80,26 +83,20 @@ public class MainActivity extends Activity {
 
     public static void switchFragment(Fragment fragment, Activity activity, boolean addToBackstack) {
         FragmentTransaction fragmentTransaction = activity.getFragmentManager().beginTransaction();
+        fragment.setEnterTransition(new Fade());
         fragmentTransaction.replace(R.id.fragment, fragment);
         if (addToBackstack) fragmentTransaction.addToBackStack(fragment.getClass().getName());
         fragmentTransaction.commit();
+        UiMethods.closeKeyboard(fragment.getView(), activity);
+
     }
 
     public static void clearBackStack(Activity activity) {
-       final FragmentManager fragmentManager = activity.getFragmentManager();
+        final FragmentManager fragmentManager = activity.getFragmentManager();
         int count = fragmentManager.getBackStackEntryCount();
-            while (count > -1) {
-                fragmentManager.popBackStackImmediate();
-                count--;
-            }
-    }
-
-    public static void hideKeyboard(Activity activity) {
-        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        View cur_focus = activity.getCurrentFocus();
-        if (cur_focus != null) {
-            inputMethodManager.hideSoftInputFromWindow(cur_focus.getWindowToken(), 0);
+        while (count > -1) {
+            fragmentManager.popBackStackImmediate();
+            count--;
         }
     }
 
