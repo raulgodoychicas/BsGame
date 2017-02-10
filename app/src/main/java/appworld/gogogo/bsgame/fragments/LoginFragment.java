@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,6 +28,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -117,24 +119,27 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 username = usernameTextInputEditText.getText().toString().toLowerCase();
                 password = passwordTextInputEditText.getText().toString();
 
-                //if Switch is on, remember Switch-State and Only Write Username To SharedPrefs
-                if (loginRememberMeSwitch.isChecked()) {
-                    if (!username.equals("")) {
+                //check if Username Field is empty
+                if(isPasswordEmpty(password) && isUsernameEmpty(username)) {
+
+                    //if Switch is on, remember Switch-State and Only Write Username To SharedPrefs
+                    if (loginRememberMeSwitch.isChecked()) {
+
                         SharedPrefsMethods.writeRememberMeServiceStateToSharedPrefs(getActivity(), true);
                         SharedPrefsMethods.writeUsernameToSharedPrefs(getActivity(), username);
+                    } else {
+                        SharedPrefsMethods.clearRememberMeService(getActivity());
                     }
-                } else {
-                    SharedPrefsMethods.clearRememberMeService(getActivity());
-                }
-                //Check if internet connection is available
-                if (isNetworkAvailable(getActivity())) {
-                    //execute AsyncTask in Background and commit inputs from User to the AsyncTask to compare User Credentials with Server
-                      AsyncLogin asyncLogin = new AsyncLogin();
-                      asyncLogin.execute(username, password);
-                } else {
-                    //If there is no internet connection compare User credentials with SharedPrefs
-                    if (isPasswordRight(username, password)) {
-                        MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
+                    //Check if internet connection is available
+                    if (isNetworkAvailable(getActivity())) {
+                        //execute AsyncTask in Background and commit inputs from User to the AsyncTask to compare User Credentials with Server
+                        AsyncLogin asyncLogin = new AsyncLogin();
+                        asyncLogin.execute(username, password);
+                    } else {
+                        //If there is no internet connection compare User credentials with SharedPrefs
+                        if (isPasswordRight(username, password)) {
+                            MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
+                        }
                     }
                 }
                 break;
@@ -148,6 +153,23 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 break;
             }
         }
+    }
+
+    private boolean isPasswordEmpty(String passwordString){
+        if(passwordString.equals("")){
+            emptyAllErrorTexts();
+            passwordTextInputLayout.setError("Pflichtfeld!");
+            return false;
+        }
+        return true;
+    }
+    private boolean isUsernameEmpty(String usernameString){
+        if(usernameString.equals("")){
+            emptyAllErrorTexts();
+            usernameTextInputLayout.setError("Pflichtfeld!");
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -210,8 +232,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             int count;
 
             try {
+
+                //encode Passwort with Base64
+                byte[] encodePassword = pw.getBytes("UTF-8");
+                String encodePasswordString = Base64.encodeToString(encodePassword, Base64.DEFAULT);
+
+
                 URL url = new URL("http://www.worldlustblog.de/Registration/db_fetch_user.php");
-                String urlParams = "&name=" + uname + "&password=" + pw;
+                String urlParams = "&name=" + uname + "&password=" + encodePasswordString;
 
                 //connect to server and send Credentials to Server
                 httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -278,8 +306,16 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     name = user_data.getString("name");
                     pw = user_data.getString("password");
 
+                        //decode  retrived Password
+                    String decodedPasswordString ="";
+                    if(!pw.equals("2")) {
+                        byte[] decodePassword = Base64.decode(pw, Base64.DEFAULT);
+                        decodedPasswordString = new String(decodePassword, "UTF-8");
+                    }
+
+
                     //If credentials are correct --> Login
-                    if (!(pw.equals(password) || name.equals(username))) {
+                    if (!(decodedPasswordString.equals(password) || name.equals(username))) {
                         passwordTextInputLayout.setError("Username oder Passwort falsch!");
                     } else {
                         MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
@@ -289,6 +325,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             } catch (JSONException e) {
                 e.printStackTrace();
                 Toast.makeText(getActivity(), "Serverproblem! Bitte versuchen Sie es später wieder.", Toast.LENGTH_LONG).show();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
 
         }

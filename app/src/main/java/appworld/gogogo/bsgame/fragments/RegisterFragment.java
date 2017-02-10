@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -173,8 +176,13 @@ public class RegisterFragment extends Fragment {
             int count;
 
             try {
+
+                //encode Passwort with Base64
+                byte[] encodePassword = pw.getBytes("UTF-8");
+                String encodePasswordString = Base64.encodeToString(encodePassword,Base64.DEFAULT);
+
                 URL url = new URL("http://www.worldlustblog.de/Registration/register.php");
-                String urlParams = "&name=" + uname + "&password=" + pw;
+                String urlParams = "&name=" + uname + "&password=" + encodePasswordString;
 
                 //connect to server and send Credentials to Server
                 httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -242,7 +250,7 @@ public class RegisterFragment extends Fragment {
                 //Registration was successful --> Login
                 MainActivity.switchFragment(new LoginFragment(), getActivity(), false);
             }
-        }
+          }
         }
     }
 
