@@ -17,6 +17,4 @@ public class UiMethods {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
-
-
 }

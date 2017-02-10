@@ -186,7 +186,7 @@ public class PlayGroundView extends View {
                 // Close Rect on The Riht Line
                 for (int i = 0; i < horizontalLinesOnCanvas.length; i++) {
                     if (horizontalLinesOnCanvas[i].player == -1) {
-                        if (horizontalLinesOnCanvas[i].startY - 20 < y && horizontalLinesOnCanvas[i].stopY + 20 > y) {
+                        if (horizontalLinesOnCanvas[i].startY - 50 < y && horizontalLinesOnCanvas[i].stopY + 50 > y) {
                             if (horizontalLinesOnCanvas[i].startX < x && horizontalLinesOnCanvas[i].stopX > x) {
                                 horizontalLinesOnCanvas[i].player = player;
                                 if (isHorizontalRectFinished(verticalLinesOnCanvases, horizontalLinesOnCanvas, i)) {
@@ -202,7 +202,7 @@ public class PlayGroundView extends View {
                 }
                 for (int i = 0; i < verticalLinesOnCanvases.length; i++) {
                     if (verticalLinesOnCanvases[i].player == -1) {
-                        if (verticalLinesOnCanvases[i].startX - 20 < x && verticalLinesOnCanvases[i].stopX + 20 > x) {
+                        if (verticalLinesOnCanvases[i].startX - 50 < x && verticalLinesOnCanvases[i].stopX + 50 > x) {
                             if (verticalLinesOnCanvases[i].startY < y && verticalLinesOnCanvases[i].stopY > y) {
                                 verticalLinesOnCanvases[i].player = player;
                                 if (isVerticalRectFinished(verticalLinesOnCanvases, horizontalLinesOnCanvas, i)) {

@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/Background"
     tools:context="appworld.gogogo.bsgame.fragments.OverviewFragment">
 
     <RelativeLayout
@@ -58,21 +59,21 @@
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="24dp"
-            android:text="\?"
-            android:textSize="48dp"
+            android:layout_alignStart="@+id/overwiew_introduction_button"
             android:layout_below="@+id/overview_spinner_gamemode"
-            android:layout_alignStart="@+id/overwiew_introduction_button" />
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="24dp"
+            android:text="\?"
+            android:textSize="48dp" />
 
         <Button
             android:id="@+id/overwiew_start_button"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:layout_below="@id/overview_help_button"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
             android:text="Spiel starten" />
 
         <Button

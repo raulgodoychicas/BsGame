@@ -88,7 +88,6 @@ public class MainActivity extends Activity {
         if (addToBackstack) fragmentTransaction.addToBackStack(fragment.getClass().getName());
         fragmentTransaction.commit();
         UiMethods.closeKeyboard(fragment.getView(), activity);
-
     }
 
     public static void clearBackStack(Activity activity) {

@@ -2,32 +2,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/Background"
     android:padding="@dimen/padding"
     tools:context="appworld.gogogo.bsgame.fragments.NotAvailableFragment">
 
     <TextView
         android:id="@+id/update_title_textview"
         android:layout_width="wrap_content"
-        android:layout_marginTop="48dp"
-        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="48dp"
         android:text="Ups!"
         android:textSize="24dp" />
 
     <TextView
         android:id="@+id/update_text_textview"
-        android:layout_marginTop="@dimen/padding"
         android:layout_width="wrap_content"
-        android:layout_centerInParent="true"
         android:layout_height="wrap_content"
         android:layout_below="@id/update_title_textview"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/padding"
         android:text="This Mode will be available in the Future \n stay tuned for more Fun!" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@mipmap/ic_launcher"/>
+        android:src="@mipmap/ic_launcher" />
 
 
 </RelativeLayout>

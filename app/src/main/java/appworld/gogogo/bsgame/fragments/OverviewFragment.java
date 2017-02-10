@@ -33,8 +33,8 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
 
     /*Bsp. gameModeID:
              31 --> Fieldsize 3 = 3x3 , GameMode 1 = Single Player
-             52 --> Fieldsize 5 = 5x5 , GameMode 2 = MultiPlayer
-            83 --> Fieldsize 8 = 8x8 , GameMode 3 = Multi Player Online */
+             42 --> Fieldsize 4 = 4x4 , GameMode 2 = MultiPlayer
+            53 --> Fieldsize 5 = 5x5 , GameMode 3 = Multi Player Online */
 
     private int gameModeID;
 
@@ -95,6 +95,15 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
                     gameModeID = 33;
                 }
                 break;
+            case ("4x4"):
+                if (gameModeSpinner.getSelectedItem().toString().equals("Single-Player")) {
+                    gameModeID = 41;
+                } else if (gameModeSpinner.getSelectedItem().toString().equals("Multi-Player")) {
+                    gameModeID = 42;
+                } else {
+                    gameModeID = 43;
+                }
+                break;
             case ("5x5"):
                 if (gameModeSpinner.getSelectedItem().toString().equals("Single-Player")) {
                     gameModeID = 51;
@@ -102,15 +111,6 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
                     gameModeID = 52;
                 } else {
                     gameModeID = 53;
-                }
-                break;
-            case ("8x8"):
-                if (gameModeSpinner.getSelectedItem().toString().equals("Single-Player")) {
-                    gameModeID = 81;
-                } else if (gameModeSpinner.getSelectedItem().toString().equals("Multi-Player")) {
-                    gameModeID = 82;
-                } else {
-                    gameModeID = 83;
                 }
                 break;
         }

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/Background"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="appworld.gogogo.bsgame.fragments.LoginFragment">
 
@@ -76,13 +77,13 @@
         <Switch
             android:id="@+id/login_angemeldet_bleiben"
             android:layout_width="wrap_content"
-            android:padding="@dimen/padding"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:scrollbarThumbVertical="@dimen/padding"
-            android:switchPadding="@dimen/padding"
             android:checked="false"
+            android:padding="@dimen/padding"
+            android:scrollbarThumbVertical="@dimen/padding"
             android:splitTrack="false"
+            android:switchPadding="@dimen/padding"
             android:text="@string/login_angemeldet_bleiben" />
 
     </LinearLayout>
