@@ -29,7 +29,6 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setActionBar(toolbar);
-
         switchFragment(new LoginFragment(), this, false);
     }
 
@@ -88,5 +87,4 @@ public class MainActivity extends Activity {
             count--;
         }
     }
-
 }

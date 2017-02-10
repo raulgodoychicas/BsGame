@@ -102,8 +102,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        //TODO: invalidate menus. zu viele
-
+        //TODO: invalidate menus. zu viel
     }
 
     @Override
