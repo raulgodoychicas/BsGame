@@ -120,28 +120,30 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 password = passwordTextInputEditText.getText().toString();
 
                 //check if Username Field is empty
-                if(isPasswordEmpty(password) && isUsernameEmpty(username)) {
+                if(isUsernameEmpty(username)){
+                    //check if Password Field is empty
+                    if(isPasswordEmpty(password)) {
+                        //if Switch is on, remember Switch-State and Only Write Username To SharedPrefs
+                        if (loginRememberMeSwitch.isChecked()) {
 
-                    //if Switch is on, remember Switch-State and Only Write Username To SharedPrefs
-                    if (loginRememberMeSwitch.isChecked()) {
-
-                        SharedPrefsMethods.writeRememberMeServiceStateToSharedPrefs(getActivity(), true);
-                        SharedPrefsMethods.writeUsernameToSharedPrefs(getActivity(), username);
-                    } else {
-                        SharedPrefsMethods.clearRememberMeService(getActivity());
-                    }
-                    //Check if internet connection is available
-                    if (isNetworkAvailable(getActivity())) {
-                        //execute AsyncTask in Background and commit inputs from User to the AsyncTask to compare User Credentials with Server
-                        AsyncLogin asyncLogin = new AsyncLogin();
-                        asyncLogin.execute(username, password);
-                    } else {
-                        //If there is no internet connection compare User credentials with SharedPrefs
-                        if (isPasswordRight(username, password)) {
-                            MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
+                            SharedPrefsMethods.writeRememberMeServiceStateToSharedPrefs(getActivity(), true);
+                            SharedPrefsMethods.writeUsernameToSharedPrefs(getActivity(), username);
+                        } else {
+                            SharedPrefsMethods.clearRememberMeService(getActivity());
+                        }
+                        //Check if internet connection is available
+                        if (isNetworkAvailable(getActivity())) {
+                            //execute AsyncTask in Background and commit inputs from User to the AsyncTask to compare User Credentials with Server
+                            AsyncLogin asyncLogin = new AsyncLogin();
+                            asyncLogin.execute(username, password);
+                        } else {
+                            //If there is no internet connection compare User credentials with SharedPrefs
+                            if (isPasswordRight(username, password)) {
+                                MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
+                            }
                         }
                     }
-                }
+            }
                 break;
             }
             case R.id.login_register_button: {

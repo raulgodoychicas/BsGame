@@ -84,7 +84,7 @@ public class RegisterFragment extends Fragment {
                         AsyncRegistraton doInBackGround = new AsyncRegistraton();
                         doInBackGround.execute(username, password);
                     } else {
-                        Toast.makeText(getActivity(), "Registrierung nicht möglich. Bitte Internetverbindung prüfen", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Registrierung nicht möglich. Bitte Internetverbindung prüfen!", Toast.LENGTH_LONG).show();
                     }
                 }
              }
@@ -96,7 +96,7 @@ public class RegisterFragment extends Fragment {
     private boolean isUsernameEmpty(String usernameString){
         if(usernameString.equals("")){
             emptyAllErrorTexts();
-            usernameTextInputLayout.setError("Pflichtfeld");
+            usernameTextInputLayout.setError("Pflichtfeld!");
             return false;
         }
         return true;
@@ -110,7 +110,7 @@ public class RegisterFragment extends Fragment {
     private boolean isPasswordAccordingToRules(String passwordString, String repeatpasswordString) {
         if (passwordString.isEmpty()) {
             emptyAllErrorTexts();
-            passwordTextInputLayout.setError("Pflichtfeld");
+            passwordTextInputLayout.setError("Pflichtfeld!");
             return false;
         }
         if (repeatpasswordString.isEmpty()) {
