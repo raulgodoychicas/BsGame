@@ -31,7 +31,6 @@ public class Ki {
             randomRectNumber = availableRectNumbers.get(randomRectNumber);
 
             while (linesOnCanvas[randomRectNumber].player != -1) {
-                Log.v("loop", "1");
                 randomRectNumber = (int) (Math.random() * availableRectNumbers.size());
             }
             return randomRectNumber;

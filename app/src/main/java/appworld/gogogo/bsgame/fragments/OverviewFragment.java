@@ -5,12 +5,14 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import appworld.gogogo.bsgame.MainActivity;
@@ -27,7 +29,7 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
     private Spinner gameModeSpinner;
     private Button startGameButton;
     private Button goToIntroButton;
-    private Button helpButton;
+    private ImageButton helpButton;
 
 //    private TextView userNameTextView;
 
@@ -55,7 +57,7 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
         super.onViewCreated(view, savedInstanceState);
 
         //Spinner initialisieren
-        fieldSizeSpinner = (Spinner) view.findViewById(R.id.overview_choosefieldsize);
+        fieldSizeSpinner = (Spinner) view.findViewById(R.id.overview_choosefieldsize_spinner);
         gameModeSpinner = (Spinner) view.findViewById(R.id.overview_spinner_gamemode);
 
         //Button initialiseren
@@ -65,7 +67,9 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
         goToIntroButton = (Button) view.findViewById(id.overwiew_introduction_button);
 
         // Help Button
-        helpButton = (Button) view.findViewById(R.id.overview_help_button);
+        helpButton = (ImageButton) view.findViewById(R.id.overview_help_button);
+        helpButton.setColorFilter(ContextCompat.getColor(getActivity(), color.colorNavbar)
+        );
 
         //Array für Feldauswahl und Spielmodusauswahl initialiseren
         ArrayAdapter<CharSequence> field_size_adapter = ArrayAdapter.createFromResource(getActivity(), array.overview_size_array, android.R.layout.simple_spinner_dropdown_item);

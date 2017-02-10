@@ -192,9 +192,9 @@ public class PlayGroundView extends View {
                                 if (isHorizontalRectFinished(verticalLinesOnCanvases, horizontalLinesOnCanvas, i)) {
                                     playerListener.changeScore(markedRects);
                                     // Change player again because if the rectangle is finish you get another turn
-                                    player = 1 - player;
+                                    changePlayer();
                                 }
-                                player = 1 - player;
+                                changePlayer();
                             }
                             playerListener.changePlayer(player);
                         }
@@ -208,22 +208,24 @@ public class PlayGroundView extends View {
                                 if (isVerticalRectFinished(verticalLinesOnCanvases, horizontalLinesOnCanvas, i)) {
                                     playerListener.changeScore(markedRects);
                                     // Change player again because if the rectangle is finish you get another turn
-                                    player = 1 - player;
+                                    changePlayer();
                                 }
-                                player = 1 - player;
+                                changePlayer();
                             }
                             playerListener.changePlayer(player);
                         }
                     }
                 }
             }
+
+            if (gameMode == 1 && player == 1) {
+                simulateKiChoice();
+                Log.v("player", String.valueOf(player));
+            }
             break;
         }
 
         invalidate();
-        if (gameMode == 1 && player == 1) {
-            simulateKiChoice();
-        }
         return true;
     }
 
@@ -391,14 +393,16 @@ public class PlayGroundView extends View {
         markedRects[rectNum].player = player;
     }
 
+    private void changePlayer() {
+        player = 1 - player;
+    }
+
     /**
      * This Method simulates the KI moves if the singleplayre mode is chosen.
      */
     private void simulateKiChoice() {
         final boolean[] action = {false};
-        player = 1 - player;
-
-        do {
+//        do {
             final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
@@ -413,6 +417,7 @@ public class PlayGroundView extends View {
                         if (isHorizontalRectFinished(verticalLinesOnCanvases, horizontalLinesOnCanvas, kiMoveInt)) {
                             playerListener.changeScore(markedRects);
                             action[0] = true;
+                            changePlayer();
                         }
                     } else if (Ki.simulateKiMove(verticalLinesOnCanvases) != -1) {
                         kiMoveInt = Ki.simulateKiMove(verticalLinesOnCanvases);
@@ -420,14 +425,15 @@ public class PlayGroundView extends View {
                         if (isVerticalRectFinished(verticalLinesOnCanvases, horizontalLinesOnCanvas, kiMoveInt)) {
                             playerListener.changeScore(markedRects);
                             action[0] = true;
+                            changePlayer();
                         }
                     }
-                    invalidate();
+                    changePlayer();
+                    playerListener.changePlayer(player);
                 }
-            }, 200);
-        }
-        while (action[0] && Ki.simulateKiMove(verticalLinesOnCanvases) != -1
-                || action[0] && Ki.simulateKiMove(horizontalLinesOnCanvas) != -1);
+            }, 1000);
+//        } while (action[0] && Ki.simulateKiMove(verticalLinesOnCanvases) != -1
+//                || action[0] && Ki.simulateKiMove(horizontalLinesOnCanvas) != -1);
 
     }
 }

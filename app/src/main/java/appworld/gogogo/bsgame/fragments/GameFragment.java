@@ -3,19 +3,16 @@ package appworld.gogogo.bsgame.fragments;
 
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import appworld.gogogo.bsgame.R;
 import appworld.gogogo.bsgame.engine.PlayGroundView;
 import appworld.gogogo.bsgame.interfaces.PlayerListener;
-import appworld.gogogo.bsgame.objects.LineOnCanvas;
 import appworld.gogogo.bsgame.objects.MarkedRects;
 
 /**
@@ -83,13 +80,11 @@ public class GameFragment extends Fragment implements PlayerListener {
         this.player = player;
         if (player == 0) {
             player1LinearLayout.setBackgroundColor(getResources().getColor(R.color.grün_p1_zug));
-            player2LinearLayout.setBackgroundColor(getResources().getColor(R.color.Kastl));
+            player2LinearLayout.setBackgroundColor(getResources().getColor(R.color.Background));
         } else {
-            player1LinearLayout.setBackgroundColor(getResources().getColor(R.color.Kastl));
+            player1LinearLayout.setBackgroundColor(getResources().getColor(R.color.Background));
             player2LinearLayout.setBackgroundColor(getResources().getColor(R.color.blau_p2_zug));
         }
-
-
     }
 
     @Override
