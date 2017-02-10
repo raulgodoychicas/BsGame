@@ -123,7 +123,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 if(isUsernameEmpty(username)){
                     //check if Password Field is empty
                     if(isPasswordEmpty(password)) {
-                        //if Switch is on, remember Switch-State and Only Write Username To SharedPrefs
+                        //if Switch is on, remember Switch-State and Write Username To SharedPrefs
                         if (loginRememberMeSwitch.isChecked()) {
 
                             SharedPrefsMethods.writeRememberMeServiceStateToSharedPrefs(getActivity(), true);
@@ -247,10 +247,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
 
-                //set timeout that app will not stuck in loading process if theres bad internet connection
-                //httpURLConnection.setConnectTimeout(8000);
-                //httpURLConnection.setReadTimeout(8000);
-
                 outputStream = httpURLConnection.getOutputStream();
                 outputStream.write(urlParams.getBytes());
                 outputStream.flush();
@@ -286,7 +282,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             pdLoading.show();
         }
 
-        protected void onPostExecute(String data) /*String data is for the array we get from the DB*/ {
+        protected void onPostExecute(String data) /*String data is for the JSON array we get from the DB*/ {
 
             //Dismiss loading view in UI
             pdLoading.dismiss();
@@ -294,7 +290,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             try {
                 String name;
                 String pw;
-
+                //check if Database Connection Failed
                 if (data.equals("Verbindungsfehler")) {
                     Toast.makeText(getActivity(), "Verbindung zur Datenbank fehlgeschlagen!", Toast.LENGTH_LONG).show();
                 } else {
@@ -304,17 +300,16 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     //get user_credentials, which are sent by the Server
                     JSONObject user_data = root.getJSONObject("user_credentials");
 
-                    //retrive name and pw from array user_credentials as a string
+                    //extract name and pw from user_credentials as a string
                     name = user_data.getString("name");
                     pw = user_data.getString("password");
 
-                        //decode  retrived Password
+                    //decode  retrived Password
                     String decodedPasswordString ="";
                     if(!pw.equals("2")) {
                         byte[] decodePassword = Base64.decode(pw, Base64.DEFAULT);
                         decodedPasswordString = new String(decodePassword, "UTF-8");
                     }
-
 
                     //If credentials are correct --> Login
                     if (!(decodedPasswordString.equals(password) || name.equals(username))) {
@@ -326,6 +321,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
             } catch (JSONException e) {
                 e.printStackTrace();
+                //Error message if Database connection was successful, but retriving Data from Server failed
                 Toast.makeText(getActivity(), "Serverproblem! Bitte versuchen Sie es später wieder.", Toast.LENGTH_LONG).show();
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();

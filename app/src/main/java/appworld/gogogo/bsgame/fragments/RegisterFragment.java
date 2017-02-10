@@ -156,6 +156,7 @@ public class RegisterFragment extends Fragment {
 
         //Loading view in UI while registration
         ProgressDialog pdLoading = new ProgressDialog(getActivity());
+
         HttpURLConnection httpURLConnection;
         OutputStream outputStream;
         InputStream inputStream;
@@ -241,13 +242,10 @@ public class RegisterFragment extends Fragment {
                 //store credentials local in sharedPrefs
                 SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), uname, pw);
 
-                //TODO Clear backstack!
-                //MainActivity.clearBackStack(getActivity());
-
                 //hide Keyboard
                 UiMethods.closeKeyboard(getView(), getActivity());
 
-                //Registration was successful --> Login
+                //Registration was successful --> switch to Login
                 MainActivity.switchFragment(new LoginFragment(), getActivity(), false);
             }
           }

@@ -48,7 +48,6 @@ public class GameFragment extends Fragment implements PlayerListener {
         gameModeInt = getArguments().getInt(GAME_MODE, 0);
         multiPlayerMode = gameModeInt % 10 == 1;
         player = 1;
-        Toast.makeText(this.getActivity(), "GAME_ID: " + String.valueOf(gameModeInt), Toast.LENGTH_SHORT).show();
     }
 
     @Override
