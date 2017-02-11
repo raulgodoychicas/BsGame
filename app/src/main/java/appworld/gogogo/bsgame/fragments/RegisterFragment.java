@@ -77,7 +77,7 @@ public class RegisterFragment extends Fragment {
             public void onClick(View v) {
 
                 //get inputs from User, Username(lower case, so login is CaseInsensitive) and password and delete spaces at the beginning and end in password
-                String username = usernameTextInputEditText.getText().toString().toLowerCase();
+                String username = usernameTextInputEditText.getText().toString().toLowerCase().trim();
                 String password = passwordTextInputEditText.getText().toString().trim();
                 String passwordRepeat = repeatPasswordTextInputEditText.getText().toString().trim();
             if(isUsernameEmpty(username)) {

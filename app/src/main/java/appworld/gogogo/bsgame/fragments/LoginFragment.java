@@ -111,8 +111,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 emptyAllErrorTexts();
                 UiMethods.closeKeyboard(getView(), getActivity());
 
-                //get inputs from User, Username(lower case, so login is CaseInsensitive) and password and delete spaces at the beginning and end in password
-                username = usernameTextInputEditText.getText().toString().toLowerCase();
+                //get inputs from User, Username(lower case, so login is CaseInsensitive) and password and delete spaces at the beginning and end
+                username = usernameTextInputEditText.getText().toString().toLowerCase().trim();
                 password = passwordTextInputEditText.getText().toString().trim();
 
                 //check if Username Field is empty
