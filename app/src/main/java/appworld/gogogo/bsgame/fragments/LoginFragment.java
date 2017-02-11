@@ -10,14 +10,11 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -114,9 +111,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 emptyAllErrorTexts();
                 UiMethods.closeKeyboard(getView(), getActivity());
 
-                //get inputs from User, Username(lower case, so login is CaseInsensitive) and password
+                //get inputs from User, Username(lower case, so login is CaseInsensitive) and password and delete spaces at the beginning and end in password
                 username = usernameTextInputEditText.getText().toString().toLowerCase();
-                password = passwordTextInputEditText.getText().toString();
+                password = passwordTextInputEditText.getText().toString().trim();
 
                 //check if Username Field is empty
                 if(isUsernameEmpty(username)){

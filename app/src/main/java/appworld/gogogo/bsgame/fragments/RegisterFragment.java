@@ -75,13 +75,15 @@ public class RegisterFragment extends Fragment {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //get inputs from User, Username(lower case, so login is CaseInsensitive) and password and delete spaces at the beginning and end in password
                 String username = usernameTextInputEditText.getText().toString().toLowerCase();
-                String password = passwordTextInputEditText.getText().toString();
-                String passwordRepeat = repeatPasswordTextInputEditText.getText().toString();
+                String password = passwordTextInputEditText.getText().toString().trim();
+                String passwordRepeat = repeatPasswordTextInputEditText.getText().toString().trim();
             if(isUsernameEmpty(username)) {
                 if (isPasswordAccordingToRules(password, passwordRepeat)) {
                     if (isNetworkAvailable(getActivity())) {
-                        AsyncRegistraton doInBackGround = new AsyncRegistraton();
+                        AsyncRegistration doInBackGround = new AsyncRegistration();
                         doInBackGround.execute(username, password);
                     } else {
                         Toast.makeText(getActivity(), "Registrierung nicht möglich. Bitte Internetverbindung prüfen!", Toast.LENGTH_LONG).show();
@@ -152,7 +154,7 @@ public class RegisterFragment extends Fragment {
     }
 
     //inner class with async-task that saves User-Credentials in Online-Database
-    class AsyncRegistraton extends AsyncTask<String, String, String> {
+    class AsyncRegistration extends AsyncTask<String, String, String> {
 
         //Loading view in UI while registration
         ProgressDialog pdLoading = new ProgressDialog(getActivity());
