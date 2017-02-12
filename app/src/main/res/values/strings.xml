@@ -52,6 +52,8 @@
     <string name="fragment_game_player2_textview">Player 2</string>
     <string name="not_available_textview_title">Ups!</string>
     <string name="not_available_textview">Dieser Spielmodus wird in Kürze zur Verfügung stehen! \n\nViel Spaß!</string>
+    <string name="dialog_leave_app">"Wollen Sie die App wirklich verlassen?</string>
+    <string name="dialog_leave_game">"Wollen Sie das Spiel wirklich beenden?</string>
 
     <string-array name="overview_size_array">
         <item>3x3</item>

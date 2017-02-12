@@ -93,26 +93,24 @@ public class MainActivity extends Activity {
         final Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment);
         if (fragment instanceof OverviewFragment) {
             new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("App beenden")
-                    .setMessage("Wollen Sie die App wirklich verlassen?")
+                    .setMessage(getString(R.string.dialog_leave_app))
                     .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int k) {
                             finish();
                         }
                     }).setNegativeButton("Nein", null).show();
-        }else if (fragment instanceof GameFragment){
+        }else if(fragment instanceof GameFragment){
             new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Spiel beenden")
-                    .setMessage("Wollen Sie das Spiel wirklich beenden?")
+                    .setMessage(getString(R.string.dialog_leave_game))
                     .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int k) {
                             switchFragment(new OverviewFragment(),fragment.getActivity(),false);
                         }
                     }).setNegativeButton("Nein", null).show();
-
         } else {
             super.onBackPressed();
         }
-
     }
 }
