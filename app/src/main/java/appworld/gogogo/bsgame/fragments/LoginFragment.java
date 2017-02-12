@@ -206,6 +206,18 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         usernameTextInputLayout.setError("");
     }
 
+    //Decode local saved password
+    public String decodePassword(String password) {
+        String decodedPasswordString = "";
+        byte[] decodePassword = Base64.decode(password, Base64.DEFAULT);
+        try {
+            decodedPasswordString = new String(decodePassword, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return decodedPasswordString;
+    }
+
     /**
      * Checks if the Username and Password matches with any saved username in the online Mysql-Database
      */
@@ -324,19 +336,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         }
 
     }
-
-    public String decodePassword(String password) {
-        String decodedPasswordString = "";
-        byte[] decodePassword = Base64.decode(password, Base64.DEFAULT);
-        try {
-            decodedPasswordString = new String(decodePassword, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return decodedPasswordString;
-    }
-
-
 }
 
 

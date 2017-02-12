@@ -154,6 +154,18 @@ public class RegisterFragment extends Fragment {
         usernameTextInputLayout.setError("");
     }
 
+    //encode password
+    public String encodePasswordString(String password) {
+        byte[] encodePassword = new byte[0];
+        try {
+            encodePassword = password.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return Base64.encodeToString(encodePassword, Base64.DEFAULT);
+    }
+
+
     //inner class with async-task that saves User-Credentials in Online-Database
     class AsyncRegistration extends AsyncTask<String, String, String> {
 
@@ -180,10 +192,8 @@ public class RegisterFragment extends Fragment {
             int count;
 
             try {
-
                 URL url = new URL("http://www.worldlustblog.de/Registration/register.php");
                 String urlParams = "&name=" + uname + "&password=" + encodePasswordString(pw);
-                ;
 
                 //connect to server and send Credentials to Server
                 httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -251,15 +261,4 @@ public class RegisterFragment extends Fragment {
             }
         }
     }
-
-    public String encodePasswordString(String password) {
-        byte[] encodePassword = new byte[0];
-        try {
-            encodePassword = password.getBytes("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return Base64.encodeToString(encodePassword, Base64.DEFAULT);
-    }
-
 }

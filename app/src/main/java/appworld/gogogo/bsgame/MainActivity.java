@@ -1,22 +1,23 @@
 package appworld.gogogo.bsgame;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.transition.Fade;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import appworld.gogogo.bsgame.engine.PlayGroundView;
+import appworld.gogogo.bsgame.fragments.GameFragment;
 import appworld.gogogo.bsgame.fragments.ImpressumFragment;
 import appworld.gogogo.bsgame.fragments.LoginFragment;
+import appworld.gogogo.bsgame.fragments.OverviewFragment;
 import appworld.gogogo.bsgame.support.SharedPrefsMethods;
 import appworld.gogogo.bsgame.support.UiMethods;
 
@@ -86,5 +87,32 @@ public class MainActivity extends Activity {
             fragmentManager.popBackStackImmediate();
             count--;
         }
+    }
+
+    public void onBackPressed() {
+        final Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment);
+        if (fragment instanceof OverviewFragment) {
+            new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("App beenden")
+                    .setMessage("Wollen Sie die App wirklich verlassen?")
+                    .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    }).setNegativeButton("Nein", null).show();
+        }else if (fragment instanceof GameFragment){
+            new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Spiel beenden")
+                    .setMessage("Wollen Sie das Spiel wirklich beenden?")
+                    .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switchFragment(new OverviewFragment(),fragment.getActivity(),false);
+                        }
+                    }).setNegativeButton("Nein", null).show();
+
+        } else {
+            super.onBackPressed();
+        }
+
     }
 }
