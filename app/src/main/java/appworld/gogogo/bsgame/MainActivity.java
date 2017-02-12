@@ -95,8 +95,8 @@ public class MainActivity extends Activity {
             new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("App beenden")
                     .setMessage("Wollen Sie die App wirklich verlassen?")
                     .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+
+                        public void onClick(DialogInterface dialog, int i) {
                             finish();
                         }
                     }).setNegativeButton("Nein", null).show();
@@ -104,8 +104,8 @@ public class MainActivity extends Activity {
             new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Spiel beenden")
                     .setMessage("Wollen Sie das Spiel wirklich beenden?")
                     .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+
+                        public void onClick(DialogInterface dialog, int i) {
                             switchFragment(new OverviewFragment(),fragment.getActivity(),false);
                         }
                     }).setNegativeButton("Nein", null).show();
