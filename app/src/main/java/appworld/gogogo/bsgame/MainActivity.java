@@ -96,7 +96,7 @@ public class MainActivity extends Activity {
                     .setMessage("Wollen Sie die App wirklich verlassen?")
                     .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
 
-                        public void onClick(DialogInterface dialog, int i) {
+                        public void onClick(DialogInterface dialog, int k) {
                             finish();
                         }
                     }).setNegativeButton("Nein", null).show();
@@ -105,7 +105,7 @@ public class MainActivity extends Activity {
                     .setMessage("Wollen Sie das Spiel wirklich beenden?")
                     .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
 
-                        public void onClick(DialogInterface dialog, int i) {
+                        public void onClick(DialogInterface dialog, int k) {
                             switchFragment(new OverviewFragment(),fragment.getActivity(),false);
                         }
                     }).setNegativeButton("Nein", null).show();
