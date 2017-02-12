@@ -87,9 +87,7 @@
             android:text="Spiel starten"
             android:textSize="24dp" />
 
-
     </RelativeLayout>
-
 
 </ScrollView>
 

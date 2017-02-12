@@ -45,11 +45,6 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
     public OverviewFragment() {
         // Required empty public constructor
     }
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        //TODO: invalidate menus. zu viele
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

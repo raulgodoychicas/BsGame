@@ -3,6 +3,7 @@ package appworld.gogogo.bsgame.fragments;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,11 +80,11 @@ public class GameFragment extends Fragment implements PlayerListener {
     public void changePlayer(int player) {
         this.player = player;
         if (player == 0) {
-            player1LinearLayout.setBackgroundColor(getResources().getColor(R.color.grün_p1_zug));
-            player2LinearLayout.setBackgroundColor(getResources().getColor(R.color.Background));
+            player1LinearLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.grün_p1_zug));
+            player2LinearLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.Background));
         } else {
-            player1LinearLayout.setBackgroundColor(getResources().getColor(R.color.Background));
-            player2LinearLayout.setBackgroundColor(getResources().getColor(R.color.blau_p2_zug));
+            player1LinearLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.Background));
+            player2LinearLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.blau_p2_zug));
         }
     }
 

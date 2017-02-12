@@ -432,6 +432,7 @@ public class PlayGroundView extends View {
                     playerListener.changePlayer(player);
                 }
             }, 1000);
+
 //        } while (action[0] && Ki.simulateKiMove(verticalLinesOnCanvases) != -1
 //                || action[0] && Ki.simulateKiMove(horizontalLinesOnCanvas) != -1);
 
