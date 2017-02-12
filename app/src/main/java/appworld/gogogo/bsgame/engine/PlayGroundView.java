@@ -403,35 +403,35 @@ public class PlayGroundView extends View {
     private void simulateKiChoice() {
         final boolean[] action = {false};
 //        do {
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    int kiMoveInt;
-                    double randonInt = Math.random();
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                int kiMoveInt;
+                double randonInt = Math.random();
 
-                    if (randonInt > 0.5 && Ki.simulateKiMove(horizontalLinesOnCanvas) != -1) {
-                        action[0] = false;
-                        kiMoveInt = Ki.simulateKiMove(horizontalLinesOnCanvas);
-                        horizontalLinesOnCanvas[kiMoveInt].player = player;
-                        if (isHorizontalRectFinished(verticalLinesOnCanvases, horizontalLinesOnCanvas, kiMoveInt)) {
-                            playerListener.changeScore(markedRects);
-                            action[0] = true;
-                            changePlayer();
-                        }
-                    } else if (Ki.simulateKiMove(verticalLinesOnCanvases) != -1) {
-                        kiMoveInt = Ki.simulateKiMove(verticalLinesOnCanvases);
-                        verticalLinesOnCanvases[kiMoveInt].player = player;
-                        if (isVerticalRectFinished(verticalLinesOnCanvases, horizontalLinesOnCanvas, kiMoveInt)) {
-                            playerListener.changeScore(markedRects);
-                            action[0] = true;
-                            changePlayer();
-                        }
+                if (randonInt > 0.5 && Ki.simulateKiMove(horizontalLinesOnCanvas) != -1) {
+                    action[0] = false;
+                    kiMoveInt = Ki.simulateKiMove(horizontalLinesOnCanvas);
+                    horizontalLinesOnCanvas[kiMoveInt].player = player;
+                    if (isHorizontalRectFinished(verticalLinesOnCanvases, horizontalLinesOnCanvas, kiMoveInt)) {
+                        playerListener.changeScore(markedRects);
+                        action[0] = true;
+                        changePlayer();
                     }
-                    changePlayer();
-                    playerListener.changePlayer(player);
+                } else if (Ki.simulateKiMove(verticalLinesOnCanvases) != -1) {
+                    kiMoveInt = Ki.simulateKiMove(verticalLinesOnCanvases);
+                    verticalLinesOnCanvases[kiMoveInt].player = player;
+                    if (isVerticalRectFinished(verticalLinesOnCanvases, horizontalLinesOnCanvas, kiMoveInt)) {
+                        playerListener.changeScore(markedRects);
+                        action[0] = true;
+                        changePlayer();
+                    }
                 }
-            }, 1000);
+                changePlayer();
+                playerListener.changePlayer(player);
+            }
+        }, 1000);
 
 //        } while (action[0] && Ki.simulateKiMove(verticalLinesOnCanvases) != -1
 //                || action[0] && Ki.simulateKiMove(horizontalLinesOnCanvas) != -1);

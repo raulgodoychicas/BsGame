@@ -80,29 +80,30 @@ public class RegisterFragment extends Fragment {
                 String username = usernameTextInputEditText.getText().toString().toLowerCase().trim();
                 String password = passwordTextInputEditText.getText().toString().trim();
                 String passwordRepeat = repeatPasswordTextInputEditText.getText().toString().trim();
-            if(isUsernameEmpty(username)) {
-                if (isPasswordAccordingToRules(password, passwordRepeat)) {
-                    if (isNetworkAvailable(getActivity())) {
-                        AsyncRegistration doInBackGround = new AsyncRegistration();
-                        doInBackGround.execute(username, password);
-                    } else {
-                        Toast.makeText(getActivity(), "Registrierung nicht möglich. Bitte Internetverbindung prüfen!", Toast.LENGTH_LONG).show();
+                if (isUsernameEmpty(username)) {
+                    if (isPasswordAccordingToRules(password, passwordRepeat)) {
+                        if (isNetworkAvailable(getActivity())) {
+                            AsyncRegistration doInBackGround = new AsyncRegistration();
+                            doInBackGround.execute(username, password);
+                        } else {
+                            Toast.makeText(getActivity(), "Registrierung nicht möglich. Bitte Internetverbindung prüfen!", Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
-             }
             }
         });
     }
 
 
-    private boolean isUsernameEmpty(String usernameString){
-        if(usernameString.equals("")){
+    private boolean isUsernameEmpty(String usernameString) {
+        if (usernameString.equals("")) {
             emptyAllErrorTexts();
             usernameTextInputLayout.setError("Pflichtfeld!");
             return false;
         }
         return true;
     }
+
     /**
      * This Methods controls if the password has the needed Format
      *
@@ -180,12 +181,9 @@ public class RegisterFragment extends Fragment {
 
             try {
 
-                //encode Passwort with Base64
-                byte[] encodePassword = pw.getBytes("UTF-8");
-                String encodePasswordString = Base64.encodeToString(encodePassword,Base64.DEFAULT);
-
                 URL url = new URL("http://www.worldlustblog.de/Registration/register.php");
-                String urlParams = "&name=" + uname + "&password=" + encodePasswordString;
+                String urlParams = "&name=" + uname + "&password=" + encodePasswordString(pw);
+                ;
 
                 //connect to server and send Credentials to Server
                 httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -233,25 +231,35 @@ public class RegisterFragment extends Fragment {
             if (flag.equals("Verbindungsfehler")) {
                 Toast.makeText(getActivity(), "Verbindung zur Datenbank fehlgeschlagen!", Toast.LENGTH_LONG).show();
             } else {
-            //Check if User already exists
-            if (flag.equals("1")) {
-                emptyAllErrorTexts();
-                usernameTextInputLayout.setError("Username bereits vergeben.");
-            } else {
-                //UI Information that registration was successfull
-                Toast.makeText(getActivity(), "Registrierung war erfolgreich.", Toast.LENGTH_LONG).show();
+                //Check if User already exists
+                if (flag.equals("1")) {
+                    emptyAllErrorTexts();
+                    usernameTextInputLayout.setError("Username bereits vergeben.");
+                } else {
+                    //UI Information that registration was successfull
+                    Toast.makeText(getActivity(), "Registrierung war erfolgreich.", Toast.LENGTH_LONG).show();
 
-                //store credentials local in sharedPrefs
-                SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), uname, pw);
+                    //store credentials local in sharedPrefs
+                    SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), uname, encodePasswordString(pw));
 
-                //hide Keyboard
-                UiMethods.closeKeyboard(getView(), getActivity());
+                    //hide Keyboard
+                    UiMethods.closeKeyboard(getView(), getActivity());
 
-                //Registration was successful --> switch to Login
-                MainActivity.switchFragment(new LoginFragment(), getActivity(), false);
+                    //Registration was successful --> switch to Login
+                    MainActivity.switchFragment(new LoginFragment(), getActivity(), false);
+                }
             }
-          }
         }
+    }
+
+    public String encodePasswordString(String password) {
+        byte[] encodePassword = new byte[0];
+        try {
+            encodePassword = password.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return Base64.encodeToString(encodePassword, Base64.DEFAULT);
     }
 
 }

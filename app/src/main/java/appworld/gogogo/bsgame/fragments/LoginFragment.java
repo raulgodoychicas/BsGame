@@ -116,9 +116,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 password = passwordTextInputEditText.getText().toString().trim();
 
                 //check if Username Field is empty
-                if(isUsernameEmpty(username)){
+                if (isUsernameEmpty(username)) {
                     //check if Password Field is empty
-                    if(isPasswordEmpty(password)) {
+                    if (isPasswordEmpty(password)) {
                         //if Switch is on, remember Switch-State and Write Username To SharedPrefs
                         if (loginRememberMeSwitch.isChecked()) {
 
@@ -139,7 +139,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                             }
                         }
                     }
-            }
+                }
                 break;
             }
             case R.id.login_register_button: {
@@ -153,16 +153,17 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private boolean isPasswordEmpty(String passwordString){
-        if(passwordString.equals("")){
+    private boolean isPasswordEmpty(String passwordString) {
+        if (passwordString.equals("")) {
             emptyAllErrorTexts();
             passwordTextInputLayout.setError("Pflichtfeld!");
             return false;
         }
         return true;
     }
-    private boolean isUsernameEmpty(String usernameString){
-        if(usernameString.equals("")){
+
+    private boolean isUsernameEmpty(String usernameString) {
+        if (usernameString.equals("")) {
             emptyAllErrorTexts();
             usernameTextInputLayout.setError("Pflichtfeld!");
             return false;
@@ -186,7 +187,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
      */
     private boolean isPasswordRight(String username, String password) {
 
-        String savedPassword = SharedPrefsMethods.readStringFromSharedPrefs(getActivity(), username);
+        String savedPassword = decodePassword(SharedPrefsMethods.readStringFromSharedPrefs(getActivity(), username));
 
         if (!SharedPrefsMethods.containsStringInSharedPrefs(getActivity(), username)) {
             passwordTextInputLayout.setError("Username oder Passwort falsch!");
@@ -301,10 +302,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     pw = user_data.getString("password");
 
                     //decode  retrived Password
-                    String decodedPasswordString ="";
-                    if(!pw.equals("2")) {
-                        byte[] decodePassword = Base64.decode(pw, Base64.DEFAULT);
-                        decodedPasswordString = new String(decodePassword, "UTF-8");
+                    String decodedPasswordString = "";
+                    if (!pw.equals("2")) {
+                        decodedPasswordString = decodePassword(pw);
                     }
 
                     //If credentials are correct --> Login
@@ -319,13 +319,23 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 e.printStackTrace();
                 //Error message if Database connection was successful, but retriving Data from Server failed
                 Toast.makeText(getActivity(), "Serverproblem! Bitte versuchen Sie es später wieder.", Toast.LENGTH_LONG).show();
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
             }
 
         }
 
     }
+
+    public String decodePassword(String password) {
+        String decodedPasswordString = "";
+        byte[] decodePassword = Base64.decode(password, Base64.DEFAULT);
+        try {
+            decodedPasswordString = new String(decodePassword, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return decodedPasswordString;
+    }
+
 
 }
 
