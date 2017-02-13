@@ -209,6 +209,17 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         usernameTextInputLayout.setError("");
     }
 
+    //encode password
+    public String encodePasswordString(String password) {
+        byte[] encodePassword = new byte[0];
+        try {
+            encodePassword = password.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return Base64.encodeToString(encodePassword, Base64.DEFAULT);
+    }
+
     //Decode local saved password
     public String decodePassword(String password) {
         String decodedPasswordString = "";
@@ -232,12 +243,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         OutputStream outputStream;
         InputStream inputStream;
         HttpURLConnection httpURLConnection;
+        String uname;
+        String pw;
 
         protected String doInBackground(String... params) {
 
             //params[0] = username, params[1] = password
-            String uname = params[0];
-            String pw = params[1];
+             uname = params[0];
+             pw = params[1];
 
             //Initializing Data String that is later needed to get the response JSON String from the Mysql-DB
             String data = "";
@@ -247,13 +260,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
             try {
 
-                //encode Passwort with Base64
-                byte[] encodePassword = pw.getBytes("UTF-8");
-                String encodePasswordString = Base64.encodeToString(encodePassword, Base64.DEFAULT);
-
-
                 URL url = new URL("http://www.worldlustblog.de/Registration/db_fetch_user.php");
-                String urlParams = "&name=" + uname + "&password=" + encodePasswordString;
+                String urlParams = "&name=" + uname + "&password=" + encodePasswordString(pw);
 
                 //connect to server and send Credentials to Server
                 httpURLConnection = (HttpURLConnection) url.openConnection();

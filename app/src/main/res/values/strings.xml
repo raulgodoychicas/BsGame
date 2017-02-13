@@ -66,8 +66,6 @@
         <item>Online Multi-Player</item>
 
     </string-array>
-
-    <string name="secret_app_key">qualitaetssiegl</string>
     <string name="fragment_overview_computer_name">Computer</string>
 
 </resources>

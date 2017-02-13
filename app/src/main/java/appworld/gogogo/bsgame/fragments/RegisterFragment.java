@@ -105,7 +105,6 @@ public class RegisterFragment extends Fragment {
         });
     }
 
-
     private boolean isUsernameEmpty(String usernameString) {
         if (usernameString.equals("")) {
             emptyAllErrorTexts();
@@ -175,34 +174,6 @@ public class RegisterFragment extends Fragment {
         }
         return Base64.encodeToString(encodePassword, Base64.DEFAULT);
     }
-
-
-    public String encodePasswordString2(String password) {
-        // only the first 8 Bytes of the constructor argument are used
-//       as material for generating the keySpec
-        DESKeySpec keySpec;
-
-//        ENCODE plainTextPassword String
-        byte[] cleartext = new byte[0];
-        String encryptedPwd = "";
-        try {
-            keySpec = new DESKeySpec(getResources().getString(R.string.secret_app_key).getBytes("UTF8"));
-            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
-            SecretKey key = keyFactory.generateSecret(keySpec);
-            cleartext = password.getBytes("UTF8");
-            Cipher cipher = Cipher.getInstance("DES"); // cipher is not thread safe
-            cipher.init(Cipher.ENCRYPT_MODE, key);
-            encryptedPwd = Base64.encodeToString(cipher.doFinal(cleartext), Base64.DEFAULT);
-        } catch (UnsupportedEncodingException | NoSuchAlgorithmException | NoSuchPaddingException
-                | InvalidKeyException | BadPaddingException | IllegalBlockSizeException | InvalidKeySpecException e) {
-            e.printStackTrace();
-        }
-
-        Log.v("password1", encryptedPwd);
-
-        return encryptedPwd;
-    }
-
 
     //inner class with async-task that saves User-Credentials in Online-Database
     class AsyncRegistration extends AsyncTask<String, String, String> {
