@@ -92,7 +92,7 @@ public class GameFragment extends Fragment implements PlayerListener {
     public void changePlayer(int player) {
         this.player = player;
         if (player == 0) {
-            player1LinearLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.grün_p1_zug));
+            player1LinearLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.orange_p1_zug));
             player2LinearLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.Background));
         } else {
             player1LinearLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.Background));

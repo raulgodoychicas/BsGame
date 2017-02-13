@@ -12,8 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/grün_p1_zug"
         android:layout_marginBottom="24dp"
+        android:background="@color/orange_p1_zug"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -58,7 +58,7 @@
             android:id="@+id/fragment_game_player2score_textview"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:background="@color/Grünes_Kastl"
+            android:background="@color/Oranges_Kastl"
             android:padding="@dimen/padding"
             android:text="0"
             android:textAlignment="textEnd"

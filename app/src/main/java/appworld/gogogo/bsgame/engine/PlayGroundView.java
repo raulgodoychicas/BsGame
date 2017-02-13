@@ -376,7 +376,7 @@ public class PlayGroundView extends View {
         selectedLinePaintP2 = new Paint();
         selectedLinePaintP2.setAntiAlias(true);
         // material design 38% alpha for hints
-        selectedLinePaintP2.setColor(getResources().getColor(R.color.Grüne_Striche));
+        selectedLinePaintP2.setColor(getResources().getColor(R.color.Orange_Striche));
         selectedLinePaintP2.setStyle(Paint.Style.STROKE);
         selectedLinePaintP2.setStrokeWidth(10);
 

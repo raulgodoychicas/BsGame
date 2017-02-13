@@ -23,7 +23,9 @@
 
     <color name="Grünes_Kastl">#801c8f7c</color>
     <color name="Blaues_Kastl">#802a718f</color>
+    <color name="Oranges_Kastl">#80E2762C</color>
 
+    <color name="orange_p1_zug">#61E2762C</color>
     <color name="grün_p1_zug">#611c8f7c</color>
     <color name="blau_p2_zug">#612a718f</color>
 
