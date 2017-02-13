@@ -40,6 +40,8 @@ import appworld.gogogo.bsgame.support.UiMethods;
  */
 public class LoginFragment extends Fragment implements View.OnClickListener {
 
+    public static final String USER_NAME_KEY = "userNameKey";
+
     private Button loginButton;
     private Button registerButton;
     private Switch loginRememberMeSwitch;
@@ -136,6 +138,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                             //If there is no internet connection compare User credentials with SharedPrefs
                             if (isPasswordRight(username, password)) {
                                 MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
+                                SharedPrefsMethods.writeStringToSharedPrefs(getActivity(),USER_NAME_KEY, username);
                             }
                         }
                     }
@@ -323,6 +326,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     if (!(decodedPasswordString.equals(password) || name.equals(username))) {
                         passwordTextInputLayout.setError("Username oder Passwort falsch!");
                     } else {
+                        SharedPrefsMethods.writeStringToSharedPrefs(getActivity(),USER_NAME_KEY, username);
                         MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
                     }
                 }

@@ -24,6 +24,17 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESKeySpec;
 
 import appworld.gogogo.bsgame.MainActivity;
 import appworld.gogogo.bsgame.R;
@@ -163,6 +174,33 @@ public class RegisterFragment extends Fragment {
             e.printStackTrace();
         }
         return Base64.encodeToString(encodePassword, Base64.DEFAULT);
+    }
+
+
+    public String encodePasswordString2(String password) {
+        // only the first 8 Bytes of the constructor argument are used
+//       as material for generating the keySpec
+        DESKeySpec keySpec;
+
+//        ENCODE plainTextPassword String
+        byte[] cleartext = new byte[0];
+        String encryptedPwd = "";
+        try {
+            keySpec = new DESKeySpec(getResources().getString(R.string.secret_app_key).getBytes("UTF8"));
+            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
+            SecretKey key = keyFactory.generateSecret(keySpec);
+            cleartext = password.getBytes("UTF8");
+            Cipher cipher = Cipher.getInstance("DES"); // cipher is not thread safe
+            cipher.init(Cipher.ENCRYPT_MODE, key);
+            encryptedPwd = Base64.encodeToString(cipher.doFinal(cleartext), Base64.DEFAULT);
+        } catch (UnsupportedEncodingException | NoSuchAlgorithmException | NoSuchPaddingException
+                | InvalidKeyException | BadPaddingException | IllegalBlockSizeException | InvalidKeySpecException e) {
+            e.printStackTrace();
+        }
+
+        Log.v("password1", encryptedPwd);
+
+        return encryptedPwd;
     }
 
 

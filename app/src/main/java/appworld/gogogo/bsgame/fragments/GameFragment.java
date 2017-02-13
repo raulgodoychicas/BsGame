@@ -1,9 +1,11 @@
 package appworld.gogogo.bsgame.fragments;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import appworld.gogogo.bsgame.R;
 import appworld.gogogo.bsgame.engine.PlayGroundView;
 import appworld.gogogo.bsgame.interfaces.PlayerListener;
 import appworld.gogogo.bsgame.objects.MarkedRects;
+import appworld.gogogo.bsgame.support.SharedPrefsMethods;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,10 +26,11 @@ public class GameFragment extends Fragment implements PlayerListener {
 
     public static String GAME_MODE;
     private int gameModeInt;
-    private boolean multiPlayerMode;
+    private boolean singlePlayerMode;
     private int player;
     private TextView player1scoreTextView, player2scoreTextView;
     private LinearLayout player1LinearLayout, player2LinearLayout;
+    private TextView player1NameTextView, player2NameTextView;
 
     public GameFragment() {
         // Required empty public constructor
@@ -44,7 +48,7 @@ public class GameFragment extends Fragment implements PlayerListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gameModeInt = getArguments().getInt(GAME_MODE, 0);
-        multiPlayerMode = gameModeInt % 10 == 1;
+        singlePlayerMode = gameModeInt % 10 == 1;
         player = 1;
     }
 
@@ -73,6 +77,14 @@ public class GameFragment extends Fragment implements PlayerListener {
 
         player1LinearLayout = (LinearLayout) view.findViewById(R.id.fragment_game_player1_linearlayout);
         player2LinearLayout = (LinearLayout) view.findViewById(R.id.fragment_game_player2_linearlayout);
+
+        player1NameTextView = (TextView) view.findViewById(R.id.fragment_game_player1_textview);
+        player2NameTextView = (TextView) view.findViewById(R.id.fragment_game_player2_textview);
+
+        player1NameTextView.setText(SharedPrefsMethods.readStringFromSharedPrefs(getActivity(), LoginFragment.USER_NAME_KEY));
+        if (singlePlayerMode) {
+            player2NameTextView.setText(R.string.fragment_overview_computer_name);
+        }
 
     }
 
@@ -108,7 +120,9 @@ public class GameFragment extends Fragment implements PlayerListener {
 
     @Override
     public void onGameFinished() {
+        createGameFinishedDialog(getActivity());
+    }
 
-
+    private void createGameFinishedDialog(Activity activity) {
     }
 }

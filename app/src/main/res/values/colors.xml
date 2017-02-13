@@ -5,18 +5,22 @@
     <color name="colorAccent">#ff0000</color>
 
     <color name="colorNavbar">#ff2a718f</color>
-
     <color name="colorNavbarDark">#ff215a72</color>
 
 
     102d39
     <color name="Background">#fff0f0f0</color>
+
     <color name="Highlight_grün">#ff1c8f7c</color>
     <color name="Highlight_blau">#ff2a718f</color>
+
     <color name="Kastl">#ffdddbda</color>
     <color name="Punkte">#ff54514e</color>
+
     <color name="Grüne_Striche">#ff1c8f7c</color>
     <color name="Blaue_Striche">#ff2a718f</color>
+    <color name="Orange_Striche">#FFE2762C</color>
+
     <color name="Grünes_Kastl">#801c8f7c</color>
     <color name="Blaues_Kastl">#802a718f</color>
 

@@ -22,7 +22,7 @@ import appworld.gogogo.bsgame.objects.MarkedRects;
  */
 public class PlayGroundView extends View {
 
-    private Paint linePaintGray, pointPaintWhite, selectedLinePaintP1, selectedLinePaintP2, rectPaint;
+    private Paint linePaintGray, pointPaint, selectedLinePaintP1, selectedLinePaintP2, rectPaint;
 
     private LineOnCanvas[] verticalLinesOnCanvases;
     private LineOnCanvas[] horizontalLinesOnCanvas;
@@ -343,8 +343,8 @@ public class PlayGroundView extends View {
 
     /**
      * Define the different colors of the Lines
-     * linePaintGray - used for the
-     * pointPaintWhite -
+     * linePaintGray -
+     * pointPaint -
      * selectedLinePaintP1 -
      * selectedLinePaintP2 -
      * rectPaint -
@@ -360,11 +360,11 @@ public class PlayGroundView extends View {
         linePaintGray.setAlpha((int) (255 * 0.38));
         linePaintGray.setStrokeWidth(10);
 
-        pointPaintWhite = new Paint();
-        pointPaintWhite.setAntiAlias(true);
-        pointPaintWhite.setColor(getResources().getColor(R.color.Background));
-        pointPaintWhite.setStyle(Paint.Style.STROKE);
-        pointPaintWhite.setStrokeWidth(9);
+        pointPaint = new Paint();
+        pointPaint.setAntiAlias(true);
+        pointPaint.setColor(getResources().getColor(R.color.Background));
+        pointPaint.setStyle(Paint.Style.STROKE);
+        pointPaint.setStrokeWidth(9);
 
         selectedLinePaintP1 = new Paint();
         selectedLinePaintP1.setAntiAlias(true);
@@ -388,11 +388,19 @@ public class PlayGroundView extends View {
 
     }
 
+    /**
+     * Mark the chosen rectangle with the actual player number
+     *
+     * @param rectNum
+     */
     private void putMarkOnRect(int rectNum) {
         markedRects[rectNum].marked = true;
         markedRects[rectNum].player = player;
     }
 
+    /**
+     * Change player
+     */
     private void changePlayer() {
         player = 1 - player;
     }
@@ -402,7 +410,6 @@ public class PlayGroundView extends View {
      */
     private void simulateKiChoice() {
         final boolean[] action = {false};
-//        do {
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -430,12 +437,11 @@ public class PlayGroundView extends View {
                 }
                 changePlayer();
                 playerListener.changePlayer(player);
+                if (player == 1) {
+                    simulateKiChoice();
+                }
             }
         }, 1000);
-
-//        } while (action[0] && Ki.simulateKiMove(verticalLinesOnCanvases) != -1
-//                || action[0] && Ki.simulateKiMove(horizontalLinesOnCanvas) != -1);
-
     }
 }
 

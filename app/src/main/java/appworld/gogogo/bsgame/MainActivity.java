@@ -100,13 +100,13 @@ public class MainActivity extends Activity {
                             finish();
                         }
                     }).setNegativeButton("Nein", null).show();
-        }else if(fragment instanceof GameFragment){
+        } else if (fragment instanceof GameFragment) {
             new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Spiel beenden")
                     .setMessage(getString(R.string.dialog_leave_game))
                     .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int k) {
-                            switchFragment(new OverviewFragment(),fragment.getActivity(),false);
+                            switchFragment(new OverviewFragment(), fragment.getActivity(), false);
                         }
                     }).setNegativeButton("Nein", null).show();
         } else {

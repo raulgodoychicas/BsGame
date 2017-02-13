@@ -25,6 +25,7 @@ import static appworld.gogogo.bsgame.R.*;
  */
 public class OverviewFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
+
     private Spinner fieldSizeSpinner;
     private Spinner gameModeSpinner;
     private Button startGameButton;
