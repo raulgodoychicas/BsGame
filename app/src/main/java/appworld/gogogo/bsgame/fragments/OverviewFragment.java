@@ -25,20 +25,13 @@ import static appworld.gogogo.bsgame.R.*;
  */
 public class OverviewFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
-
     private Spinner fieldSizeSpinner;
     private Spinner gameModeSpinner;
-    private Button startGameButton;
-    private Button goToIntroButton;
-    private ImageButton helpButton;
-
-//    private TextView userNameTextView;
 
     /*Bsp. gameModeID:
              31 --> Fieldsize 3 = 3x3 , GameMode 1 = Single Player
              42 --> Fieldsize 4 = 4x4 , GameMode 2 = MultiPlayer
             53 --> Fieldsize 5 = 5x5 , GameMode 3 = Multi Player Online */
-
     private int gameModeID;
 
     public OverviewFragment() {
@@ -62,13 +55,13 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemSele
         gameModeSpinner = (Spinner) view.findViewById(R.id.overview_spinner_gamemode);
 
         //Button initialiseren
-        startGameButton = (Button) view.findViewById(R.id.overwiew_start_button);
+        Button startGameButton = (Button) view.findViewById(id.overwiew_start_button);
 
         // Button Introduction
-        goToIntroButton = (Button) view.findViewById(id.overwiew_introduction_button);
+        Button goToIntroButton = (Button) view.findViewById(id.overwiew_introduction_button);
 
         // Help Button
-        helpButton = (ImageButton) view.findViewById(R.id.overview_help_button);
+        ImageButton helpButton = (ImageButton) view.findViewById(id.overview_help_button);
         helpButton.setColorFilter(ContextCompat.getColor(getActivity(), color.colorNavbar)
         );
 

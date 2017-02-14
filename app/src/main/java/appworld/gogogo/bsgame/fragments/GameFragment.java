@@ -2,11 +2,16 @@ package appworld.gogogo.bsgame.fragments;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.text.InputType;
+
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -27,10 +32,9 @@ public class GameFragment extends Fragment implements PlayerListener {
     public static String GAME_MODE;
     private int gameModeInt;
     private boolean singlePlayerMode;
-    private int player;
     private TextView player1scoreTextView, player2scoreTextView;
     private LinearLayout player1LinearLayout, player2LinearLayout;
-    private TextView player1NameTextView, player2NameTextView;
+    private Context context;
 
     public GameFragment() {
         // Required empty public constructor
@@ -47,9 +51,10 @@ public class GameFragment extends Fragment implements PlayerListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         gameModeInt = getArguments().getInt(GAME_MODE, 0);
         singlePlayerMode = gameModeInt % 10 == 1;
-        player = 1;
+        context = getActivity();
     }
 
     @Override
@@ -78,19 +83,27 @@ public class GameFragment extends Fragment implements PlayerListener {
         player1LinearLayout = (LinearLayout) view.findViewById(R.id.fragment_game_player1_linearlayout);
         player2LinearLayout = (LinearLayout) view.findViewById(R.id.fragment_game_player2_linearlayout);
 
-        player1NameTextView = (TextView) view.findViewById(R.id.fragment_game_player1_textview);
-        player2NameTextView = (TextView) view.findViewById(R.id.fragment_game_player2_textview);
+        TextView player1NameTextView = (TextView) view.findViewById(R.id.fragment_game_player1_textview);
+        TextView player2NameTextView = (TextView) view.findViewById(R.id.fragment_game_player2_textview);
 
         player1NameTextView.setText(SharedPrefsMethods.readStringFromSharedPrefs(getActivity(), LoginFragment.USER_NAME_KEY));
         if (singlePlayerMode) {
             player2NameTextView.setText(R.string.fragment_overview_computer_name);
         }
+    }
 
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        MenuItem logoutMenuItem = menu.findItem(R.id.action_logout);
+        MenuItem clearDataMenuItem = menu.findItem(R.id.action_clear_data);
+        logoutMenuItem.setVisible(false);
+        clearDataMenuItem.setVisible(false);
+        getActivity().invalidateOptionsMenu();
     }
 
     @Override
     public void changePlayer(int player) {
-        this.player = player;
         if (player == 0) {
             player1LinearLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.orange_p1_zug));
             player2LinearLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.Background));
@@ -102,7 +115,6 @@ public class GameFragment extends Fragment implements PlayerListener {
 
     @Override
     public void changeScore(MarkedRects[] MarkedRects) {
-
         int player1Score = 0;
         int player2Score = 0;
 
@@ -117,12 +129,29 @@ public class GameFragment extends Fragment implements PlayerListener {
         player2scoreTextView.setText(String.valueOf(player2Score));
     }
 
-
     @Override
-    public void onGameFinished() {
-        createGameFinishedDialog(getActivity());
+    public void onGameFinished(String winner, String points) {
+        createGameFinishedDialog(winner, points);
     }
 
-    private void createGameFinishedDialog(Activity activity) {
+    private void createGameFinishedDialog(String winner, String points) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Spiel Beendet!");
+        builder.setMessage("Spieler " + winner + " hat " + points + " Punkte erzielt und gewonnen");
+        builder.setPositiveButton("Spiel anschauen", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("Verlassen", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                getActivity().getFragmentManager().popBackStack();
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
+
 }

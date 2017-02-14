@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
-import appworld.gogogo.bsgame.engine.PlayGroundView;
 import appworld.gogogo.bsgame.fragments.GameFragment;
 import appworld.gogogo.bsgame.fragments.ImpressumFragment;
 import appworld.gogogo.bsgame.fragments.LoginFragment;
@@ -48,10 +47,7 @@ public class MainActivity extends Activity {
         int id = item.getItemId();
         Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment);
 
-        if (id == R.id.action_settings) {
-            return true;
-
-        } else if (id == R.id.action_impressum) {
+        if (id == R.id.action_impressum) {
             //Überprüfen ob ImpressumFragment bereits geladen ist, um Mehrfachladen des Fragments zu verhindern
             if (!(fragment instanceof ImpressumFragment)) {
                 switchFragment(new ImpressumFragment(), this, true);

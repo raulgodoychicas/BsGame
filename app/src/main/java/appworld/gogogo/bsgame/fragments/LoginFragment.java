@@ -13,6 +13,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -42,8 +43,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     public static final String USER_NAME_KEY = "userNameKey";
 
-    private Button loginButton;
-    private Button registerButton;
     private Switch loginRememberMeSwitch;
     private TextInputEditText usernameTextInputEditText;
     private TextInputEditText passwordTextInputEditText;
@@ -60,6 +59,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -72,10 +72,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        loginButton = (Button) view.findViewById(R.id.login_button);
+        Button loginButton = (Button) view.findViewById(R.id.login_button);
         loginButton.setOnClickListener(this);
 
-        registerButton = (Button) view.findViewById(R.id.login_register_button);
+        Button registerButton = (Button) view.findViewById(R.id.login_register_button);
         registerButton.setOnClickListener(this);
 
         loginRememberMeSwitch = (Switch) view.findViewById(R.id.login_angemeldet_bleiben);
@@ -99,9 +99,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        //TODO: invalidate menus. zu viel
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        MenuItem logoutMenuItem = menu.findItem(R.id.action_logout);
+        MenuItem clearDataMenuItem = menu.findItem(R.id.action_clear_data);
+        logoutMenuItem.setVisible(false);
+        clearDataMenuItem.setVisible(false);
+        getActivity().invalidateOptionsMenu();
     }
 
     @Override
@@ -138,7 +142,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                             //If there is no internet connection compare User credentials with SharedPrefs
                             if (isPasswordRight(username, password)) {
                                 MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
-                                SharedPrefsMethods.writeStringToSharedPrefs(getActivity(),USER_NAME_KEY, username);
+                                SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), USER_NAME_KEY, username);
                             }
                         }
                     }
@@ -148,7 +152,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             case R.id.login_register_button: {
                 //hide keyboard
                 UiMethods.closeKeyboard(getView(), getActivity());
-
                 //switch to RegisterFragment
                 MainActivity.switchFragment(new RegisterFragment(), getActivity(), true);
                 break;
@@ -249,8 +252,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         protected String doInBackground(String... params) {
 
             //params[0] = username, params[1] = password
-             uname = params[0];
-             pw = params[1];
+            uname = params[0];
+            pw = params[1];
 
             //Initializing Data String that is later needed to get the response JSON String from the Mysql-DB
             String data = "";
@@ -334,7 +337,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     if (!(decodedPasswordString.equals(password) || name.equals(username))) {
                         passwordTextInputLayout.setError("Username oder Passwort falsch!");
                     } else {
-                        SharedPrefsMethods.writeStringToSharedPrefs(getActivity(),USER_NAME_KEY, username);
+                        SharedPrefsMethods.writeStringToSharedPrefs(getActivity(), USER_NAME_KEY, username);
                         MainActivity.switchFragment(new OverviewFragment(), getActivity(), false);
                     }
                 }

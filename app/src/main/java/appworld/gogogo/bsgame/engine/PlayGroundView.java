@@ -22,7 +22,7 @@ import appworld.gogogo.bsgame.objects.MarkedRects;
  */
 public class PlayGroundView extends View {
 
-    private Paint linePaintGray, pointPaint, selectedLinePaintP1, selectedLinePaintP2, rectPaint;
+    private Paint linePaintGray, selectedLinePaintP1, selectedLinePaintP2, rectPaint;
 
     private LineOnCanvas[] verticalLinesOnCanvases;
     private LineOnCanvas[] horizontalLinesOnCanvas;
@@ -38,6 +38,7 @@ public class PlayGroundView extends View {
     private float mScaleFactor = 1.f;
 
     private int gameMode;
+    private boolean repeatCheck = true;
 
     private PlayerListener playerListener;
 
@@ -163,8 +164,9 @@ public class PlayGroundView extends View {
                 isGameFinished = false;
             }
         }
-        if (isGameFinished) {
-            playerListener.onGameFinished();
+        if (repeatCheck && isGameFinished) {
+            checkWinner();
+            repeatCheck = false;
         }
 
 
@@ -360,12 +362,6 @@ public class PlayGroundView extends View {
         linePaintGray.setAlpha((int) (255 * 0.38));
         linePaintGray.setStrokeWidth(10);
 
-        pointPaint = new Paint();
-        pointPaint.setAntiAlias(true);
-        pointPaint.setColor(getResources().getColor(R.color.Background));
-        pointPaint.setStyle(Paint.Style.STROKE);
-        pointPaint.setStrokeWidth(9);
-
         selectedLinePaintP1 = new Paint();
         selectedLinePaintP1.setAntiAlias(true);
         // material design 38% alpha for hints
@@ -385,7 +381,6 @@ public class PlayGroundView extends View {
         rectPaint.setColor(Color.DKGRAY);
         rectPaint.setStyle(Paint.Style.FILL);
         rectPaint.setStrokeWidth(5);
-
     }
 
     /**
@@ -442,6 +437,22 @@ public class PlayGroundView extends View {
                 }
             }
         }, 1000);
+    }
+
+    private void checkWinner() {
+        int player1points = 0;
+        int player2points = 0;
+        for (MarkedRects markedRect : markedRects) {
+            if (markedRect.player == 0) player1points++;
+            else if (markedRect.player == 1) player2points++;
+        }
+        if (player1points > player2points) {
+            playerListener.onGameFinished("1", String.valueOf(player1points));
+            Log.v("player", "player1won");
+        } else if (player1points < player2points) {
+            playerListener.onGameFinished("2", String.valueOf(player2points));
+            Log.v("player", "player2won");
+        }
     }
 }
 

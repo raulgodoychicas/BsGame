@@ -1,28 +1,29 @@
 package appworld.gogogo.bsgame.fragments;
 
 import android.app.Fragment;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import appworld.gogogo.bsgame.R;
 
 public class ImpressumFragment extends Fragment {
 
-    private TextView impressumHeaderTextView;
-    private TextView impressumBodyTextView;
-
     public ImpressumFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -36,8 +37,8 @@ public class ImpressumFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        impressumHeaderTextView = (TextView) view.findViewById(R.id.impressum_haeder_textview);
-        impressumBodyTextView = (TextView) view.findViewById(R.id.impressum_body_textview);
+        TextView impressumHeaderTextView = (TextView) view.findViewById(R.id.impressum_haeder_textview);
+        TextView impressumBodyTextView = (TextView) view.findViewById(R.id.impressum_body_textview);
 
         Spanned resultHeader;
         Spanned resultBody;
@@ -54,6 +55,18 @@ public class ImpressumFragment extends Fragment {
             impressumHeaderTextView.setText(resultHeader);
             impressumBodyTextView.setText(resultBody);
         }
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        MenuItem logoutMenuItem = menu.findItem(R.id.action_logout);
+        MenuItem clearDataMenuItem = menu.findItem(R.id.action_clear_data);
+        MenuItem impressumMenuItem = menu.findItem(R.id.action_impressum);
+        logoutMenuItem.setVisible(false);
+        clearDataMenuItem.setVisible(false);
+        impressumMenuItem.setVisible(false);
+        getActivity().invalidateOptionsMenu();
     }
 
 }

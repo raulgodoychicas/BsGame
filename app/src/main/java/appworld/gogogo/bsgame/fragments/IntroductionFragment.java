@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -16,14 +18,16 @@ import appworld.gogogo.bsgame.R;
  * A simple {@link Fragment} subclass.
  */
 public class IntroductionFragment extends Fragment {
-    private TextView introductionHeaderTextView;
-    private TextView introductionBodyTextView;
-
 
     public IntroductionFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,8 +39,8 @@ public class IntroductionFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        introductionHeaderTextView = (TextView) view.findViewById(R.id.introduction_header_textview);
-        introductionBodyTextView = (TextView) view.findViewById(R.id.introduction_body_textview);
+        TextView introductionHeaderTextView = (TextView) view.findViewById(R.id.introduction_header_textview);
+        TextView introductionBodyTextView = (TextView) view.findViewById(R.id.introduction_body_textview);
 
         Spanned resultHeader;
         Spanned resultBody;
@@ -53,6 +57,16 @@ public class IntroductionFragment extends Fragment {
             introductionHeaderTextView.setText(resultHeader);
             introductionBodyTextView.setText(resultBody);
         }
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        MenuItem clearDataMenuItem = menu.findItem(R.id.action_clear_data);
+        MenuItem impressumMenuItem = menu.findItem(R.id.action_impressum);
+        clearDataMenuItem.setVisible(false);
+        impressumMenuItem.setVisible(false);
+        getActivity().invalidateOptionsMenu();
     }
 
 }

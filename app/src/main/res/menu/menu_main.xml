@@ -2,21 +2,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="appworld.gogogo.bsgame.MainActivity">
-    <item
-        android:orderInCategory="101"
-        android:title="@string/action_settings"
-        android:id="@+id/action_settings"/>
-    <item
-        android:title="@string/action_impressum"
-        android:orderInCategory="102"
-        android:id="@+id/action_impressum" />
-    <item
-        android:title="@string/action_clear_data"
-        android:orderInCategory="103"
-        android:id="@+id/action_clear_data" />
-    <item
-        android:title="@string/action_logout"
-        android:orderInCategory="104"
-        android:id="@+id/action_logout"/>
+
+    <group android:id="@+id/main_menu_group">
+        <item
+            android:id="@+id/action_impressum"
+            android:orderInCategory="101"
+            android:title="@string/action_impressum" />
+        <item
+            android:id="@+id/action_clear_data"
+            android:orderInCategory="102"
+            android:title="@string/action_clear_data" />
+        <item
+            android:id="@+id/action_logout"
+            android:orderInCategory="103"
+            android:title="@string/action_logout" />
+    </group>
 
 </menu>

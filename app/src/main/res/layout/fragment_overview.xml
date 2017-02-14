@@ -48,7 +48,7 @@
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="24dp"
             android:layout_marginTop="4dp"
-            android:layout_marginRight="2dp"
+            android:layout_marginEnd="2dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/overview_choosefieldsize_spinner"
             android:layout_alignParentEnd="true"
@@ -72,7 +72,7 @@
             android:layout_below="@+id/overview_spinner_gamemode"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp"
-            android:text="Anleitung"
+            android:text="@string/overview_introduction_text"
             android:textSize="14sp"
             android:textStyle="italic" />
 
@@ -84,7 +84,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="68dp"
-            android:text="Spiel starten"
+            android:text="@string/overview_start_text"
             android:textSize="24dp" />
 
     </RelativeLayout>

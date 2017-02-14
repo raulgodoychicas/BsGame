@@ -67,6 +67,8 @@
 
     </string-array>
     <string name="fragment_overview_computer_name">Computer</string>
+    <string name="overview_start_text">Spiel starten</string>
+    <string name="overview_introduction_text">Anleitung</string>
 
 </resources>
 
