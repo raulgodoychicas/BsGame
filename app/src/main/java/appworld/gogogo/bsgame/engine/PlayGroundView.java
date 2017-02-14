@@ -404,7 +404,6 @@ public class PlayGroundView extends View {
      * This Method simulates the KI moves if the singleplayre mode is chosen.
      */
     private void simulateKiChoice() {
-        final boolean[] action = {false};
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -413,12 +412,10 @@ public class PlayGroundView extends View {
                 double randonInt = Math.random();
 
                 if (randonInt > 0.5 && Ki.simulateKiMove(horizontalLinesOnCanvas) != -1) {
-                    action[0] = false;
                     kiMoveInt = Ki.simulateKiMove(horizontalLinesOnCanvas);
                     horizontalLinesOnCanvas[kiMoveInt].player = player;
                     if (isHorizontalRectFinished(verticalLinesOnCanvases, horizontalLinesOnCanvas, kiMoveInt)) {
                         playerListener.changeScore(markedRects);
-                        action[0] = true;
                         changePlayer();
                     }
                 } else if (Ki.simulateKiMove(verticalLinesOnCanvases) != -1) {
@@ -426,7 +423,6 @@ public class PlayGroundView extends View {
                     verticalLinesOnCanvases[kiMoveInt].player = player;
                     if (isVerticalRectFinished(verticalLinesOnCanvases, horizontalLinesOnCanvas, kiMoveInt)) {
                         playerListener.changeScore(markedRects);
-                        action[0] = true;
                         changePlayer();
                     }
                 }
@@ -448,10 +444,8 @@ public class PlayGroundView extends View {
         }
         if (player1points > player2points) {
             playerListener.onGameFinished("1", String.valueOf(player1points));
-            Log.v("player", "player1won");
         } else if (player1points < player2points) {
             playerListener.onGameFinished("2", String.valueOf(player2points));
-            Log.v("player", "player2won");
         }
     }
 }

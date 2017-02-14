@@ -105,7 +105,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         MenuItem clearDataMenuItem = menu.findItem(R.id.action_clear_data);
         logoutMenuItem.setVisible(false);
         clearDataMenuItem.setVisible(false);
-        getActivity().invalidateOptionsMenu();
+        if (getActivity() != null) {
+            getActivity().invalidateOptionsMenu();
+        }
     }
 
     @Override
