@@ -137,6 +137,11 @@ public class GameFragment extends Fragment implements PlayerListener {
     private void createGameFinishedDialog(String winner, String points) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Spiel Beendet!");
+        if (winner.equals("1")) {
+            winner = SharedPrefsMethods.readStringFromSharedPrefs((Activity) context, LoginFragment.USER_NAME_KEY);
+        } else if (winner.equals("2") && singlePlayerMode) {
+            winner = "Computer";
+        }
         builder.setMessage("Spieler " + winner + " hat " + points + " Punkte erzielt und gewonnen");
         builder.setPositiveButton("Spiel anschauen", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
